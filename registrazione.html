@@ -61,36 +61,46 @@
         </nav>
     </header>
 
-     <div class="row justify-content-center align-items-center text-center mb-5 mt-5">
-
-            <div class="col-4"></div>
-
-            <button class="col-4 btn btn-danger btn-lg shadow-lg p-3 mb-5" style="background-color: #6B0808; border-radius: 20px;">Vorrei dare una mano</button>
-
-            <div class="col-4"></div>
-
+    <main>
+        <div class = "align-items-center text-center mt-5 mb-5" >
+            <h1 style=" color:black; font-size: 30px"> Registrati </h1>
         </div>
 
-         <div class="row justify-content-center align-items-center text-center mb-5">
+       <form action = "" class = "align-items-center text-center mb-4">
+        
+            <div class = "mb-4 d-flex justify-content-center align-items-center">
+                <label for = "nome" style = "width: 30%;" class = "fw-bold">Nome</label>
+                <input type="text" name="nome" style="width:65%; border:2px solid #6B0808; border-radius:20px;">
+            </div>
 
-            <div class="col-4"></div>
+            <div class = "mb-4 d-flex justify-content-center align-items-center">
+                <label for ="cognome" style = "width: 30%;" class = "fw-bold">Cognome</label>
+                <input type="text" name="cognome" style="width:65%; border:2px solid #6B0808; border-radius:20px;">
+            </div>
 
-            <button class="col-4 btn btn-danger btn-lg shadow-lg p-3 mb-5" style="background-color: #6B0808; border-radius: 20px;">Vorrei ricevere aiuto</button>
+            <div class = "mb-4 d-flex justify-content-center align-items-center">
+                <label for = "matricola" style = "width: 30%;" class = "fw-bold">Matricola</label>
+                <input type="number" name="matricola" style="width:65%; border:2px solid #6B0808; border-radius:20px;">
+            </div>
 
-            <div class="col-4"></div>
+            <div class = "mb-4 d-flex justify-content-center align-items-center">
+                <label for ="email" style = "width: 30%;" class = "fw-bold">Email</label>
+                <input type="email" name="email" style="width:65%; border:2px solid #6B0808; border-radius:20px;">
+            </div>
 
-        </div>
+            <div class = "mb-4 d-flex justify-content-center align-items-center">
+                <label for = "password" style = "width: 30%;" class = "fw-bold">Password</label>
+                <input type="password" name="password" style="width:65%; border:2px solid #6B0808; border-radius:20px;">
+            </div>
 
-         <div class="row justify-content-center align-items-center text-center mb-5">
+            <div class="mb-5 d-flex justify-content-center align-items-center">
+                <label for="conferma_password" style="width: 30%; line-height: 1.2;" class="fw-bold">Conferma<br>Password</label>
+                <input type="password" name="conferma_password" style="width:65%; border:2px solid #6B0808; border-radius:20px;">
+            </div>
 
-            <div class="col-4"></div>
-
-            <button class="col-4 btn btn-danger btn-lg shadow-lg p-3 mb-5" style="background-color: #6B0808; border-radius: 20px;">Entra come guest</button>
-
-            <div class="col-4"></div>
-
-        </div>
-</div>
+        <button class="col-4 btn btn-danger shadow-lg fw-bold p-1" style="background-color: #6B0808; border-radius: 20px; width:35%">Conferma</button>
+       </form>
+    </main>
 <style>
     /* Quando il bottone (toggler) è APERTO (aria-expanded="true"),
    cerca l'elemento .navbar-brand (il logo) che viene dopo di lui
