@@ -1,0 +1,38 @@
+    /* Stile generale della navbar */
+        header {
+            background-color: #CE1126;
+        }
+
+        .navbar-toggler-icon {
+            width: 1.5em;
+            height: 1.5em;
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .navbar-brand img {
+            height: 60px;
+        }
+
+        #offcanvasNavbar {
+            background-color: #CE1126;
+            width: 75%;
+        }
+
+        .offcanvas-body .navbar-nav {
+            font-size: 30px;
+        }
+
+        .btn-action {
+            background-color: #6B0808;
+            border-radius: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #CE1126;
+        }
+
+        /* Sparizione logo all'apertura menu */
+        .navbar-toggler[aria-expanded="true"]~.navbar-brand {
+            display: none !important;
+        }
