@@ -48,7 +48,7 @@
             padding-left: 15px;
         }
 
-        .btn-login {
+        .btn-confirm {
             width: 35%;
         }
 
@@ -60,3 +60,32 @@
             background-color: #6B0808;
             border-radius: 20px;
         }
+
+        /* Header e Footer Sfondo Rosso */
+        header, .footer {
+            background-color: #CE1126;
+        }
+
+        /* Titolo pagina (Registrati) */
+        .title-custom {
+            color: black;
+            font-size: 30px;
+        }
+
+        /* Input fields */
+        .input-custom {
+            width: 65%;
+            border: 2px solid #6B0808;
+            border-radius: 20px;
+            padding-left: 15px; /* Aggiunto per evitare che il testo tocchi il bordo */
+        }
+
+        /* Labels (Nome, Cognome, ecc.) */
+        .label-custom {
+            width: 30%;
+            /* line-height: 1.2 serve per la label "Conferma Password" che va a capo */
+            line-height: 1.2; 
+        }
+
+    
+     
