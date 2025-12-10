@@ -22,7 +22,6 @@
             font-size: 30px;
         }
 
-        /* Footer */
         .footer {
             background-color: #CE1126;
         }
@@ -35,10 +34,6 @@
         .title-custom {
             color: black;
             font-size: 30px;
-        }
-
-        .label-custom {
-            width: 30%;
         }
 
         .input-custom {
@@ -61,30 +56,62 @@
             border-radius: 20px;
         }
 
-        /* Header e Footer Sfondo Rosso */
-        header, .footer {
-            background-color: #CE1126;
-        }
 
-        /* Titolo pagina (Registrati) */
-        .title-custom {
-            color: black;
-            font-size: 30px;
-        }
-
-        /* Input fields */
-        .input-custom {
-            width: 65%;
-            border: 2px solid #6B0808;
-            border-radius: 20px;
-            padding-left: 15px; /* Aggiunto per evitare che il testo tocchi il bordo */
-        }
-
-        /* Labels (Nome, Cognome, ecc.) */
         .label-custom {
             width: 30%;
             /* line-height: 1.2 serve per la label "Conferma Password" che va a capo */
             line-height: 1.2; 
+        }
+
+
+        
+        .filter-box {
+            background-color: #6B0808;
+            border-radius: 20px;
+        }
+
+        /* Stile base per tutti gli input e select */
+        .input-base {
+            border: 2px solid #6B0808;
+            border-radius: 20px;
+        }
+
+        /* Input stretti (es. Data) */
+        .input-narrow {
+            width: 45%;
+        }
+
+        /* Input larghi (es. Località, Materia) */
+        .input-wide {
+            width: 75%;
+        }
+
+        /* Bottone Cerca */
+        .btn-search {
+            background-color: #6B0808;
+            border-radius: 20px;
+            width: 15%;
+        }
+
+        /* Tabella Risultati */
+        .results-table {
+            background-color: #6B0808;
+            border-radius: 20px;
+        }
+
+        /* Righe Tabella */
+        .table-row-custom {
+            background-color: #6B0808;
+            border-color: #ffffff;
+            border-radius: 20px;
+        }
+
+        /* Celle Intestazione Tabella */
+        .table-head-cell {
+            background-color: #6B0808;
+            border-bottom: 2px solid #000000;
+            border-right: 2px solid #000000;
+            border-radius: 20px;
         }
 
     

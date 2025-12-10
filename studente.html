@@ -25,9 +25,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
     </script>
 
-    <style>
-        
-    </style>
 </head>
 
 <body class="d-flex flex-column ">
@@ -85,102 +82,133 @@
                 </div>
             </nav>
         </header>
-<main>
-        <div class = "align-items-center text-center mt-3 mb-2" >
-            <h1 style=" color:black; font-size: 30px"> Trova Disponibilità </h1>
-        </div>
 
-
-        <div class="row justify-content-center align-items-center text-center mb-2 mt-3">
-
-            <div class="col-5 shadow-lg p-3 mb-1 text-white me-3" style="background-color: #6B0808; border-radius: 20px;">
-                <h2>Data</h2>
-                    
-                <div class= ""> 
-                    <input type="date" name="cognome" class = "col-3" style="width:45%; border:2px solid #6B0808; border-radius:20px;">
-                    <input type="text" name="cognome" class = "col-6" style="width:45%; border:2px solid #6B0808; border-radius:20px;">
-                    <input type="text" name="cognome" class = "col-6 mt-1" style="width:45%; border:2px solid #6B0808; border-radius:20px;">
-                </div>
+        <main>
+            <div class="align-items-center text-center mt-3 mb-2">
+                <h1 class="page-title">
+                    Trova Disponibilità
+                </h1>
             </div>
-
-            <div class="col-5 shadow-lg p-4 mb-1 text-white" style="background-color: #6B0808; border-radius: 20px;">
-
-                <h2>Località</h2>
-                    
-                <div class= "row"> 
-                    <div class="pt-1 pb-2 mt-1">
-                        <input type="text" name="luogo" class = "mt-1" style="width:75%; border:2px solid #6B0808; border-radius:20px;">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <form class="row justify-content-center align-items-center text-center mb-2 mt-3">
-
-            <div class="col-5 shadow-lg p-4 mb-1 text-white me-3" style="background-color: #6B0808; border-radius: 20px;">
-
-                <h2>Materia</h2>
-                    
-                <div class= "row"> 
-                    <div class="pt-1 pb-2 mt-1">
-                        <select name="materia" class = "mt-1" style="width:75%; border:2px solid #6B0808; border-radius:20px;"></select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-5 shadow-lg p-4 mb-1 text-white" style="background-color: #6B0808; border-radius: 20px;">
-
-                <h2>Tutor</h2>
-                    
-                <div class= "row"> 
-                    <div class="pt-1 pb-2 mt-1">
-                        <select name="luogo" class = "mt-1" style="width:75%; border:2px solid #6B0808; border-radius:20px;"></select>
-                    </div>
-                </div>
-            </div>
-
-            <button class="col-4 btn btn-danger shadow-lg fw-bold p-1" style="background-color: #6B0808; border-radius: 20px; width:15%">Cerca</button>
-        </form>
-        
-        <div class="mb-5">
-            <table class="col-10 shadow-lg p-4 mb-1 text-white" style="background-color: #6B0808; border-radius: 20px;">
-                <tr class="col-12 shadow-lg p-4 mb-1 text-white" style="background-color: #6B0808; border-color: #ffffff;border-radius: 20px;">
-                    <th class="col- shadow-lg p-4 mb-1 text-white" style="background-color: #6B0808; border-bottom: 2px solid #000000; border-right: 2px solid #000000; border-radius: 20px;">Data</th>
-                    <th>Ora</th>
-                    <th>Luogo</th>
-                    <th>Materia</th>
-                    <th>Tutor</th>
-                </tr>
-                <tr>
-                    <td>10/10/2024</td>
-                    <td>14:00</td>
-                    <td>Bologna</td>
-                    <td>Ingegneria dei Sistemi Web</td>
-                    <td>Mario Rossi</td>
-                </tr>
-                <tr>
-                    <td>12/10/2024</td>
-                    <td>16:00</td>
-                    <td>Online</td>
-                    <td>Basi di Dati</td>
-                    <td>Luigi Bianchi</td>
-                </tr>
-            </table>
-        </div>
             
+            <div class="row justify-content-center align-items-center text-center mb-2 mt-3">
+                <div class="col-5 shadow-lg p-3 mb-1 text-white me-3 filter-box">
+                    <h2>
+                        Data
+                    </h2>
+                    <div class="">
+                        <input type="date" name="cognome" class="col-3 input-base input-narrow">
+                        <input type="text" name="cognome" class="col-6 input-base input-narrow">
+                        <input type="text" name="cognome" class="col-6 mt-1 input-base input-narrow">
+                    </div>
+                </div>
+                <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
+                    <h2>
+                        Località
+                    </h2>
+                    <div class="row">
+                        <div class="pt-1 pb-2 mt-1">
+                            <input type="text" name="luogo" class="mt-1 input-base input-wide">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    </main>     
-    <footer class="py-3 mt-auto text-white footer">
-        <p>
-          Progetto svolto da:
-        </p>
-        <p class="text-center">
-          Andrea Tonini e Lisandro Antonioli - A.A. 2025-2026
-        </p>
-      </footer>
-      <script type="module" src="src/app.js">
-      </script>
+            <form class="row justify-content-center align-items-center text-center mb-2 mt-3">
+                <div class="col-5 shadow-lg p-4 mb-1 text-white me-3 filter-box">
+                    <h2>
+                        Materia
+                    </h2>
+                    <div class="row">
+                        <div class="pt-1 pb-2 mt-1">
+                            <select name="materia" class="mt-1 input-base input-wide">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
+                    <h2>
+                        Tutor
+                    </h2>
+                    <div class="row">
+                        <div class="pt-1 pb-2 mt-1">
+                            <select name="luogo" class="mt-1 input-base input-wide">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search">
+                    Cerca
+                </button>
+            </form>
+
+            <div class="mb-5">
+                <table class="col-10 shadow-lg p-4 mb-1 text-white results-table">
+                    <tr class="col-12 shadow-lg p-4 mb-1 text-white table-row-custom">
+                        <th class="col- shadow-lg p-4 mb-1 text-white table-head-cell">
+                            Data
+                        </th>
+                        <th>
+                            Ora
+                        </th>
+                        <th>
+                            Luogo
+                        </th>
+                        <th>
+                            Materia
+                        </th>
+                        <th>
+                            Tutor
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            10/10/2024
+                        </td>
+                        <td>
+                            14:00
+                        </td>
+                        <td>
+                            Bologna
+                        </td>
+                        <td>
+                            Ingegneria dei Sistemi Web
+                        </td>
+                        <td>
+                            Mario Rossi
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            12/10/2024
+                        </td>
+                        <td>
+                            16:00
+                        </td>
+                        <td>
+                            Online
+                        </td>
+                        <td>
+                            Basi di Dati
+                        </td>
+                        <td>
+                            Luigi Bianchi
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+        
+        <footer class="py-3 mt-auto text-white footer">
+            <p>
+                Progetto svolto da:
+            </p>
+            <p class="text-center">
+                Andrea Tonini e Lisandro Antonioli - A.A. 2025-2026
+            </p>
+        </footer>
+        <script type="module" src="src/app.js">
+        </script>
     </div>
-  </body>
+</body>
 
 </html>
