@@ -14,7 +14,7 @@
         }
 
         #offcanvasNavbar {
-            background-color: #CE1126;
+            background-color: #6B0808;
             width: 75%;
         }
 
@@ -32,17 +32,14 @@
             display: none !important;
         }
 
-        /* Titoli neri (H1 Accedi, H2 Non hai un account) */
         .title-custom {
             color: black;
             font-size: 30px;
         }
 
-        /* Label del form (Email, Password) */
         .label-custom {
             width: 30%;
         }
-
 
         .input-custom {
             width: 65%;
