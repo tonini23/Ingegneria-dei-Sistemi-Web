@@ -22,11 +22,6 @@
             font-size: 30px;
         }
 
-        .btn-action {
-            background-color: #6B0808;
-            border-radius: 20px;
-        }
-
         /* Footer */
         .footer {
             background-color: #CE1126;
@@ -35,4 +30,36 @@
         /* Sparizione logo all'apertura menu */
         .navbar-toggler[aria-expanded="true"]~.navbar-brand {
             display: none !important;
+        }
+
+        /* Titoli neri (H1 Accedi, H2 Non hai un account) */
+        .title-custom {
+            color: black;
+            font-size: 30px;
+        }
+
+        /* Label del form (Email, Password) */
+        .label-custom {
+            width: 30%;
+        }
+
+
+        .input-custom {
+            width: 65%;
+            border: 2px solid #6B0808;
+            border-radius: 20px;
+            padding-left: 15px;
+        }
+
+        .btn-login {
+            width: 35%;
+        }
+
+        .btn-large {
+            width: 65%;
+        }
+
+        .btn{
+            background-color: #6B0808;
+            border-radius: 20px;
         }
