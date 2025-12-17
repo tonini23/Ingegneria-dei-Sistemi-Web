@@ -87,23 +87,55 @@
             width: 15%;
         }
 
-        .results-table {
-            background-color: #6B0808;
-            border-radius: 20px;
+        td {
+            padding: 5px;
         }
 
-        .table-row-custom {
-            background-color: #6B0808;
-            border-color: #ffffff;
-            border-radius: 20px;
-        }
+        /* --- Tabella Unibo "Light Version" (Consigliata per Usabilità) --- */
 
-        .table-head-cell {
-            background-color: #6B0808;
-            border-bottom: 2px solid #000000;
-            border-right: 2px solid #000000;
-            border-radius: 20px;
-        }
+.table-unibo {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: white; /* Sfondo base bianco */
+    border: 2px solid #6B0808; /* Bordo esterno rosso per il branding */
+}
+
+/* Intestazione: Manteniamo il Rosso per identità */
+.table-unibo thead th {
+    background-color: #CE1126; /* Rosso Unibo */
+    color: white;
+    padding: 15px;
+    border-bottom: 3px solid #6B0808; /* Stacco forte tra intestazione e dati */
+}
+
+/* Corpo: Sfondo chiaro per leggibilità */
+.table-unibo tbody td {
+    background-color: #ffffff; /* Bianco pulito */
+    color: #000000; /* Testo nero per massimo contrasto */
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6; /* Riga grigia sottile standard */
+    font-weight: 500; /* Leggermente più spesso per leggibilità */
+}
+
+/* Righe alternate (Zebra Striping) - Un tocco di rosso chiarissimo */
+.table-unibo tbody tr:nth-child(even) td {
+    background-color: #fff5f5; /* Un rosa pallidissimo, quasi bianco */
+}
+
+/* Hover: Feedback rosso chiaro */
+.table-unibo tbody tr:hover td {
+    background-color: #ffe0e0; /* Rosso chiaro al passaggio del mouse */
+    cursor: pointer;
+}
+
+/* Gestione bordi arrotondati e ultimi elementi */
+.table-unibo tbody tr:last-child td {
+    border-bottom: none;
+}
   
 
     
