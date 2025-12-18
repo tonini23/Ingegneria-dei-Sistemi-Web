@@ -91,52 +91,46 @@
             padding: 5px;
         }
 
-        /* --- Tabella Unibo "Light Version" (Consigliata per Usabilità) --- */
+       
 
-.table-unibo {
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: white; /* Sfondo base bianco */
-    border: 2px solid #6B0808; /* Bordo esterno rosso per il branding */
-}
+    .table-unibo {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        background-color: white; 
+        border: 2px solid #6B0808; 
+    }
 
-/* Intestazione: Manteniamo il Rosso per identità */
-.table-unibo thead th {
-    background-color: #CE1126; /* Rosso Unibo */
-    color: white;
-    padding: 15px;
-    border-bottom: 3px solid #6B0808; /* Stacco forte tra intestazione e dati */
-}
+    .table-unibo thead th {
+        background-color: #CE1126; 
+        color: white;
+        padding: 15px;
+        border-bottom: 3px solid #6B0808; 
+    }
 
-/* Corpo: Sfondo chiaro per leggibilità */
-.table-unibo tbody td {
-    background-color: #ffffff; /* Bianco pulito */
-    color: #000000; /* Testo nero per massimo contrasto */
-    padding: 12px;
-    border-bottom: 1px solid #dee2e6; /* Riga grigia sottile standard */
-    font-weight: 500; /* Leggermente più spesso per leggibilità */
-}
+    .table-unibo tbody td {
+        background-color: #ffffff;
+        color: #000000; 
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6; 
+        font-weight: 500; 
+    }
+        
+    .table-unibo tbody tr:nth-child(even) td {
+        background-color: #fff5f5;
+    }
 
-/* Righe alternate (Zebra Striping) - Un tocco di rosso chiarissimo */
-.table-unibo tbody tr:nth-child(even) td {
-    background-color: #fff5f5; /* Un rosa pallidissimo, quasi bianco */
-}
+    .table-unibo tbody tr:hover td {
+        background-color: #ffe0e0; 
+        cursor: pointer;
+    }
 
-/* Hover: Feedback rosso chiaro */
-.table-unibo tbody tr:hover td {
-    background-color: #ffe0e0; /* Rosso chiaro al passaggio del mouse */
-    cursor: pointer;
-}
-
-/* Gestione bordi arrotondati e ultimi elementi */
-.table-unibo tbody tr:last-child td {
-    border-bottom: none;
-}
-  
-
+    .table-unibo tbody tr:last-child td {
+        border-bottom: none;
+    }
     
-     
+
+      
