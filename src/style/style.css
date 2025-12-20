@@ -131,6 +131,77 @@
     .table-unibo tbody tr:last-child td {
         border-bottom: none;
     }
+
+    .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .profile-input {
+            background-color: white;
+            border: none;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+            width: 100%;
+            padding: 5px;
+        }
+
+        .section-header {
+            background-color: #6B0808;
+            border-radius: 20px 20px 0 0; /* Arrotondato solo sopra */
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-custom thead th {
+            background-color: #CE1126; /* Rosso Unibo */
+            color: white;
+            border: 1px solid white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table-custom tbody td {
+            background-color: #6B0808;
+            color: white;
+            border: 1px solid white;
+            height: 40px; /* Altezza fissa per righe vuote */
+        }
+
+        .custom-check {
+            width: 25px;
+            height: 25px;
+            background-color: #6B0808;
+            border: 2px solid white;
+            margin-right: 10px;
+            accent-color: #6B0808;
+        }
+
+        .btn-blue {
+            background-color: #0000FF !important; /* Blu elettrico come da foto */
+            color: white;
+            border-radius: 20px;
+            border: none;
+        }
+        
+        .btn-red {
+            background-color: #FF0000 !important;
+            color: white;
+            border-radius: 20px;
+            border: none;
+        }
+
     
 
       

@@ -16,94 +16,6 @@
 
     <link rel="stylesheet" href="src/style/style.css">
 
-    <style>
-       
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid white;
-        }
-
-        /* Input nel profilo (bianchi con testo nero) */
-        .profile-input {
-            background-color: white;
-            border: none;
-            border-radius: 20px;
-            text-align: center;
-            font-weight: bold;
-            width: 100%;
-            padding: 5px;
-        }
-
-        /* Titolo sezione Prenotazioni */
-        .section-header {
-            background-color: #6B0808;
-            border-radius: 20px 20px 0 0; /* Arrotondato solo sopra */
-            padding: 10px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        /* Tabella personalizzata */
-        .table-custom {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* Intestazione Tabella (Rosso chiaro) */
-        .table-custom thead th {
-            background-color: #CE1126; /* Rosso Unibo */
-            color: white;
-            border: 1px solid white;
-            padding: 10px;
-            text-align: center;
-        }
-
-        /* Corpo Tabella (Rosso scuro) */
-        .table-custom tbody td {
-            background-color: #6B0808;
-            color: white;
-            border: 1px solid white;
-            height: 40px; /* Altezza fissa per righe vuote */
-        }
-
-        /* Checkbox personalizzato */
-        .custom-check {
-            width: 25px;
-            height: 25px;
-            background-color: #6B0808;
-            border: 2px solid white;
-            margin-right: 10px;
-            accent-color: #6B0808;
-        }
-
-        /* Bottone Blu specifico */
-        .btn-blue {
-            background-color: #0000FF !important; /* Blu elettrico come da foto */
-            color: white;
-            border-radius: 20px;
-            border: none;
-        }
-        
-        /* Bottone Rosso (per uniformità con Elimina) */
-        .btn-red {
-            background-color: #FF0000 !important;
-            color: white;
-            border-radius: 20px;
-            border: none;
-        }
-
-        /* Wrapper per allineare checkbox e tabella */
-        .table-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px;
-        }
-    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -199,11 +111,11 @@
                         Prenotazioni
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table-custom">
+                    <div class="t">
+                        <table class="table-unibo">
                             <thead>
                                 <tr>
-                                    <th style="background-color: #CE1126; border: none; width: 40px;"></th>
+                                    <th ></th>
                                     <th>Data</th>
                                     <th>Località</th>
                                     <th>Materia</th>
@@ -212,19 +124,19 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="background-color: transparent; border: none; vertical-align: middle;">
+                                    <td>
+                                        <input type="checkbox" class="custom-check">
+                                    </td>
+                                    <td>provaa</td><td></td><td></td><td></td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <input type="checkbox" class="custom-check">
                                     </td>
                                     <td></td><td></td><td></td><td></td>
                                 </tr>
                                 <tr>
-                                    <td style="background-color: transparent; border: none; vertical-align: middle;">
-                                        <input type="checkbox" class="custom-check">
-                                    </td>
-                                    <td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td style="background-color: transparent; border: none; vertical-align: middle;">
+                                    <td>
                                         <input type="checkbox" class="custom-check">
                                     </td>
                                     <td></td><td></td><td></td><td></td>
