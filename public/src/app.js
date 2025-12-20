@@ -1,8 +1,11 @@
 import Home from './pagine/home.js';
+import Login from './pagine/login.js';
 
 
 const routes = [
     { path: '/', component: Home },
+    { path: '/login', component: Login },
+
 ];
 
 const router = VueRouter.createRouter({
