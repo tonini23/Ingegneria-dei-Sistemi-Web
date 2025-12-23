@@ -1,56 +1,6 @@
-<!DOCTYPE html>
-<html lang="it">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
-    <meta name="theme-color" content="#CE1126">
-    <meta name="description" content="Piattaforma di tutoring per studenti dell'Università di Bologna.">
-    <meta name="author" content="Andrea Tonini, Lisandro Antonioli">
-    <title>Unibo tutoring - Profilo</title>
-    <link rel="icon" href="media/favicon.png" type="image/x-icon">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" href="src/style/style.css">
-
-</head>
-
-<body class="d-flex flex-column min-vh-100">
-    <div id="app">
-        <header>
-            <div class="text-center pt-4 pb-2 ">
-                <h1 class="m-0 text-white">Unibo tutoring</h1>
-            </div>
-            <nav class="navbar pb-4">
-                <div class="container-fluid position-relative d-flex align-items-center">
-                    <button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-brand position-absolute top-50 start-50 translate-middle" href="#">
-                        <img src="src/img/download (4).png" alt="Unibo Logo">
-                    </div>
-                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title text-white">Menu</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body">
-                            <ul class="navbar-nav p-3 rounded navbar-dark">
-                                <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Registrati</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Profilo</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
+const Profilo = {
+    template:
+        `
 
         <main class="container mt-4 mb-5">
             
@@ -171,13 +121,8 @@
 
         </main>
 
-        <footer class="py-3 mt-auto text-white footer">
-            <p>Progetto svolto da:</p>
-            <p class="text-center">Andrea Tonini e Lisandro Antonioli - A.A. 2025-2026</p>
-        </footer>
+    `
+    
+};
 
-        <script type="module" src="src/app.js"></script>
-    </div>
-</body>
-
-</html>
+export default Profilo;
