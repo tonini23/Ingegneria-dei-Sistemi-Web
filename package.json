@@ -1,0 +1,19 @@
+{
+  "name": "ingegneria-dei-sistemi-web",
+  "version": "1.0.0",
+  "description": "Progetto per l'esame di Ingegneria dei Sistemi Web del corso LP tecnologie dei sistemi informatici svolto da Andrea Tonini e Lisandro Antonioli nell'anno accademico 2025-2026.",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonini23/Ingegneria-dei-Sistemi-Web.git"
+  },
+  "author": "Andrea Tonini Lisandro Antonioli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonini23/Ingegneria-dei-Sistemi-Web/issues"
+  },
+  "homepage": "https://github.com/tonini23/Ingegneria-dei-Sistemi-Web#readme"
+}
