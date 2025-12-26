@@ -7,16 +7,16 @@ const Login = {
                 <h1 class="title-custom"> Accedi </h1>
             </div>
 
-            <form action="" class="align-items-center text-center mb-4">
+            <form action="/" class="align-items-center text-center mb-4">
 
                 <div class="mb-4">
                     <label for="email" class="fw-bold label-custom">Email</label>
-                    <input type="email" name="email" class="input-custom">
+                    <input type="email" name="email" class="input-custom" required>
                 </div>
 
                 <div class="mb-4">
                     <label for="password" class="fw-bold label-custom">Password</label>
-                    <input type="password" name="password" class="input-custom">
+                    <input type="password" name="password" class="input-custom" required>
                 </div>
 
                 <div class="align-items-end text-end mb-3 me-4">

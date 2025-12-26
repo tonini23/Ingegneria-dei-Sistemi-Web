@@ -53,11 +53,13 @@ const Studente = {
                         </select>
                     </div>
                 </div>
-                <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search">
-                    Cerca
-                </button>
+               
             </div>
-        </div>
+             <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search">
+                    Cerca
+            </button>
+        
+    </form>    
     </main>
 
 `
