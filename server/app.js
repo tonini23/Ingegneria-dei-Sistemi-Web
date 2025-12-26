@@ -1,14 +1,14 @@
 import express from 'express';
 const app = express();
-const port = 3000;
-//import data from './colors.json' with { type: "json" };
+const port = 3000;  
+//import Home from '../public/src/pagine/home';
 
-/*
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
-*/
+
+
 app.get('/', function (req, res) {
-    res.send('Hello World!');	
+    res.send('Ciao!');
 });
 
 app.use(function(req,res,next){
