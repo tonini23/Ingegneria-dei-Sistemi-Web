@@ -30,9 +30,13 @@ const Login = {
                     <h2 class="title-custom"> Non hai un account? </h2>
                 </div>
 
-                
-                <button class="col-4 btn btn-lg btn-danger p-3 shadow-lg mb-3 btn-large">Registrati</button>
-                <button class="col-4 btn btn-lg btn-danger p-3 shadow-lg mb-5 btn-large">Entra come guest</button>
+                <router-link to="/registrazione">
+                    <button class="col-4 btn btn-lg btn-danger p-3 shadow-lg mb-3 btn-large">Registrati</button>
+                </router-link>
+
+                <router-link to="/studente">
+                    <button class="col-4 btn btn-lg btn-danger p-3 shadow-lg mb-5 btn-large">Entra come guest</button>
+                </router-link>
             </div>
         </main>
 
