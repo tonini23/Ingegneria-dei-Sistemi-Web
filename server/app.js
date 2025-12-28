@@ -3,12 +3,15 @@ const app = express();
 const port = 3000;  
 //import Home from '../public/src/pagine/home';
 
+import { profiloRouter } from './routes/profiloRouter.js';
+
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 
 
 app.get('/', function (req, res) {
     res.send('Ciao!');
+    console.log('Richiesta ricevuta alla radice del sito');
 });
 
 app.use(function(req,res,next){
