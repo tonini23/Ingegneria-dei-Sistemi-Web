@@ -1,3 +1,5 @@
+//import { allPrenotazioniUtente } from "../../../server/controllers/profiloController";
+
 const Profilo = {
     template:
         `
@@ -73,35 +75,14 @@ const Profilo = {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr v-for="prenotazione in prenotazioni" :key="prenotazione.id">
                                     <td>
                                         <input type="checkbox" class="custom-check">
                                     </td>
-                                    <td>provaa</td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" class="custom-check">
-                                    </td>
-                                    <td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" class="custom-check">
-                                    </td>
-                                    <td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td style="background-color: transparent; border: none; vertical-align: middle;">
-                                        <input type="checkbox" class="custom-check">
-                                    </td>
-                                    <td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td style="background-color: transparent; border: none; vertical-align: middle;">
-                                        <input type="checkbox" class="custom-check">
-                                    </td>
-                                    <td></td><td></td><td></td><td></td>
+                                    <td>{{ prenotazione.data }}</td>
+                                    <td>{{ prenotazione.localita }}</td>
+                                    <td>{{ prenotazione.materia }}</td>
+                                    <td>{{ prenotazione.studente }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -122,7 +103,18 @@ const Profilo = {
         </main>
 
     `
-    
+    ,
+    methods: {
+        getAllPrenotazioni: function() {
+            //axios.get('/profilo')
+        },
+        deletePrenotazione: function() {
+            //logica per eliminare le prenotazioni selezionate
+        },
+        updatePrenotazione: function() {
+            //logica per modificare le prenotazioni selezionate
+        }
+    }
 };
 
 export default Profilo;
