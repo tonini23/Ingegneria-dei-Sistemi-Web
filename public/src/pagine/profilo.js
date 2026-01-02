@@ -1,5 +1,3 @@
-//import { allPrenotazioniUtente } from "../../../server/controllers/profiloController";
-
 const Profilo = {
     template:
         `
@@ -63,25 +61,27 @@ const Profilo = {
                         Prenotazioni
                     </div>
 
-                    <div class="t">
+                    <div class="">
                         <table class="table-unibo">
                             <thead>
                                 <tr>
                                     <th ></th>
                                     <th>Data</th>
+                                    <th>Ora</th>
                                     <th>Località</th>
                                     <th>Materia</th>
                                     <th>Studente</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="prenotazione in prenotazioni" :key="prenotazione.id">
+                                <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                                     <td>
                                         <input type="checkbox" class="custom-check">
                                     </td>
-                                    <td>{{ prenotazione.data }}</td>
-                                    <td>{{ prenotazione.localita }}</td>
-                                    <td>{{ prenotazione.materia }}</td>
+                                    <td>{{ formattaData(prenotazione.Data) }}</td>
+                                    <td>{{ prenotazione.Ora }}</td>
+                                    <td>{{ prenotazione.Localita }}</td>
+                                    <td>{{ prenotazione.Materia }}</td>
                                     <td>{{ prenotazione.studente }}</td>
                                 </tr>
                             </tbody>
@@ -89,10 +89,10 @@ const Profilo = {
                     </div>
 
                     <div class="row justify-content-center mt-3 gap-4">
-                        <button class="col-4 btn btn-blue shadow fw-bold py-2">
+                        <button class="col-4 btn btn-blue shadow fw-bold py-2" @click="updatePrenotazione">
                             Modifica
                         </button>
-                        <button class="col-4 btn btn-red shadow fw-bold py-2">
+                        <button class="col-4 btn btn-red shadow fw-bold py-2" @click="deletePrenotazione">
                             Elimina
                         </button>
                     </div>
@@ -104,16 +104,46 @@ const Profilo = {
 
     `
     ,
+        data() {
+        return {
+            prenotazioni: []
+    }
+    },
     methods: {
-        getAllPrenotazioni: function() {
-            //axios.get('/profilo')
+        getPrenotazioni: function() {
+            axios.get('api/prenotazioni')
+             .then(response => {
+                console.log("Dati ricevuti:", response.data); // Debug per vedere cosa arriva
+                this.prenotazioni = response.data;
+             })
+             .catch(error => {
+                console.error("Errore caricamento:", error);
+             });
         },
         deletePrenotazione: function() {
             //logica per eliminare le prenotazioni selezionate
+            console.log("Elimina prenotazione");
         },
         updatePrenotazione: function() {
             //logica per modificare le prenotazioni selezionate
+            console.log("Modifica prenotazione");
+        },
+        formattaData: function(dataString) {
+            if (!dataString) return ""; 
+            
+            const data = new Date(dataString); 
+
+            
+            // padStart(2, '0') serve ad aggiungere lo zero davanti (es. "5" diventa "05")
+            const giorno = String(data.getDate()).padStart(2, '0');
+            const mese = String(data.getMonth() + 1).padStart(2, '0'); // I mesi partono da 0 in JS
+            const anno = data.getFullYear();
+
+            return `${giorno}-${mese}-${anno}`;
         }
+    },
+    mounted() {
+        this.getPrenotazioni();
     }
 };
 

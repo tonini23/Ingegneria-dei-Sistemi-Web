@@ -4,6 +4,7 @@ import * as profiloController from '../controllers/profiloController.js';
 
 const router = express.Router();
 
-//router.get('/profilo', profiloController.allPrenotazioniUtente);
+router.get('/api/prenotazioni', profiloController.allPrenotazioni);
+
 
 export { router as profiloRouter };

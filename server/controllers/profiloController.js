@@ -1,7 +1,7 @@
-/*import { connection } from "../utils/db.js";
+import { connection } from "../utils/db.js";
 
-async function allPrenotazioniUtente(req, res) {
-connection.query('SELECT * FROM prenotazioni WHERE id_utente = ?',
+async function allPrenotazioni(req, res) {
+connection.query('SELECT * FROM prenotazioni WHERE Id = 1',
     [], 
     function (error, results, fields) {
     if (error) {
@@ -13,4 +13,4 @@ connection.query('SELECT * FROM prenotazioni WHERE id_utente = ?',
 )
 };
 
-export { allPrenotazioniUtente }; */
+export { allPrenotazioni }; 
