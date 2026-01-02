@@ -110,7 +110,7 @@ const Studente = {
 
 <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search"
   style="background-color: #6B0808; border-radius: 20px; color: white; display: block; margin-left: auto; margin-right: auto;">
-  Cerca
+  Conferma
 </button>
 
 `
