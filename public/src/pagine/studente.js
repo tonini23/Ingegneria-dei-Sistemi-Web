@@ -89,19 +89,12 @@ const Studente = {
                 <th>Tutor</th>
             </tr>
         </thead>
-        <tbody> <tr>
-                <td>10/10/2024</td>
-                <td>14:00</td>
-                <td>Bologna</td>
-                <td>Ingegneria dei Sistemi Web</td>
-                <td>Mario Rossi</td>
-            </tr>
-            <tr>
-                <td>12/10/2024</td>
-                <td>16:00</td>
-                <td>Online</td>
-                <td>Basi di Dati</td>
-                <td>Luigi Bianchi</td>
+        <tbody> <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+                <td>{{ prenotazione.Data }}</td>
+                <td>{{ prenotazione.Ora }}</td>
+                <td>{{ prenotazione.Luogo }}</td>
+                <td>{{ prenotazione.Materia }}</td>
+                <td>{{ prenotazione.Tutor }}</td>
             </tr>
         </tbody>
     </table>

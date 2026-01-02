@@ -204,7 +204,9 @@
             border: none;
         }
 
-        /* RESET LINK SOLO NAVBAR */
+        
+        /* STILE VOCI NAVBAR */
+
         header .navbar a,
         header .navbar a:visited,
         header .navbar a:hover,
@@ -218,7 +220,7 @@
             font-style: normal !important;
         }
 
-        /* STILE VOCI NAVBAR */
+
         .navbar .nav-link {
             font-size: 32px !important;
             font-weight: 600;
