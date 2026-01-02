@@ -75,12 +75,12 @@ const Studente = {
                 </div>
                
             </div>
-             <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search">
+            <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search">
                     Cerca
             </button>
         
     </form>    
-      <div class="mb-5 table-responsive"> <table class="table-unibo">
+      <div class="mb-3 table-responsive"> <table class="table-unibo">
         <thead> <tr>
                 <th>Data</th>
                 <th>Ora</th>
@@ -107,6 +107,11 @@ const Studente = {
     </table>
 </div>
 </main>
+
+<button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search"
+  style="background-color: #6B0808; border-radius: 20px; color: white; display: block; margin-left: auto; margin-right: auto;">
+  Cerca
+</button>
 
 `
     
