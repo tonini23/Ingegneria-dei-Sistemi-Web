@@ -105,7 +105,8 @@ const Studente = {
             </tr>
         </tbody>
     </table>
-    </main>
+</div>
+</main>
 
 `
     

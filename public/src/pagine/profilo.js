@@ -55,7 +55,7 @@ const Profilo = {
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-12 col-md-10 col-lg-8">
+                <div class="col-12 col-md-12 col-lg-12">
                     
                     <div class="section-header text-center mb-0 border border-white border-bottom-0">
                         Prenotazioni
@@ -79,7 +79,7 @@ const Profilo = {
                                         <input type="checkbox" class="custom-check">
                                     </td>
                                     <td>{{ formattaData(prenotazione.Data) }}</td>
-                                    <td>{{ prenotazione.Ora }}</td>
+                                    <td>{{ formattaOra(prenotazione.Ora) }}</td>
                                     <td>{{ prenotazione.Localita }}</td>
                                     <td>{{ prenotazione.Materia }}</td>
                                     <td>{{ prenotazione.studente }}</td>
@@ -140,6 +140,10 @@ const Profilo = {
             const anno = data.getFullYear();
 
             return `${giorno}-${mese}-${anno}`;
+        },
+        formattaOra: function(orario) {
+            if (!orario) return '-';
+            return orario.slice(0, 5);
         }
     },
     mounted() {
