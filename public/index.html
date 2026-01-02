@@ -47,48 +47,25 @@
                 </button>
               </div>
               <div class="offcanvas-body">
-                <ul class="navbar-nav p-3 rounded navbar-dark">
+                <ul class="navbar-nav p-3 rounded">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">
-                      Home
-                    </a>
+                    <router-link to="/" class="nav-link active">Home</router-link>
                   </li>
-                  <router-link to="/login">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        Login
-                      </a>
-                    </li>
-                  </ul>
-                  </router-link>
-                  <router-link to="/registrazione">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        Registrati
-                      </a>
-                    </li>
-                  </router-link>
-                  <router-link to="/profilo">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        Profilo
-                      </a>
-                    </li>
-                  </router-link>
-                  <router-link to="/studente">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        Studente
-                      </a>
-                    </li>
-                  </router-link>
-                  <router-link to="/tutor">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        Tutor
-                      </a>
-                    </li>
-                  </router-link>
+                  <li class="nav-item">
+                    <router-link to="/login" class="nav-link">Login</router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link to="/registrazione" class="nav-link">Registrati</router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link to="/profilo" class="nav-link">Profilo</router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link to="/studente" class="nav-link">Studente</router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link to="/tutor" class="nav-link">Tutor</router-link>
+                  </li>
                 </ul>
               </div>
             </div>

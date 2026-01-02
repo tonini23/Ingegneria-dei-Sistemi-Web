@@ -204,6 +204,27 @@
             border: none;
         }
 
-    
+        /* RESET LINK SOLO NAVBAR */
+        header .navbar a,
+        header .navbar a:visited,
+        header .navbar a:hover,
+        header .navbar a:active,
+        #offcanvasNavbar .navbar-nav a,
+        #offcanvasNavbar .navbar-nav a:visited,
+        #offcanvasNavbar .navbar-nav a:hover,
+        #offcanvasNavbar .navbar-nav a:active {
+            color: white !important;
+            text-decoration: none !important;
+            font-style: normal !important;
+        }
 
-      
+        /* STILE VOCI NAVBAR */
+        .navbar .nav-link {
+            font-size: 32px !important;
+            font-weight: 600;
+            text-align: center;
+            font-style: normal !important;
+        }
+            
+
+            
