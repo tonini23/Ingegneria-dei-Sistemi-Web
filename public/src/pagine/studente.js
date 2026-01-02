@@ -39,6 +39,26 @@ const Studente = {
                 <div class="row">
                     <div class="pt-1 pb-2 mt-1">
                         <select name="materia" class="mt-1 input-base input-wide">
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                             <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                             <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                             <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
+                            <option>123131</option>
                         </select>
                     </div>
                 </div>
