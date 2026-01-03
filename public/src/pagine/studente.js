@@ -99,12 +99,13 @@ const Studente = {
         </tbody>
     </table>
 </div>
+
+    <button class="btn btn-danger shadow-lg fw-bold p-1 mb-2" style="background-color:#6B0808; border-radius:20px; color:white; display:block; margin-left:auto; margin-right:auto;">
+        Conferma
+    </button>
+
 </main>
 
-<button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search mb-2 "
-  style="background-color: #6B0808; border-radius: 20px; color: white; display: block; margin-left: auto; margin-right: auto;">
-  Conferma
-</button>
 
 `
 

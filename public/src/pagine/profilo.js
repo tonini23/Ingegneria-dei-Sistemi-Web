@@ -21,22 +21,22 @@ const Profilo = {
                                 
                                 <div class="d-flex align-items-center mb-2">
                                     <label class="ms-0 w-25 text-start" >Nome</label>
-                                    <input type="text" class="profile-input" value="Marco" readonly>
+                                    <input type="text" class="profile-input" value="Marco">
                                 </div>
 
                                 <div class="d-flex align-items-center mb-2">
                                     <label class="w-25 text-start">Cognome</label>
-                                    <input type="text" class="profile-input" value="Rossi" readonly>
+                                    <input type="text" class="profile-input" value="Rossi">
                                 </div>
 
                                 <div class="d-flex align-items-center mb-2">
                                     <label class="w-25 text-start">Email</label>
-                                    <input type="text" class="profile-input" value="marco.rossi@studio.unibo.it" readonly style="font-size: 0.8rem;">
+                                    <input type="text" class="profile-input" value="marco.rossi@studio.unibo.it" style="font-size: 0.8rem;">
                                 </div>
 
                                 <div class="d-flex align-items-center">
                                     <label class="w-25 text-start">Matricola</label>
-                                    <input type="text" class="profile-input" value="1234567890" readonly>
+                                    <input type="text" class="profile-input" value="1234567890">
                                 </div>
 
                             </div>
@@ -55,7 +55,7 @@ const Profilo = {
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-12 col-md-12 col-lg-12">
+                <div class="col-12 col-md-10 col-lg-8">
                     
                     <div class="section-header text-center mb-0 border border-white border-bottom-0">
                         Prenotazioni
@@ -79,7 +79,7 @@ const Profilo = {
                                         <input type="checkbox" class="custom-check">
                                     </td>
                                     <td>{{ formattaData(prenotazione.Data) }}</td>
-                                    <td>{{ formattaOra(prenotazione.Ora) }}</td>
+                                    <td>{{ prenotazione.Ora }}</td>
                                     <td>{{ prenotazione.Localita }}</td>
                                     <td>{{ prenotazione.Materia }}</td>
                                     <td>{{ prenotazione.studente }}</td>
@@ -140,10 +140,6 @@ const Profilo = {
             const anno = data.getFullYear();
 
             return `${giorno}-${mese}-${anno}`;
-        },
-        formattaOra: function(orario) {
-            if (!orario) return '-';
-            return orario.slice(0, 5);
         }
     },
     mounted() {
