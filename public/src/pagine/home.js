@@ -8,7 +8,7 @@ const Home = {
           </div>
           <router-link to="/tutor">
             <button class="col-6 btn btn-danger btn-lg shadow-lg p-4 mb-5 btn-action">
-              Vorrei dare una mano
+              Vorrei dare<br>una mano
             </button>
           </router-link>
           <div class="col-3">
@@ -19,7 +19,7 @@ const Home = {
           </div>
           <router-link to="/studente">
             <button class="col-6 btn btn-danger btn-lg shadow-lg p-4 mb-5 btn-action">
-              Vorrei ricevere aiuto
+              Vorrei<br>ricevere aiuto
             </button>
           </router-link>
           <div class="col-3">
@@ -30,7 +30,7 @@ const Home = {
           </div>
           <router-link to="/studente">
             <button class="col-6 btn btn-danger btn-lg shadow-lg p-4 mb-5 btn-action">
-              Entra come guest
+              Entra<br>come guest
             </button>
           </router-link>
           <div class="col-3">

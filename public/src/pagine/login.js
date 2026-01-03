@@ -19,9 +19,11 @@ const Login = {
                     <input type="password" name="password" class="input-custom" required>
                 </div>
 
-                <div class="align-items-end text-end mb-3 me-4">
-                    <a href="" class="text-decoration-none fst-italic">Password Dimenticata</a>
-                </div>
+                <router-link to="/pass_dimenticata">
+                    <div class="align-items-end text-end mb-3 me-4">
+                        <a href="" class="text-decoration-none fst-italic">Password Dimenticata</a>
+                    </div>
+                </router-link>
                     <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-confirm">Accedi</button>
             </form>
 

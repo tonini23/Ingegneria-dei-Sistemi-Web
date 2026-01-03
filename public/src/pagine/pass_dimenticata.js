@@ -40,7 +40,7 @@ const PassDimenticata = {
         <form action="" class="align-items-center text-center mb-3">
           <div class="mb-3 d-flex justify-content-center align-items-center">
             <label for="newpassword" class="fw-bold label-custom">
-              Nuova Password
+              Nuova<br>Password
             </label>
             <input type="text" class="input-custom" name="newpassword">
           </div>
@@ -49,7 +49,7 @@ const PassDimenticata = {
         <form action="" class="align-items-center text-center mb-2">
           <div class="mb-2 d-flex justify-content-center align-items-center">
             <label for="confermapassword" class="fw-bold label-custom">
-              Conferma Password
+              Conferma<br>Password
             </label>
             <input type="text" class="input-custom" name="confermapassword">
           </div>
