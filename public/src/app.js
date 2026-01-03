@@ -4,6 +4,7 @@ import Registrazione from './pagine/registrazione.js';
 import Profilo from './pagine/profilo.js';  
 import Studente from './pagine/studente.js';
 import Tutor from './pagine/tutor.js';
+import PassDimenticata from './pagine/pass_dimenticata.js';
 
 
 const routes = [
@@ -12,7 +13,8 @@ const routes = [
     { path: '/registrazione', component: Registrazione },
     { path: '/profilo', component: Profilo },
     { path: '/studente', component: Studente },
-    { path: '/tutor', component: Tutor }
+    { path: '/tutor', component: Tutor },
+    { path: '/pass_dimenticata', component: PassDimenticata }
 ];
 
 const router = VueRouter.createRouter({
