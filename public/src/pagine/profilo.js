@@ -45,12 +45,18 @@ const Profilo = {
                 </div>
             </div>
 
-            <div class="row justify-content-center mb-5 gap-3">
-                <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; border-radius: 20px;">
+            <div class="row justify-content-center mb-3 gap-3">
+                <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 40%; border-radius: 20px;">
                     Modifica Dati
                 </button>
-                <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; border-radius: 20px;">
+                <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 40%; border-radius: 20px;">
                     Modifica Immagine
+                </button>
+            </div>
+
+            <div class="row justify-content-center mb-5 gap-3">
+                <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
+                    Logout
                 </button>
             </div>
 

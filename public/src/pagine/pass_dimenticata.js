@@ -18,7 +18,7 @@ const PassDimenticata = {
           </div>
         </form>
 
-        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-5" style="background-color:#6B0808; border-radius:20px; color:white; display:block; margin-left:auto; margin-right:auto;">
+        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-5" style="background-color:#6B0808; width:50%; border-radius:20px; color:white; display:block; margin-left:auto; margin-right:auto;">
           Invia codice
         </button>
 
@@ -32,30 +32,27 @@ const PassDimenticata = {
           </div>
         </form>
 
-        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-5" style="background-color:#6B0808; border-radius:20px; color:white; display:block; margin-left:auto; margin-right:auto;">
+        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-5" style="background-color:#6B0808; width:50%; border-radius:20px; color:white; display:block; margin-left:auto; margin-right:auto;">
           Conferma codice
         </button>
 
-
-        <form action="" class="align-items-center text-center mb-3">
+        <form action="" class="align-items-center text-center mb-2">
           <div class="mb-3 d-flex justify-content-center align-items-center">
             <label for="newpassword" class="fw-bold label-custom">
               Nuova<br>Password
             </label>
-            <input type="text" class="input-custom" name="newpassword">
+            <input type="password" class="input-custom" name="newpassword">
           </div>
-        </form>
 
-        <form action="" class="align-items-center text-center mb-2">
           <div class="mb-2 d-flex justify-content-center align-items-center">
             <label for="confermapassword" class="fw-bold label-custom">
               Conferma<br>Password
             </label>
-            <input type="text" class="input-custom" name="confermapassword">
+            <input type="password" class="input-custom" name="confermapassword">
           </div>
         </form>
 
-        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-5" style="background-color:#6B0808; border-radius:20px; color:white; display:block; margin-left:auto; margin-right:auto;">
+        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-5" style="background-color:#6B0808; border-radius:20px; width:50%; color:white; display:block; margin-left:auto; margin-right:auto;">
           Conferma
         </button>
 
