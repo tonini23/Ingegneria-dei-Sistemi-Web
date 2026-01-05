@@ -82,6 +82,7 @@ const Studente = {
     </form>    
       <div class="mb-3 table-responsive"> <table class="table-unibo">
         <thead> <tr>
+                <th></th>
                 <th>Data</th>
                 <th>Ora</th>
                 <th>Luogo</th>
@@ -89,12 +90,33 @@ const Studente = {
                 <th>Tutor</th>
             </tr>
         </thead>
-        <tbody> <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+        <tbody> <!-- <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+                <td>
+                <input type="radio" class="custom-check">
+                </td>
                 <td>{{ prenotazione.Data }}</td>
                 <td>{{ prenotazione.Ora }}</td>
                 <td>{{ prenotazione.Luogo }}</td>
                 <td>{{ prenotazione.Materia }}</td>
                 <td>{{ prenotazione.Tutor }}</td>
+            </tr> -->
+            <tr> <td>
+                <input type="radio" class="custom-check">
+                </td>
+                <td>12-11-2024</td>
+                <td>14:00</td>
+                <td>Biblioteca centrale</td>
+                <td>Analisi Matematica</td>
+                <td>Mario Rossi</td>
+            </tr>
+            <tr> <td>
+                <input type="radio" class="custom-check">
+                </td>
+                <td>12-11-2024</td>
+                <td>14:00</td>
+                <td>Biblioteca centrale</td>
+                <td>Analisi Matematica</td>
+                <td>Mario Rossi</td>
             </tr>
         </tbody>
     </table>
