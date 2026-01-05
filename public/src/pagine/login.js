@@ -24,7 +24,12 @@ const Login = {
                         <a href="" class="text-decoration-none fst-italic">Password Dimenticata</a>
                     </div>
                 </router-link>
-                    <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-confirm">Accedi</button>
+
+                <div class="row justify-content-center mb-5 gap-3">
+                    <button class="col-5 btn text-white shadow fw-bold py-1" style="background-color: #6B0808; width: 40%; border-radius: 20px;">
+                        Accedi
+                    </button>
+                </div>
             </form>
 
             <div class="align-items-center text-center">

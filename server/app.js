@@ -2,7 +2,7 @@ import express from 'express';
 import { profiloRouter } from './routes/profiloRouter.js';
 
 const app = express();
-const port = 3000;  
+const port = 3001;  //sarebbe stata porta 3000, ma a me quella porta sul pc mi da problemi
 
 
 app.use(express.static('public'));
