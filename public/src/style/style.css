@@ -31,6 +31,36 @@
             display: none !important;
         }
 
+        /* Quando lo schermo è grande (Desktop), annulla lo stile "cassetto" dell'offcanvas */
+@media (min-width: 992px) {
+    .offcanvas {
+        position: static !important;
+        visibility: visible !important;
+        transform: none !important;
+        width: auto !important;
+        background-color: transparent !important; /* Toglie lo sfondo rosso del cassetto su desktop */
+        border: none !important;
+        height: auto !important;
+        flex-grow: 1;
+    }
+    
+    .offcanvas-header {
+        display: none; /* Nasconde la "X" e il titolo "Menu" su desktop */
+    }
+    
+    .offcanvas-body {
+        display: flex;
+        justify-content: flex-end; /* Allinea i link a destra */
+        padding: 0;
+        overflow: visible;
+    }
+
+    /* Riduciamo leggermente il font su desktop per eleganza */
+    .navbar-nav {
+        font-size: 1.2rem !important; 
+    }
+}
+        
         .title-custom {
             color: black;
             font-size: 30px;

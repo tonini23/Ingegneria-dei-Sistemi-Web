@@ -20,55 +20,50 @@
   
   <body class="d-flex flex-column ">
     <div id="app">
-      <header>
-        <div class="text-center pt-4 pb-2 ">
-          <h1 class="m-0 text-white">
-            StudiBO
-          </h1>
-        </div>
-        <nav class="navbar pb-4">
-          <div class="container-fluid position-relative d-flex align-items-center">
-            <button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-              <span class="navbar-toggler-icon">
-              </span>
+<header>
+    <div class="d-flex justify-content-center align-items-center pt-4 pb-2">
+        <h1 class="m-0 text-white me-3">StudiBO</h1>
+        <img src="src/img/download (4).png" alt="Unibo Logo" style="height: 60px;">
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark pb-3">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="offcanvas" 
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-brand position-absolute top-50 start-50 translate-middle"
-            href="#">
-              <img src="src/img/download (4).png" alt="Unibo Logo">
+
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" 
+                 style="background-color: #CE1126;">
+                
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title text-white">Menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <div class="offcanvas-body w-100">
+                    
+                    <ul class="navbar-nav w-100 justify-content-between mb-2 mb-lg-0" style="font-size: 20px;"> 
+                        <li class="nav-item">
+                            <router-link to="/" class="nav-link text-white ps-0">Home</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/login" class="nav-link text-white ps-0">Login</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/registrazione" class="nav-link text-white ps-0">Registrati</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/profilo" class="nav-link text-white ps-0">Profilo</router-link>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title text-white">
-                  Menu
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                aria-label="Close">
-                </button>
-              </div>
-              <div class="offcanvas-body">
-                <ul class="navbar-nav p-3 rounded">
-                  <li class="nav-item">
-                    <router-link to="/" class="nav-link active">Home</router-link>
-                  </li>
-                  <li class="nav-item">
-                    <router-link to="/login" class="nav-link">Login</router-link>
-                  </li>
-                  <li class="nav-item">
-                    <router-link to="/profilo" class="nav-link">Profilo</router-link>
-                  </li>
-                  <li class="nav-item">
-                    <router-link to="/studente" class="nav-link">Studente</router-link>
-                  </li>
-                  <li class="nav-item">
-                    <router-link to="/tutor" class="nav-link">Tutor</router-link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+
+        </div>
+    </nav>
+</header>
       <router-view></router-view>
       <footer class="py-3 mt-auto text-white footer">
         <p>
