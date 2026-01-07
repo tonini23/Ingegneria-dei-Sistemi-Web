@@ -38,6 +38,7 @@ const Home = {
             </div>
           </div>
         </div>
+        
         <div class="justify-content-center align-items-center text-center mb-5 mt-5 d-none d-lg-block">
           <div class="col-1"> </div>
           <router-link to="/tutor">
