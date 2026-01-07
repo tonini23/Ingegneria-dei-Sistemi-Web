@@ -4,6 +4,9 @@
   "description": "Progetto per l'esame di Ingegneria dei Sistemi Web del corso LP tecnologie dei sistemi informatici svolto da Andrea Tonini e Lisandro Antonioli nell'anno accademico 2025-2026.",
   "main": "server/app.js",
   "scripts": {
+    "dev": "npx ts-node-dev server/app.ts",
+    "build": "npx tsc",
+    "start": "node public/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
