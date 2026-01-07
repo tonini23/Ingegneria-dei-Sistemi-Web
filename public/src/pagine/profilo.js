@@ -31,12 +31,12 @@ const Profilo = {
 
                                 <div class="d-flex align-items-center mb-2">
                                     <label class="w-25 text-start">Email</label>
-                                    <input type="text" class="profile-input" value="marco.rossi@studio.unibo.it" style="font-size: 0.8rem;">
+                                    <input type="text" class="profile-input" value="marco.rossi@studio.unibo.it">
                                 </div>
 
                                 <div class="d-flex align-items-center">
                                     <label class="w-25 text-start">Matricola</label>
-                                    <input type="text" class="profile-input" value="1234567890">
+                                    <input type="text" class="profile-input" value="1234567890" readonly>
                                 </div>
 
                             </div>
