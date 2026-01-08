@@ -1,8 +1,9 @@
 import express from 'express';
-import { profiloRouter } from './routes/profiloRouter.js';
+import { prenotazioniRouter } from './routes/prenotazioniRouter.js';
+
 
 const app = express();
-const port = 3001;  //sarebbe stata porta 3000, ma a me quella porta sul pc mi da problemi
+const port = 3001;  //la convenzione sarebbe usare la porta 3000, ma sul mio pc è già occupata
 
 
 app.use(express.static('public'));
@@ -13,7 +14,7 @@ app.get('/', function (req, res) {
     res.sendFile('index.html', { root: 'public' });
 });
 
-app.use('/', profiloRouter);
+app.use('/', prenotazioniRouter);
 
 app.use(function(req,res,next){
     res.setHeader('Content-Type', 'text/plain');
