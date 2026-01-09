@@ -1,79 +1,262 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    /* Stile generale della navbar */
+        header {
+            background-color: #CE1126;
+        }
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+        .navbar-toggler-icon {
+            width: 1.5em;
+            height: 1.5em;
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+        .navbar-brand img {
+            height: 60px;
+        }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+        #offcanvasNavbar {
+            background-color: #6B0808;
+            width: 75%;
+        }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+        .offcanvas-body .navbar-nav {
+            font-size: 30px;
+        }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+        .footer {
+            background-color: #CE1126;
+        }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+        /* Sparizione logo all'apertura menu */
+        .navbar-toggler[aria-expanded="true"]~.navbar-brand {
+            display: none !important;
+        }
 
-.card {
-  padding: 2em;
-}
+        /* Quando lo schermo è grande (Desktop), annulla lo stile "cassetto" dell'offcanvas */
+@media (min-width: 992px) {
+    .offcanvas {
+        position: static !important;
+        visibility: visible !important;
+        transform: none !important;
+        width: auto !important;
+        background-color: transparent !important; /* Toglie lo sfondo rosso del cassetto su desktop */
+        border: none !important;
+        height: auto !important;
+        flex-grow: 1;
+    }
+    
+    .offcanvas-header {
+        display: none; /* Nasconde la "X" e il titolo "Menu" su desktop */
+    }
+    
+    .offcanvas-body {
+        display: flex;
+        justify-content: flex-end; /* Allinea i link a destra */
+        padding: 0;
+        overflow: visible;
+    }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    /* Riduciamo leggermente il font su desktop per eleganza */
+    .navbar-nav {
+        font-size: 1.2rem !important; 
+    }
 }
+        
+        .title-custom {
+            color: black;
+            font-size: 30px;
+        }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+        .input-custom {
+            width: 65%;
+            border: 2px solid #6B0808;
+            border-radius: 20px;
+            padding-left: 15px;
+        }
+
+        .btn-confirm {
+            width: 35%;
+        }
+
+        .btn-large {
+            width: 65%;
+        }
+
+        .btn{
+            background-color: #6B0808;
+            border-radius: 20px;
+        }
+        
+
+
+        .label-custom {
+            width: 30%;
+            /* line-height: 1.2 serve per la label "Conferma Password" che va a capo */
+            line-height: 1.2; 
+        }
+
+
+        
+        .filter-box {
+            background-color: #6B0808;
+            border-radius: 20px;
+        }
+
+        .input-base {
+            border: 2px solid #6B0808;
+            border-radius: 20px;
+        }
+
+        .input-narrow {
+            width: 45%;
+        }
+
+        .input-wide {
+            width: 75%;
+        }
+
+        .btn-search {   
+            width: 15%;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+       
+
+    .table-unibo {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        background-color: white; 
+        border: 2px solid #6B0808; 
+    }
+
+    .table-unibo thead th {
+        background-color: #CE1126; 
+        color: white;
+        padding: 15px;
+        border-bottom: 3px solid #6B0808; 
+    }
+
+    .table-unibo tbody td {
+        background-color: #ffffff;
+        color: #000000; 
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6; 
+        font-weight: 500; 
+    }
+        
+    .table-unibo tbody tr:nth-child(even) td {
+        background-color: #fff5f5;
+    }
+
+    .table-unibo tbody tr:hover td {
+        background-color: #ffe0e0; 
+        cursor: pointer;
+    }
+
+    .table-unibo tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .profile-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .profile-input {
+            background-color: white;
+            border: none;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+            width: 75%;
+            padding: 5px;
+            
+        }
+
+        .section-header {
+            background-color: #6B0808;
+            border-radius: 20px 20px 0 0; /* Arrotondato solo sopra */
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-custom thead th {
+            background-color: #CE1126; /* Rosso Unibo */
+            color: white;
+            border: 1px solid white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table-custom tbody td {
+            background-color: #6B0808;
+            color: white;
+            border: 1px solid white;
+            height: 40px; /* Altezza fissa per righe vuote */
+        }
+
+        .custom-check {
+            width: 25px;
+            height: 25px;
+            background-color: #6B0808;
+            border: 2px solid white;
+            margin-right: 10px;
+            accent-color: #6B0808;
+        }
+
+        .btn-blue {
+            background-color: #0000FF !important; /* Blu elettrico come da foto */
+            color: white;
+            border-radius: 20px;
+            border: none;
+        }
+        
+        .btn-red {
+            background-color: #FF0000 !important;
+            color: white;
+            border-radius: 20px;
+            border: none;
+        }
+
+        
+        /* STILE VOCI NAVBAR */
+
+        header .navbar a,
+        header .navbar a:visited,
+        header .navbar a:hover,
+        header .navbar a:active,
+        #offcanvasNavbar .navbar-nav a,
+        #offcanvasNavbar .navbar-nav a:visited,
+        #offcanvasNavbar .navbar-nav a:hover,
+        #offcanvasNavbar .navbar-nav a:active {
+            color: white !important;
+            text-decoration: none !important;
+            font-style: normal !important;
+        }
+
+
+        .navbar .nav-link {
+            font-size: 32px !important;
+            font-weight: 600;
+            text-align: center;
+            font-style: normal !important;
+        }
+            
+
+            
