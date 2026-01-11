@@ -26,6 +26,10 @@
             background-color: #CE1126;
         }
 
+        body {
+            padding-bottom: 100px;
+        }
+
         /* Sparizione logo all'apertura menu */
         .navbar-toggler[aria-expanded="true"]~.navbar-brand {
             display: none !important;

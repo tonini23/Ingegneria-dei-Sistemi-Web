@@ -60,5 +60,5 @@ import Profilo from './components/profilo.vue'
 </template>
 
 <style scoped>
-
+  
 </style>
