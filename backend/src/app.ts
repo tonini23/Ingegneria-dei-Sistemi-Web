@@ -16,7 +16,6 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/', prenotazioniRouter);
 
-// Qui aggiungiamo anche NextFunction
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Content-Type', 'text/plain');
     res.status(404).send('Pagina non trovata');
