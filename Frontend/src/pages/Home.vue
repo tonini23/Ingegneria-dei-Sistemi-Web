@@ -38,7 +38,7 @@ const count = ref(0)*/
       </div>
     </div>
 
-    <div class="justify-content-center align-items-center text-center mb-5 mt-5 d-none d-lg-block">
+    <div class="justify-content-center align-items-center text-center mb-5 mt-5 d-none d-lg-block align-middle">
       <div class="col-1"></div>
       <router-link to="/tutor">
         <button class="col-3 btn btn-danger btn-lg shadow-lg p-5 mb-5 me-5 btn-action">

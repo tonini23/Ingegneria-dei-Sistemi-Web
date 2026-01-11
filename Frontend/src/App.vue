@@ -32,13 +32,16 @@ import Profilo from './components/profilo.vue'
                           <router-link to="/" class="nav-link text-white ps-0">Home</router-link>
                       </li>
                       <li class="nav-item">
-                          <router-link to="/login" class="nav-link text-white ps-0">Login</router-link>
-                      </li>
-                      <li class="nav-item">
-                          <router-link to="/registrazione" class="nav-link text-white ps-0">Registrati</router-link>
-                      </li>
-                      <li class="nav-item">
                           <router-link to="/profilo" class="nav-link text-white ps-0">Profilo</router-link>
+                      </li>
+                      <li class="nav-item">
+                          <router-link to="/studente" class="nav-link text-white ps-0">Studente</router-link>
+                      </li>
+                      <li class="nav-item">
+                          <router-link to="/tutor" class="nav-link text-white ps-0">Tutor</router-link>
+                      </li>
+                      <li class="nav-item">
+                          <router-link to="/login" class="nav-link text-white ps-0">Login</router-link>
                       </li>
                   </ul>
               </div>
