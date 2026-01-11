@@ -35,7 +35,7 @@
             display: none !important;
         }
 
-        /* Quando lo schermo è grande (Desktop), annulla lo stile "cassetto" dell'offcanvas */
+        /* Quando lo schermo è grande (Desktop), annulla lo stile dell'offcanvas */
 @media (min-width: 992px) {
     .offcanvas {
         position: static !important;
@@ -59,74 +59,58 @@
         overflow: visible;
     }
 
-    /* Riduciamo leggermente il font su desktop per eleganza */
     .navbar-nav {
         font-size: 1.2rem !important; 
     }
 }
         
-        .title-custom {
-            color: black;
-            font-size: 30px;
-        }
+    .title-custom {
+        color: black;
+        font-size: 30px;
+    }
 
-        .input-custom {
-            width: 65%;
-            border: 2px solid #6B0808;
-            border-radius: 20px;
-            padding-left: 15px;
-        }
-
-        .btn-confirm {
-            width: 35%;
-        }
-
-        .btn-large {
-            width: 65%;
-        }
-
-        .btn{
-            background-color: #6B0808;
-            border-radius: 20px;
-        }
-        
-
-
-        .label-custom {
-            width: 30%;
-            /* line-height: 1.2 serve per la label "Conferma Password" che va a capo */
-            line-height: 1.2; 
-        }
-
-
-        
-        .filter-box {
-            background-color: #6B0808;
-            border-radius: 20px;
-        }
-
-        .input-base {
-            border: 2px solid #6B0808;
-            border-radius: 20px;
-        }
-
-        .input-narrow {
-            width: 45%;
-        }
-
-        .input-wide {
-            width: 75%;
-        }
-
-        .btn-search {   
-            width: 15%;
-        }
-
-        td {
-            padding: 5px;
-        }
-
-       
+    .input-custom {
+        width: 65%;
+        border: 2px solid #6B0808;
+        border-radius: 20px;
+        padding-left: 15px;
+    }
+    .btn-confirm {
+        width: 35%;
+    }
+    .btn-large {
+        width: 65%;
+    }
+    .btn{
+        background-color: #6B0808;
+        border-radius: 20px;
+    }
+    
+    .label-custom {
+        width: 30%;
+        /* line-height: 1.2 serve per la label "Conferma Password" che va a capo */
+        line-height: 1.2; 
+    }
+    .filter-box {
+        background-color: #6B0808;
+        border-radius: 20px;
+    }
+    .input-base {
+        border: 2px solid #6B0808;
+        border-radius: 20px;
+    }
+    .input-narrow {
+        width: 45%;
+    }
+    .input-wide {
+        width: 75%;
+    }
+    .btn-search {   
+        width: 15%;
+    }
+    td {
+        padding: 5px;
+    }
 
     .table-unibo {
         border-collapse: separate;

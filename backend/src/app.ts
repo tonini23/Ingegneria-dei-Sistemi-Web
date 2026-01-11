@@ -3,16 +3,14 @@ import type { Request, Response, NextFunction } from 'express'; // <--- Nota "im
 import { prenotazioniRouter } from './routes/prenotazioniRouter'; 
 
 const app: Express = express()
-const port: number = 3001 // Per convenzione sarebbe 3000 
+const port: number = 3001 // Per convenzione sarebbe 3000 ma per problemi personali uso 3001
 
-// Nota: 'public' si riferisce alla vecchia cartella. 
-// Quando useremo Vite, questo dovrà cambiare o sparire, ma per ora lascialo così.
-app.use(express.static('public')); 
+app.use(express.static('public'));
+app.use(express.static('dist-frontend')); 
 app.use(express.urlencoded({ extended: true }));
 
-// Qui aggiungiamo i tipi : Request e : Response
+
 app.get('/', (req: Request, res: Response) => {
-    // Nota: anche questo path potrebbe dover cambiare con la nuova struttura
     res.sendFile('index.html', { root: 'public' });
 });
 
