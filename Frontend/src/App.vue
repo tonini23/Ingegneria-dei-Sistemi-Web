@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import Home from './components/Home.vue'
-import PassDimenticata from './components/passDimenticata.vue'
-import Registrazione from './components/registrazione.vue'
-import Login from './components/login.vue'
-import Studente from './components/studente.vue'
-import Tutor from './components/tutor.vue'
-import Profilo from './components/profilo.vue'
-
-</script>
-
 <template>
   <header>
     <div class="d-flex justify-content-center align-items-center pt-4 pb-2">

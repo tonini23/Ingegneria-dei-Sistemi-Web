@@ -41,5 +41,4 @@ const express_1 = __importDefault(require("express"));
 const prenotazioniController = __importStar(require("../controllers/prenotazioniController"));
 const router = express_1.default.Router();
 exports.prenotazioniRouter = router;
-// Definisci la rotta (assicurati che il percorso dell'URL sia quello che ti serve)
-router.get('/api/prenotazioni', prenotazioniController.allPrenotazioni);
+router.get('/api/prenotazioni/:id', prenotazioniController.allPrenotazioni);

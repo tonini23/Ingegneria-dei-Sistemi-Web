@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-// Definizione delle variabili reattive
 const prenotazioni = ref<any[]>([]);
 
 // Funzione per formattare la data
@@ -15,12 +14,10 @@ const formattaData = (dataString: string) => {
     return `${giorno}-${mese}-${anno}`;
 };
 
-// Funzione per caricare i dati dal Backend
 const getPrenotazioni = async () => {
-    try {
-        // NOTA: Assicurati che il percorso API sia corretto (es. http://localhost:3000/api/...)
-        // In sviluppo potresti dover configurare un proxy su vite.config.ts
-        const response = await axios.get('/api/prenotazioni');
+   try {
+        const response = await axios.get('/api/prenotazioni/1');
+        
         console.log("Dati ricevuti:", response.data);
         prenotazioni.value = response.data;
     } catch (error) {
@@ -36,7 +33,6 @@ const updatePrenotazione = () => {
     console.log("Modifica prenotazione");
 };
 
-// Lifecycle Hook: Carica i dati quando il componente è montato
 onMounted(() => {
     getPrenotazioni();
 });
@@ -136,32 +132,15 @@ onMounted(() => {
             </button>
           </div>
         </div>
+      </div>
     </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="justify-content-center align-items-center text-center my-5 d-none d-lg-block">
-
-      
-
       <div class="text-center mb-4">
         <h1 class="title-custom fw-bold">Profilo</h1>
       </div>
-
       <div class="row my-5">
-
         <div class="col-6">
-
           <div class="row justify-content-center mb-4">
             <div class="col-12">
               <div class="filter-box p-5 text-white">
@@ -206,12 +185,9 @@ onMounted(() => {
               Logout
             </button>
           </div>
-
         </div>  
 
-
         <div class="col-6">
-
           <div class="row justify-content-center">
             <div class="col-12 col-md-10">
               <div class="section-header text-center mb-0 border border-white border-bottom-0">
@@ -254,21 +230,9 @@ onMounted(() => {
               </div>
             </div>
         </div>
-      </div>
-
-
+        </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-      </div>
+  </div>
 
 
 

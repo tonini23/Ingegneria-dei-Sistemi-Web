@@ -6,9 +6,12 @@
     "module": "ESNext",
     "types": ["node"],
     "skipLibCheck": true,
+    "composite": true,
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    //"moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
@@ -24,3 +27,5 @@
   },
   "include": ["vite.config.ts"]
 }
+
+
