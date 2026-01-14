@@ -11,16 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.allPrenotazioni = allPrenotazioni;
 const db_1 = require("../utils/db");
-// Manteniamo 'async' come nel tuo file originale
 function allPrenotazioni(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        // Usiamo la tua logica corretta con il parametro ?
-        db_1.connection.query('SELECT * FROM prenotazioni WHERE Id = ?', [req.params.id], function (error, results, fields) {
+        const userId = req.params.id;
+        const sql = 'SELECT * FROM prenotazioni WHERE id_studente = ? OR id_tutor = ?';
+        db_1.connection.query(sql, [userId, userId], function (error, results, fields) {
             if (error) {
-                console.error("Errore DB:", error); // È utile loggare l'errore nel server
+                console.error("Errore DB:", error);
                 res.status(500).send('Errore del server');
             }
             else {
+                console.log("Risultati trovati:", results);
                 res.json(results);
             }
         });
