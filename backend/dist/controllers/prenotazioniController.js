@@ -14,14 +14,26 @@ const db_1 = require("../utils/db");
 function allPrenotazioni(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.params.id;
-        const sql = 'SELECT * FROM prenotazioni WHERE id_studente = ? OR id_tutor = ?';
+        // Aggiungiamo la JOIN con la tabella 'materie'
+        // Assumiamo che la tabella si chiami 'materie' e abbia un campo 'nome'
+        // e che in 'prenotazioni' ci sia la chiave esterna 'id_materia'
+        const sql = `
+        SELECT 
+            p.*, 
+            u.nome AS nome_studente, 
+            u.cognome AS cognome_studente,
+            m.nome AS materia_nome
+        FROM prenotazioni p
+        JOIN utenti u ON p.id_studente = u.id
+        JOIN materie m ON p.id_materia = m.id
+        WHERE p.id_studente = ? OR p.id_tutor = ?
+    `;
         db_1.connection.query(sql, [userId, userId], function (error, results, fields) {
             if (error) {
                 console.error("Errore DB:", error);
                 res.status(500).send('Errore del server');
             }
             else {
-                console.log("Risultati trovati:", results);
                 res.json(results);
             }
         });

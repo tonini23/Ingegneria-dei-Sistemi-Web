@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { format } from 'path';
 
 const prenotazioni = ref<any[]>([]);
 
@@ -12,6 +13,13 @@ const formattaData = (dataString: string) => {
     const mese = String(data.getMonth() + 1).padStart(2, '0');
     const anno = data.getFullYear();
     return `${giorno}-${mese}-${anno}`;
+};
+
+// Funzione per formattare l'ora (toglie :00 finale)
+const formattaOra = (oraString: string) => {
+    if (!oraString) return "";
+    // Prende solo i primi 5 caratteri (es. "16:30")
+    return oraString.slice(0, 5); 
 };
 
 const getPrenotazioni = async () => {
@@ -114,10 +122,10 @@ onMounted(() => {
                     <input type="checkbox" class="custom-check">
                   </td>
                   <td>{{ formattaData(prenotazione.Data) }}</td>
-                  <td>{{ prenotazione.Ora }}</td>
+                  <td>{{ formattaOra(prenotazione.Ora) }}</td>
                   <td>{{ prenotazione.Localita }}</td>
-                  <td>{{ prenotazione.Materia }}</td>
-                  <td>{{ prenotazione.studente }}</td>
+                  <td>{{ prenotazione.materia_nome }}</td>
+                  <td>{{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}</td>
                 </tr>
               </tbody>
             </table>
@@ -211,10 +219,10 @@ onMounted(() => {
                         <input type="checkbox" class="custom-check">
                       </td>
                       <td>{{ formattaData(prenotazione.Data) }}</td>
-                      <td>{{ prenotazione.Ora }}</td>
+                      <td>{{ formattaOra(prenotazione.Ora) }}</td>
                       <td>{{ prenotazione.Localita }}</td>
-                      <td>{{ prenotazione.Materia }}</td>
-                      <td>{{ prenotazione.studente }}</td>
+                      <td>{{ prenotazione.materia_nome }}</td>
+                      <td>{{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}</td>
                     </tr>
                   </tbody>
                 </table>
