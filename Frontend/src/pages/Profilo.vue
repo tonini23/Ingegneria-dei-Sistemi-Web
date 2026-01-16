@@ -24,7 +24,7 @@ const formattaOra = (oraString: string) => {
 
 const getPrenotazioni = async () => {
    try {
-        const response = await axios.get('/api/prenotazioni/1');
+        const response = await axios.get('/api/prenotazioni/');
         
         console.log("Dati ricevuti:", response.data);
         prenotazioni.value = response.data;
@@ -63,20 +63,20 @@ onMounted(() => {
               </div>
               <div class="col-9">
                 <div class="d-flex align-items-center mb-2">
-                  <label class="ms-0 w-25 text-start">Nome</label>
-                  <input type="text" class="profile-input" value="Marco">
+                  <label class="ms-0 w-25 text-start" for="Nome_">Nome</label>
+                  <input type="text" class="profile-input" name="Nome" id="Nome_" value="Marco">
                 </div>
                 <div class="d-flex align-items-center mb-2">
-                  <label class="w-25 text-start">Cognome</label>
-                  <input type="text" class="profile-input" value="Rossi">
+                  <label class="w-25 text-start" for="Cognome_">Cognome</label>
+                  <input type="text" class="profile-input" name="Cognome" id="Cognome_" value="Rossi">
                 </div>
                 <div class="d-flex align-items-center mb-2">
-                  <label class="w-25 text-start">Email</label>
-                  <input type="text" class="profile-input" value="marco.rossi@studio.unibo.it">
+                  <label class="w-25 text-start" for="Email_">Email</label>
+                  <input type="text" class="profile-input" name="Email" id="Email_" value="marco.rossi@studio.unibo.it">
                 </div>
                 <div class="d-flex align-items-center">
-                  <label class="w-25 text-start">Matricola</label>
-                  <input type="text" class="profile-input" value="1234567890" readonly>
+                  <label class="w-25 text-start" for="Matricola_">Matricola</label>
+                  <input type="text" class="profile-input" name="Matricola" id="Matricola" value="1234567890" readonly>
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@ onMounted(() => {
             <table class="table-unibo">
               <thead>
                 <tr>
-                  <th></th>
+                  <th><input type="checkbox" class="custom-check"></th>
                   <th>Data</th>
                   <th>Ora</th>
                   <th>Località</th>
@@ -158,20 +158,20 @@ onMounted(() => {
                   </div>
                   <div class="col-9">
                     <div class="d-flex align-items-center mb-3">
-                      <label class="ms-0 w-25 text-start">Nome</label>
-                      <input type="text" class="profile-input" value="Marco">
+                      <label class="ms-0 w-25 text-start" for="Nome" >Nome</label>
+                      <input type="text" class="profile-input" name="Nome" id="Nome" value="Marco">
                     </div>
                     <div class="d-flex align-items-center mb-3">
-                      <label class="w-25 text-start">Cognome</label>
-                      <input type="text" class="profile-input" value="Rossi">
+                      <label class="w-25 text-start" for="Cognome">Cognome</label>
+                      <input type="text" class="profile-input" name="Cognome" id="Cognome" value="Rossi">
                     </div>
                     <div class="d-flex align-items-center mb-3">
-                      <label class="w-25 text-start">Email</label>
-                      <input type="text" class="profile-input" value="marco.rossi@studio.unibo.it">
+                      <label class="w-25 text-start" for="Email">Email</label>
+                      <input type="text" class="profile-input" name="Email" id="Email" value="marco.rossi@studio.unibo.it">
                     </div>
                     <div class="d-flex align-items-center">
-                      <label class="w-25 text-start">Matricola</label>
-                      <input type="text" class="profile-input" value="1234567890" readonly>
+                      <label class="w-25 text-start" for="Matricola">Matricola</label>
+                      <input type="text" class="profile-input" name="Matricola" id="Matricola" value="1234567890" readonly>
                     </div>
                   </div>
                 </div>

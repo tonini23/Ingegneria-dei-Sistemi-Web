@@ -84,7 +84,7 @@
             </thead>
             <tbody> <!-- <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                 <td>
-                <input type="radio" class="custom-check">
+                <input type="radio" name="studente" class="custom-check">
                 </td>
                 <td>{{ prenotazione.Data }}</td>
                 <td>{{ prenotazione.Ora }}</td>
@@ -102,7 +102,7 @@
                 <td>Mario Rossi</td>
                 </tr>
                 <tr> <td>
-                    <input type="radio" class="custom-check">
+                    <input type="radio" name="scelta" class="custom-check">
                     </td>
                     <td>12-11-2024</td>
                     <td>14:00</td>
@@ -206,7 +206,7 @@
                 </thead>
                 <tbody> <!-- <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                     <td>
-                    <input type="radio" class="custom-check">
+                    <input type="radio" name="studente" class="custom-check">
                     </td>
                     <td>{{ prenotazione.Data }}</td>
                     <td>{{ prenotazione.Ora }}</td>
