@@ -11,6 +11,13 @@ const formattaData = (dataString) => {
     const anno = data.getFullYear();
     return `${giorno}-${mese}-${anno}`;
 };
+// Funzione per formattare l'ora (toglie :00 finale)
+const formattaOra = (oraString) => {
+    if (!oraString)
+        return "";
+    // Prende solo i primi 5 caratteri (es. "16:30")
+    return oraString.slice(0, 5);
+};
 const getPrenotazioni = async () => {
     try {
         const response = await axios.get('/api/prenotazioni/1');
@@ -259,15 +266,16 @@ for (const [prenotazione] of __VLS_vFor((__VLS_ctx.prenotazioni))) {
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
     (__VLS_ctx.formattaData(prenotazione.Data));
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.Ora);
+    (__VLS_ctx.formattaOra(prenotazione.Ora));
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
     (prenotazione.Localita);
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.Materia);
+    (prenotazione.materia_nome);
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.studente);
+    (prenotazione.nome_studente);
+    (prenotazione.cognome_studente);
     // @ts-ignore
-    [prenotazioni, formattaData,];
+    [prenotazioni, formattaData, formattaOra,];
 }
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "row justify-content-center mt-3 gap-4" },
@@ -528,15 +536,16 @@ for (const [prenotazione] of __VLS_vFor((__VLS_ctx.prenotazioni))) {
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
     (__VLS_ctx.formattaData(prenotazione.Data));
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.Ora);
+    (__VLS_ctx.formattaOra(prenotazione.Ora));
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
     (prenotazione.Localita);
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.Materia);
+    (prenotazione.materia_nome);
     __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.studente);
+    (prenotazione.nome_studente);
+    (prenotazione.cognome_studente);
     // @ts-ignore
-    [prenotazioni, formattaData, updatePrenotazione, deletePrenotazione,];
+    [prenotazioni, formattaData, formattaOra, updatePrenotazione, deletePrenotazione,];
 }
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "row justify-content-center mt-3 gap-4" },
