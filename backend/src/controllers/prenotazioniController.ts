@@ -34,4 +34,49 @@ async function allPrenotazioni(req: Request, res: Response) {
     );
 }
 
-export { allPrenotazioni };
+async function addPrenotazione(req: Request, res: Response) {
+    const userId = req.params.id;
+    const { id_tutor, id_materia, data_prenotazione } = req.body;
+    const sql = `
+        INSERT INTO prenotazioni (id_studente, id_tutor, id_materia, data_prenotazione)
+        VALUES (?, ?, ?, ?)
+    `;
+    connection.query(
+        sql,
+        [userId, id_tutor, id_materia, data_prenotazione],
+        function (error: QueryError | null, results: RowDataPacket[], fields: any) {
+            if (error) {
+                console.error("Errore DB:", error);
+                res.status(500).send('Errore del server');
+            } else {
+                res.json({ message: "Prenotazione aggiunta con successo" });
+            }
+        }
+    );
+}
+
+async function deletePrenotazione(req: Request, res: Response) {
+    const userId = req.params.id;
+
+    const sql = `
+        DELETE FROM prenotazioni
+        WHERE id_studente = ?
+    `;
+
+    connection.query(
+        sql,
+        [userId],
+        function (error: QueryError | null, results: RowDataPacket[], fields: any) {
+            if (error) {
+                console.error("Errore DB:", error);
+                res.status(500).send('Errore del server');
+            } else {
+                res.json({ message: "Prenotazione eliminata con successo" });
+            }
+        }
+    );
+}
+
+
+
+export { allPrenotazioni, addPrenotazione, deletePrenotazione };
