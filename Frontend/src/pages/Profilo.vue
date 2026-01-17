@@ -244,11 +244,8 @@ const boh = [1, 2, 3, 4];
               </div>
 
               <div class="row justify-content-center mt-3 gap-4">
-                <button class="col-4 btn btn-blue shadow fw-bold py-2" @click="updatePrenotazione">
-                  Modifica
-                </button>
                 <button class="col-4 btn btn-red shadow fw-bold py-2" @click="deletePrenotazione">
-                  Elimina
+                  Disdici
                 </button>
               </div>
             </div>
