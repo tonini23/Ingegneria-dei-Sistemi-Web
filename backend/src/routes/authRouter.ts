@@ -6,6 +6,6 @@ const router = express.Router();
 router.post('/api/auth/register', authController.register);
 router.post('/api/auth/login', authController.login);
 router.post('/api/auth/logout', authController.logout);
-router.get('/api/auth/utente', authController.getUtente);
+router.get('/api/auth/utente', authController.getProfile);
 
-export { router as prenotazioniRouter };
+export { router as authRouter };

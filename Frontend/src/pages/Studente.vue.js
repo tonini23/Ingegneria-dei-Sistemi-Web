@@ -213,6 +213,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.input)({
     type: "radio",
+    name: "scelta",
     ...{ class: "custom-check" },
 });
 /** @type {__VLS_StyleScopedClasses['custom-check']} */ ;

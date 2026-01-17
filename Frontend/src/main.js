@@ -11,6 +11,7 @@ import PassDimenticata from './pages/PassDimenticata.vue';
 import Registrazione from './pages/Registrazione.vue';
 import Studente from './pages/Studente.vue';
 import Tutor from './pages/Tutor.vue';
+import NotFound from './pages/NotFound.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -21,7 +22,7 @@ const router = createRouter({
         { path: '/studente', component: Studente },
         { path: '/tutor', component: Tutor },
         { path: '/pass_dimenticata', component: PassDimenticata },
-        //{ path: "/:pathMatch(.*)*", component: PaginaNonTrovata} Non so se la faremo
+        { path: "/:pathMatch(.*)*", component: NotFound }
     ]
 });
 createApp(App)

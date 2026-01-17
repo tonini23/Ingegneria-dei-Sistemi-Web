@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.allPrenotazioni = allPrenotazioni;
+exports.addPrenotazione = addPrenotazione;
+exports.deletePrenotazione = deletePrenotazione;
 const db_1 = require("../utils/db");
 function allPrenotazioni(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -35,6 +37,43 @@ function allPrenotazioni(req, res) {
             }
             else {
                 res.json(results);
+            }
+        });
+    });
+}
+function addPrenotazione(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.params.id;
+        const { id_tutor, id_materia, data_prenotazione } = req.body;
+        const sql = `
+        INSERT INTO prenotazioni (id_studente, id_tutor, id_materia, data_prenotazione)
+        VALUES (?, ?, ?, ?)
+    `;
+        db_1.connection.query(sql, [userId, id_tutor, id_materia, data_prenotazione], function (error, results, fields) {
+            if (error) {
+                console.error("Errore DB:", error);
+                res.status(500).send('Errore del server');
+            }
+            else {
+                res.json({ message: "Prenotazione aggiunta con successo" });
+            }
+        });
+    });
+}
+function deletePrenotazione(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.params.id;
+        const sql = `
+        DELETE FROM prenotazioni
+        WHERE id_studente = ?
+    `;
+        db_1.connection.query(sql, [userId], function (error, results, fields) {
+            if (error) {
+                console.error("Errore DB:", error);
+                res.status(500).send('Errore del server');
+            }
+            else {
+                res.json({ message: "Prenotazione eliminata con successo" });
             }
         });
     });
