@@ -42,3 +42,5 @@ const prenotazioniController = __importStar(require("../controllers/prenotazioni
 const router = express_1.default.Router();
 exports.prenotazioniRouter = router;
 router.get('/api/prenotazioni/:id', prenotazioniController.allPrenotazioni);
+router.post('/api/prenotazioni/:id', prenotazioniController.addPrenotazione);
+router.delete('/api/prenotazioni/:id', prenotazioniController.deletePrenotazione);

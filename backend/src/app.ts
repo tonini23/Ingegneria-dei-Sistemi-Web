@@ -1,6 +1,9 @@
 import express, { Express } from "express";
+import cookieParser from "cookie-parser";
 import type { Request, Response, NextFunction } from 'express'; // <--- Nota "import type" e la riga separata
 import { prenotazioniRouter } from './routes/prenotazioniRouter'; 
+import { authRouter } from './routes/authRouter';
+
 
 const app: Express = express()
 const port: number = 3001 // Per convenzione sarebbe 3000 ma per problemi personali uso 3001
@@ -8,6 +11,8 @@ const port: number = 3001 // Per convenzione sarebbe 3000 ma per problemi person
 app.use(express.static('public'));
 app.use(express.static('dist-frontend')); 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 
 
 app.get('/', (req: Request, res: Response) => {
@@ -15,6 +20,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/', prenotazioniRouter);
+app.use('/', authRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Content-Type', 'text/plain');

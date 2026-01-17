@@ -1,5 +1,42 @@
-<script setup lang="ts">
-// In futuro qui metterò la logica per chiamare l'API di login
+<script lang="ts">
+import axios from 'axios';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  data() {
+    return {
+      nome: '',
+      cognome: '',
+      matricola: '',
+      email: '',
+      password: '',
+      conferma_password: '',
+    };
+  },
+  methods: {
+      async onSubmit(){
+        if(this.password !== this.conferma_password){
+          console.log("Le password non coincidono!");
+          return;
+        }
+        try {
+          await axios.post("/api/registrazione", {
+            nome: this.nome,
+            cognome: this.cognome,
+            matricola: this.matricola,
+            email: this.email,
+            password: this.password,
+          });
+          location.href = "/";
+        } catch (e: any) {
+          if(e.response){
+            
+          }
+      }
+    },
+  },
+});
+
 </script>
 
 <template>

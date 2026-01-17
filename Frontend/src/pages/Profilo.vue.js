@@ -20,7 +20,7 @@ const formattaOra = (oraString) => {
 };
 const getPrenotazioni = async () => {
     try {
-        const response = await axios.get('/api/prenotazioni/1');
+        const response = await axios.get('/api/prenotazioni/');
         console.log("Dati ricevuti:", response.data);
         prenotazioni.value = response.data;
     }
@@ -111,6 +111,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-2']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "ms-0 w-25 text-start" },
+    for: "Nome_",
 });
 /** @type {__VLS_StyleScopedClasses['ms-0']} */ ;
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
@@ -118,6 +119,8 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Nome",
+    id: "Nome_",
     value: "Marco",
 });
 /** @type {__VLS_StyleScopedClasses['profile-input']} */ ;
@@ -129,12 +132,15 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-2']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "w-25 text-start" },
+    for: "Cognome_",
 });
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-start']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Cognome",
+    id: "Cognome_",
     value: "Rossi",
 });
 /** @type {__VLS_StyleScopedClasses['profile-input']} */ ;
@@ -146,12 +152,15 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-2']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "w-25 text-start" },
+    for: "Email_",
 });
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-start']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Email",
+    id: "Email_",
     value: "marco.rossi@studio.unibo.it",
 });
 /** @type {__VLS_StyleScopedClasses['profile-input']} */ ;
@@ -162,12 +171,15 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['align-items-center']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "w-25 text-start" },
+    for: "Matricola_",
 });
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-start']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Matricola",
+    id: "Matricola",
     value: "1234567890",
     readonly: true,
 });
@@ -247,6 +259,11 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.table, __VLS_intrinsics.table)({
 __VLS_asFunctionalElement1(__VLS_intrinsics.thead, __VLS_intrinsics.thead)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.input)({
+    type: "checkbox",
+    ...{ class: "custom-check" },
+});
+/** @type {__VLS_StyleScopedClasses['custom-check']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
@@ -377,6 +394,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-3']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "ms-0 w-25 text-start" },
+    for: "Nome",
 });
 /** @type {__VLS_StyleScopedClasses['ms-0']} */ ;
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
@@ -384,6 +402,8 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Nome",
+    id: "Nome",
     value: "Marco",
 });
 /** @type {__VLS_StyleScopedClasses['profile-input']} */ ;
@@ -395,12 +415,15 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-3']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "w-25 text-start" },
+    for: "Cognome",
 });
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-start']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Cognome",
+    id: "Cognome",
     value: "Rossi",
 });
 /** @type {__VLS_StyleScopedClasses['profile-input']} */ ;
@@ -412,12 +435,15 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-3']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "w-25 text-start" },
+    for: "Email",
 });
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-start']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Email",
+    id: "Email",
     value: "marco.rossi@studio.unibo.it",
 });
 /** @type {__VLS_StyleScopedClasses['profile-input']} */ ;
@@ -428,12 +454,15 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['align-items-center']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
     ...{ class: "w-25 text-start" },
+    for: "Matricola",
 });
 /** @type {__VLS_StyleScopedClasses['w-25']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-start']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
     ...{ class: "profile-input" },
+    name: "Matricola",
+    id: "Matricola",
     value: "1234567890",
     readonly: true,
 });

@@ -1,3 +1,7 @@
+import axios from 'axios';
+import { defineComponent } from 'vue';
+export default {};
+;
 const __VLS_ctx = {};
 let __VLS_components;
 let __VLS_intrinsics;
@@ -172,6 +176,38 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
 /** @type {__VLS_StyleScopedClasses['mb-5']} */ ;
 /** @type {__VLS_StyleScopedClasses['btn-large']} */ ;
 var __VLS_15;
-const __VLS_export = (await import('vue')).defineComponent({});
-export default {};
+const __VLS_export = defineComponent({
+    data() {
+        return {
+            nome: '',
+            cognome: '',
+            matricola: '',
+            email: '',
+            password: '',
+            conferma_password: '',
+        };
+    },
+    methods: {
+        async onSubmit() {
+            if (this.password !== this.conferma_password) {
+                console.log("Le password non coincidono!");
+                return;
+            }
+            try {
+                await axios.post("/api/registrazione", {
+                    nome: this.nome,
+                    cognome: this.cognome,
+                    matricola: this.matricola,
+                    email: this.email,
+                    password: this.password,
+                });
+                location.href = "/";
+            }
+            catch (e) {
+                if (e.response) {
+                }
+            }
+        },
+    },
+});
 //# sourceMappingURL=Login.vue.js.map

@@ -1,3 +1,7 @@
+import axios from 'axios';
+import { defineComponent } from 'vue';
+export default {};
+;
 const __VLS_ctx = {};
 let __VLS_components;
 let __VLS_intrinsics;
@@ -19,6 +23,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.h1, __VLS_intrinsics.h1)({
 });
 /** @type {__VLS_StyleScopedClasses['title-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.form, __VLS_intrinsics.form)({
+    ...{ onSubmit: (__VLS_ctx.onSubmit) },
     action: "",
     ...{ class: "align-items-center text-center mb-4" },
 });
@@ -40,6 +45,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 /** @type {__VLS_StyleScopedClasses['label-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
+    value: (__VLS_ctx.nome),
     ...{ class: "input-custom" },
     name: "nome",
 });
@@ -59,6 +65,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 /** @type {__VLS_StyleScopedClasses['label-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
+    value: (__VLS_ctx.cognome),
     ...{ class: "input-custom" },
     name: "cognome",
 });
@@ -81,6 +88,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "matricola",
 });
+(__VLS_ctx.matricola);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "mb-4 d-flex justify-content-center align-items-center" },
@@ -119,6 +127,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "password",
 });
+(__VLS_ctx.password);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "mb-5 d-flex justify-content-center align-items-center" },
@@ -139,6 +148,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "conferma_password",
 });
+(__VLS_ctx.conferma_password);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
     ...{ class: "col-4 btn btn-danger shadow-lg fw-bold p-1 btn-confirm" },
@@ -172,6 +182,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.h1, __VLS_intrinsics.h1)({
 });
 /** @type {__VLS_StyleScopedClasses['title-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.form, __VLS_intrinsics.form)({
+    ...{ onSubmit: (__VLS_ctx.onSubmit) },
     action: "",
     ...{ class: "align-items-center text-center mb-4" },
 });
@@ -202,6 +213,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 /** @type {__VLS_StyleScopedClasses['label-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
+    value: (__VLS_ctx.nome),
     ...{ class: "input-custom" },
     name: "nome",
 });
@@ -215,6 +227,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 /** @type {__VLS_StyleScopedClasses['label-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     type: "text",
+    value: (__VLS_ctx.cognome),
     ...{ class: "input-custom" },
     name: "cognome",
 });
@@ -231,6 +244,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "matricola",
 });
+(__VLS_ctx.matricola);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "row col-5 row-gap-5 mb-5" },
@@ -251,6 +265,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "email",
 });
+(__VLS_ctx.email);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
@@ -264,6 +279,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "password",
 });
+(__VLS_ctx.password);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
@@ -278,6 +294,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "conferma_password",
 });
+(__VLS_ctx.conferma_password);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
     ...{ class: "col-4 btn btn-danger shadow-lg fw-bold p-1 btn-confirm mt-3" },
@@ -291,6 +308,38 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
 /** @type {__VLS_StyleScopedClasses['p-1']} */ ;
 /** @type {__VLS_StyleScopedClasses['btn-confirm']} */ ;
 /** @type {__VLS_StyleScopedClasses['mt-3']} */ ;
-const __VLS_export = (await import('vue')).defineComponent({});
-export default {};
+// @ts-ignore
+[onSubmit, onSubmit, nome, nome, cognome, cognome, matricola, matricola, password, password, conferma_password, conferma_password, email,];
+const __VLS_export = defineComponent({
+    data() {
+        return {
+            nome: '',
+            cognome: '',
+            matricola: '',
+            email: '',
+            password: '',
+            conferma_password: '',
+        };
+    },
+    methods: {
+        async onSubmit() {
+            try {
+                await axios.post("/api/auth/register", {
+                    nome: this.nome,
+                    cognome: this.cognome,
+                    matricola: this.matricola,
+                    email: this.email,
+                    password: this.password,
+                });
+                console.log("Registrazione avvenuta con successo!");
+                location.href = "/";
+            }
+            catch (e) {
+                if (e.response) {
+                    console.log(e.response.data.message);
+                }
+            }
+        },
+    },
+});
 //# sourceMappingURL=Registrazione.vue.js.map
