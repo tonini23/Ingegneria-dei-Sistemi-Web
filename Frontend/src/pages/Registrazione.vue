@@ -57,7 +57,7 @@ export default defineComponent({
         </div>
         <div class="mb-4 d-flex justify-content-center align-items-center">
           <label for="email" class="fw-bold label-custom">Email</label>
-          <input type="email" class="input-custom" name="email">
+          <input type="email" v-model="email" class="input-custom" name="email">
         </div>
         <div class="mb-4 d-flex justify-content-center align-items-center">
           <label for="password" class="fw-bold label-custom">Password</label>

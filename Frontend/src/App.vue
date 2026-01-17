@@ -1,3 +1,23 @@
+<script lang="ts">
+import { defineComponent } from 'vue';
+import UserInfo  from './compontents/userInfo.vue';
+import { Utente } from './types';
+
+/*export default defineComponent({
+  components: { 
+    UserInfo,
+  },
+  data() {
+    return {
+      utente: {} as Utente,
+    };
+  },
+  methods: {
+    await axios.get("/api/auth/Profilo");
+  },
+});*/
+</script>
+
 <template>
   <header>
     <div class="d-flex justify-content-center align-items-center pt-4 pb-2">
