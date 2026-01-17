@@ -44,6 +44,8 @@ const updatePrenotazione = () => {
 onMounted(() => {
     getPrenotazioni();
 });
+
+const boh = [1, 2, 3, 4];
 </script>
 
 <template>
@@ -214,17 +216,30 @@ onMounted(() => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
-                      <td>
-                        <input type="checkbox" class="custom-check">
-                      </td>
-                      <td>{{ formattaData(prenotazione.Data) }}</td>
-                      <td>{{ formattaOra(prenotazione.Ora) }}</td>
-                      <td>{{ prenotazione.Localita }}</td>
-                      <td>{{ prenotazione.materia_nome }}</td>
-                      <td>{{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}</td>
-                    </tr>
-                  </tbody>
+    <tr v-for="prenotazione in boh" :key="prenotazione.id">
+        <td><input type="checkbox" class="custom-check"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        
+        <td>
+             {{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}
+        </td>
+
+        <td>
+            <span v-if="prenotazione % 2 === 0" 
+                  class="badge rounded-pill bg-warning text-dark">
+                Tutor
+            </span>
+
+            <span v-else 
+                  class="badge rounded-pill" style="background-color: #CE1126;">
+                Studente
+            </span>
+        </td>
+    </tr>
+</tbody>
                 </table>
               </div>
 
