@@ -108,6 +108,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
     ...{ class: "input-custom" },
     name: "email",
 });
+(__VLS_ctx.email);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "mb-4 d-flex justify-content-center align-items-center" },
@@ -309,7 +310,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
 /** @type {__VLS_StyleScopedClasses['btn-confirm']} */ ;
 /** @type {__VLS_StyleScopedClasses['mt-3']} */ ;
 // @ts-ignore
-[onSubmit, onSubmit, nome, nome, cognome, cognome, matricola, matricola, password, password, conferma_password, conferma_password, email,];
+[onSubmit, onSubmit, nome, nome, cognome, cognome, matricola, matricola, email, email, password, password, conferma_password, conferma_password,];
 const __VLS_export = defineComponent({
     data() {
         return {

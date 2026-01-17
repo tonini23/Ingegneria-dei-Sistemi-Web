@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 
 export interface Utente {
     Id: number;
+    Nome: string;      
+    Cognome: string;   
+    Matricola: number; 
     Email: string;
     Password: string;
 }

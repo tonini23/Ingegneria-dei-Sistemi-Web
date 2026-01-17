@@ -12,7 +12,7 @@ export const register = async (req: Request, res: Response) => {
         return;
     }
 
-    const { email, password} = req.body;
+    const { nome, cognome, matricola, email, password} = req.body;
 
     const [utenti] = await connection.promise().execute(
         'SELECT email FROM utenti WHERE email = ? ', [email]);
@@ -21,12 +21,19 @@ export const register = async (req: Request, res: Response) => {
         res.status(400).json({ message: 'Email già registrata' });
         return;
     }
+    /*const [matricole] = await connection.promise().execute(
+        'SELECT matricola FROM utenti WHERE matricola = ? ', [matricola]);
+
+    if (Array.isArray(matricole) && matricole.length > 0) {
+        res.status(400).json({ message: 'Matricola già registrata' });
+        return;
+    }*/
 
     const passwordHash = await bcrypt.hash(password, 10);
 
     await connection.promise().execute(
-        'INSERT INTO utenti (email, password) VALUES (?, ?)',
-        [email, passwordHash]
+        'INSERT INTO utenti (nome, cognome, matricola, email, password) VALUES (?, ?, ?, ?, ?)',
+        [nome, cognome, matricola, email, passwordHash]
     );
 
     const [results] = await connection.promise().execute(

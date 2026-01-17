@@ -22,14 +22,21 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(401).json({ message: 'Questa operazione richiede il logout' });
         return;
     }
-    const { email, password } = req.body;
+    const { nome, cognome, matricola, email, password } = req.body;
     const [utenti] = yield db_1.connection.promise().execute('SELECT email FROM utenti WHERE email = ? ', [email]);
     if (Array.isArray(utenti) && utenti.length > 0) {
         res.status(400).json({ message: 'Email già registrata' });
         return;
     }
+    /*const [matricole] = await connection.promise().execute(
+        'SELECT matricola FROM utenti WHERE matricola = ? ', [matricola]);
+
+    if (Array.isArray(matricole) && matricole.length > 0) {
+        res.status(400).json({ message: 'Matricola già registrata' });
+        return;
+    }*/
     const passwordHash = yield bcrypt_1.default.hash(password, 10);
-    yield db_1.connection.promise().execute('INSERT INTO utenti (email, password) VALUES (?, ?)', [email, passwordHash]);
+    yield db_1.connection.promise().execute('INSERT INTO utenti (nome, cognome, matricola, email, password) VALUES (?, ?, ?, ?, ?)', [nome, cognome, matricola, email, passwordHash]);
     const [results] = yield db_1.connection.promise().execute('SELECT * FROM utenti WHERE email = ?', [email]);
     const newUtente = results[0];
     (0, auth_1.SetUtente)(req, res, newUtente);
