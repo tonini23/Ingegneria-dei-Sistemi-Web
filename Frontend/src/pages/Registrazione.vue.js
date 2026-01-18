@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import { mostraNotifica } from '../notification';
 export default {};
 ;
 const __VLS_ctx = {};
@@ -84,12 +85,23 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 /** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
 /** @type {__VLS_StyleScopedClasses['label-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "number",
+    type: "text",
+    maxlength: "10",
+    value: (__VLS_ctx.matricola),
     ...{ class: "input-custom" },
     name: "matricola",
 });
-(__VLS_ctx.matricola);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
+if (__VLS_ctx.erroreMatricola) {
+    __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+        ...{ class: "text-danger mt-1 small fw-bold" },
+    });
+    /** @type {__VLS_StyleScopedClasses['text-danger']} */ ;
+    /** @type {__VLS_StyleScopedClasses['mt-1']} */ ;
+    /** @type {__VLS_StyleScopedClasses['small']} */ ;
+    /** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+    (__VLS_ctx.erroreMatricola);
+}
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "mb-4 d-flex justify-content-center align-items-center" },
 });
@@ -241,12 +253,23 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
 /** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
 /** @type {__VLS_StyleScopedClasses['label-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "number",
+    type: "text",
+    maxlength: "10",
+    value: (__VLS_ctx.matricola),
     ...{ class: "input-custom" },
     name: "matricola",
 });
-(__VLS_ctx.matricola);
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
+if (__VLS_ctx.erroreMatricola) {
+    __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+        ...{ class: "text-danger mt-1 small fw-bold" },
+    });
+    /** @type {__VLS_StyleScopedClasses['text-danger']} */ ;
+    /** @type {__VLS_StyleScopedClasses['mt-1']} */ ;
+    /** @type {__VLS_StyleScopedClasses['small']} */ ;
+    /** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+    (__VLS_ctx.erroreMatricola);
+}
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "row col-5 row-gap-5 mb-5" },
 });
@@ -310,7 +333,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
 /** @type {__VLS_StyleScopedClasses['btn-confirm']} */ ;
 /** @type {__VLS_StyleScopedClasses['mt-3']} */ ;
 // @ts-ignore
-[onSubmit, onSubmit, nome, nome, cognome, cognome, matricola, matricola, email, email, password, password, conferma_password, conferma_password,];
+[onSubmit, onSubmit, nome, nome, cognome, cognome, matricola, matricola, erroreMatricola, erroreMatricola, erroreMatricola, erroreMatricola, email, email, password, password, conferma_password, conferma_password,];
 const __VLS_export = defineComponent({
     data() {
         return {
@@ -320,10 +343,21 @@ const __VLS_export = defineComponent({
             email: '',
             password: '',
             conferma_password: '',
+            erroreMatricola: '',
         };
     },
     methods: {
         async onSubmit() {
+            this.erroreMatricola = '';
+            const regexMatricola = /^\d+$/;
+            if (!regexMatricola.test(this.matricola)) {
+                this.erroreMatricola = "La matricola deve contenere solo numeri.";
+                return;
+            }
+            if (this.matricola.length > 10 || this.matricola.length < 7) {
+                this.erroreMatricola = "La matricola Deve avere almeno 7 cifre e massimo 10 cifre.";
+                return;
+            }
             try {
                 await axios.post("/api/auth/register", {
                     nome: this.nome,
@@ -332,12 +366,15 @@ const __VLS_export = defineComponent({
                     email: this.email,
                     password: this.password,
                 });
-                console.log("Registrazione avvenuta con successo!");
-                location.href = "/";
+                mostraNotifica("Registrazione completata! Ora sei loggato.", "success");
+                setTimeout(() => {
+                    location.href = "/";
+                }, 2000);
             }
             catch (e) {
                 if (e.response) {
                     console.log(e.response.data.message);
+                    mostraNotifica(e.response.data.message, "error");
                 }
             }
         },

@@ -1,93 +1,144 @@
 <script lang="ts">
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import { mostraNotifica } from '../notification'; // Assicurati che l'import sia corretto (mostraNotifica o mostraNotifica)
 
 export default defineComponent({
   data() {
     return {
-      nome: '',
-      cognome: '',
-      matricola: '',
       email: '',
       password: '',
-      conferma_password: '',
     };
   },
   methods: {
       async onSubmit(){
-        if(this.password !== this.conferma_password){
-          console.log("Le password non coincidono!");
-          return;
+        
+        if (!this.email || !this.password) {
+            mostraNotifica("Inserisci email e password", "error");
+            return;
         }
+
         try {
+          
           await axios.post("/api/auth/login", {
-            nome: this.nome,
-            cognome: this.cognome,
-            matricola: this.matricola,
             email: this.email,
             password: this.password,
           });
-          location.href = "/";
+          
+          mostraNotifica("Login effettuato con successo!", "success");
+          
+          setTimeout(() => {
+            location.href = "/"; 
+          }, 1500);
+
         } catch (e: any) {
           if(e.response){
-            
+            mostraNotifica(e.response.data.message, "error");
+          } else {
+            mostraNotifica("Errore di connessione", "error");
           }
-      }
+        }
     },
   },
 });
-
 </script>
-
 <template>
-   <main>
-      <div class="align-items-center text-center mt-5 mb-5 row justify-content-center">
-        <div class="col-5" style="height: 100%;">
-              
-          <div class="align-items-center text-center mt-5 mb-5">
-                        <h1 class="title-custom"> Accedi </h1>
-          </div>
-                    
-          <form action="/" class="align-items-center text-center mb-5">
+  <main>
+    
+    <div class="d-lg-none">
+      
+      <div class="align-items-center text-center mt-5 mb-5">
+        <h1 class="title-custom">Accedi</h1>
+      </div>
 
-            <div class="mb-5">
-                <label for="email" class="fw-bold label-custom">Email</label>
-                <input type="email" name="email" class="input-custom" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="password" class="fw-bold label-custom">Password</label>
-                <input type="password" name="password" class="input-custom" required>
-            </div>
-
-            <router-link to="/pass_dimenticata">
-                <div class="align-items-end text-end mb-5 me-4">
-                    <a href="" class="text-decoration-none fst-italic">Password Dimenticata</a>
-                </div>
-            </router-link>
-
-            <div class="row justify-content-center">
-                <button class="col-5 btn text-white shadow fw-bold py-1" style="background-color: #6B0808; width: 40%; border-radius: 20px;">
-                    Accedi
-                </button>
-            </div>
-          </form>
+      <form class="align-items-center text-center mb-5" @submit.prevent="onSubmit">
+        
+        <div class="mb-4 d-flex justify-content-center align-items-center">
+          <label for="email" class="fw-bold label-custom">Email</label>
+          <input type="email" v-model="email" class="input-custom" name="email" required>
         </div>
 
-          <div class="col-5" style="height: 100%;">
-                    
-            <div class="align-items-center text-center mt-5 mb-5">
-                        <h1 class="title-custom"> Non hai un account? </h1>
+        <div class="mb-2 d-flex justify-content-center align-items-center">
+          <label for="password" class="fw-bold label-custom">Password</label>
+          <input type="password" v-model="password" class="input-custom" name="password" required>
+        </div>
+
+        <div class="mb-4 text-end" style="width: 85%; margin: 0 auto;">
+           <router-link to="/pass_dimenticata" class="text-decoration-none fst-italic text-dark" style="font-size: 0.9rem;">
+             Password Dimenticata?
+           </router-link>
+        </div>
+
+        <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-confirm">
+          Accedi
+        </button>
+      </form>
+
+      <hr class="my-5 w-75 mx-auto" style="border-top: 2px solid #ccc;">
+
+      <div class="align-items-center text-center mb-4">
+        <h2>Non hai un account?</h2>
+      </div>
+
+      <div class="d-flex flex-column align-items-center gap-3 mb-5">
+        <router-link to="/registrazione" class="w-100 text-center">
+             <button class="btn btn-danger shadow-lg fw-bold py-2" style="width: 60%; border-radius: 20px;">
+                Registrati
+             </button>
+        </router-link>
+
+      </div>
+
+    </div>
+
+
+    <div class="justify-content-center align-items-center text-center mb-5 mt-5 d-none d-lg-block">
+      <div class="row justify-content-center align-items-start mt-5">
+        
+        <div class="col-5 border-end border-2 pe-5">
+            <div class="align-items-center text-center mb-5">
+                <h1 class="title-custom">Accedi</h1>
+            </div>
+            
+            <form class="align-items-center text-center mb-4" @submit.prevent="onSubmit">
+                <div class="mb-4 d-flex justify-content-center align-items-center">
+                    <label for="email" class="fw-bold label-custom">Email</label>
+                    <input type="email" v-model="email" class="input-custom" name="email">
+                </div>
+                <div class="mb-2 d-flex justify-content-center align-items-center">
+                    <label for="password" class="fw-bold label-custom">Password</label>
+                    <input type="password" v-model="password" class="input-custom" name="password">
+                </div>
+
+                <div class="mb-5 text-end pe-5 me-5">
+                    <router-link to="/pass_dimenticata" class="text-decoration-none fst-italic text-dark">
+                        Password Dimenticata?
+                    </router-link>
+                </div>
+
+                <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-confirm mt-3" style="width:40%;">
+                    Accedi
+                </button>
+            </form>
+        </div>
+
+        <div class="col-5 ps-5 d-flex flex-column justify-content-center" style="height: 100%;">
+            <div class="align-items-center text-center mb-5 mt-4">
+                <h2>Non hai un account?</h2>
             </div>
 
-            <router-link to="/registrazione">
-                <button class="col-4 btn btn-lg btn-danger p-3 shadow-lg my-5 btn-large">Registrati</button>
-            </router-link>
+            <div class="d-flex flex-column align-items-center gap-4 mt-3">
+                <router-link to="/registrazione" class="w-100">
+                    <button class="btn btn-danger shadow-lg fw-bold py-3 px-5" style="border-radius: 30px; font-size: 1.2rem; width: 60%;">
+                        Registrati
+                    </button>
+                </router-link>
 
-            <router-link to="/studente">
-                <button class="col-4 btn btn-lg btn-danger p-3 shadow-lg mt-4 mb-5 btn-large">Entra come guest</button>
-            </router-link>
-          </div>
-      </div>      
-    </main>
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
 </template>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import { mostraNotifica } from '../notification';
 export default {};
 ;
 const __VLS_ctx = {};
@@ -194,17 +195,21 @@ const __VLS_export = defineComponent({
                 return;
             }
             try {
-                await axios.post("/api/registrazione", {
+                await axios.post("/api/auth/login", {
                     nome: this.nome,
                     cognome: this.cognome,
                     matricola: this.matricola,
                     email: this.email,
                     password: this.password,
                 });
-                location.href = "/";
+                mostraNotifica("Registrazione completata! Ora sei loggato.", "success");
+                setTimeout(() => {
+                    location.href = "/";
+                }, 2000);
             }
             catch (e) {
                 if (e.response) {
+                    mostraNotifica(e.response.data.message, "error");
                 }
             }
         },

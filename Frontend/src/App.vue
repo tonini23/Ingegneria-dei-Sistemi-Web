@@ -3,11 +3,18 @@ import { defineComponent } from 'vue';
 import Navbar from './components/Navbar.vue';
 import { Utente } from './types';
 import axios from 'axios';
+import { statoNotifica } from './notification';
 
 
 export default defineComponent({
   components: { 
     Navbar
+  },
+  data() {
+    return {
+      utente: {} as Utente,
+      statoNotifica
+    };
   },
 });
 </script>
@@ -22,6 +29,20 @@ export default defineComponent({
   </header>
 
   <router-view></router-view>
+
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055">
+    <div class="toast align-items-center text-white border-0" 
+        :class="{'show': statoNotifica.show, 'text-bg-success': statoNotifica.type === 'success', 'text-bg-danger': statoNotifica.type === 'error'}"
+        role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+        <div class="toast-body fw-bold">
+            {{ statoNotifica.message }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" 
+                @click="statoNotifica.show = false"></button>
+        </div>
+    </div>
+    </div>
 
   <footer class="text-white footer fixed-bottom">
     <p> Progetto svolto da: </p>

@@ -1,6 +1,7 @@
 <script lang="ts">
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import { mostraNotifica } from '../notification';
 
 export default defineComponent({
   data() {
@@ -40,11 +41,15 @@ export default defineComponent({
             email: this.email,
             password: this.password,
           });
-          console.log("Registrazione avvenuta con successo!");
-          location.href = "/";
+          mostraNotifica("Registrazione completata! Ora sei loggato.", "success");
+          
+          setTimeout(() => {
+            location.href = "/"; 
+        }, 2000);
         } catch (e: any) {
           if(e.response){
             console.log(e.response.data.message);
+            mostraNotifica(e.response.data.message, "error");
           }
       }
     },

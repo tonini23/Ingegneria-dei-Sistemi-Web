@@ -37,7 +37,15 @@ const updatePrenotazione = () => {
 onMounted(() => {
     getPrenotazioni();
 });
-const boh = [1, 2, 3, 4];
+async function logout() {
+    try {
+        await axios.post('/api/auth/logout');
+        location.reload();
+    }
+    catch (error) {
+        console.error("Errore durante il logout:", error);
+    }
+}
 const __VLS_ctx = {
     ...{},
     ...{},
@@ -220,6 +228,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-5']} */ ;
 /** @type {__VLS_StyleScopedClasses['gap-3']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
+    ...{ onClick: (__VLS_ctx.logout) },
     ...{ class: "col-5 btn text-white shadow fw-bold py-2" },
     ...{ style: {} },
 });
@@ -479,6 +488,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mb-5']} */ ;
 /** @type {__VLS_StyleScopedClasses['gap-3']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
+    ...{ onClick: (__VLS_ctx.logout) },
     ...{ class: "col-5 btn text-white shadow fw-bold py-2" },
     ...{ style: {} },
 });
@@ -547,7 +557,7 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
 /** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
 /** @type {__VLS_StyleScopedClasses['py-2']} */ ;
 // @ts-ignore
-[updatePrenotazione, deletePrenotazione, deletePrenotazione,];
+[logout, logout, updatePrenotazione, deletePrenotazione, deletePrenotazione,];
 const __VLS_export = (await import('vue')).defineComponent({});
 export default {};
 //# sourceMappingURL=Profilo.vue.js.map
