@@ -21,10 +21,23 @@
                     Data
                 </h2>
                 <div class="">
-                    <input type="text" name="" class="col-3 input-base input-narrow input-custom">
-                    <input type="text" name="" class="col-6 input-base input-narrow input-custom">
-                    <input type="text" name="" class="col-6 mt-1 input-base input-narrow input-custom">
-                </div>
+                        <div class="d-flex gap-2 mb-2 justify-content-center">
+                            <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                <option>29</option>
+                                <option>30</option>
+                            </select>
+                            <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                <option>Nov</option>
+                                <option>Dic</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <select class="form-select rounded-pill border-0 text-center fw-bold w-100">
+                                <option>2025</option>
+                                <option>2026</option>
+                            </select>
+                        </div>
+                    </div>
             </div>
             <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
                 <h2>
@@ -46,11 +59,7 @@
                 <div class="row">
                     <div class="pt-1 pb-2 mt-1">
                         <select name="materia" class="mt-1 input-base input-wide">
-                            <option>123131</option>
-                            <option>123131</option>
-                            <option>123131</option>
-                            <option>123131</option>
-                            <option>123131</option>
+
                         </select>
                     </div>
                 </div>
@@ -82,35 +91,18 @@
                     <th>Tutor</th>
                 </tr>
             </thead>
-            <tbody> <!-- <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
-                <td>
-                <input type="radio" name="studente" class="custom-check">
-                </td>
-                <td>{{ prenotazione.Data }}</td>
-                <td>{{ prenotazione.Ora }}</td>
-                <td>{{ prenotazione.Luogo }}</td>
-                <td>{{ prenotazione.Materia }}</td>
-                <td>{{ prenotazione.Tutor }}</td>
-                </tr> -->
-                <tr> <td>
-                    <input type="radio" class="custom-check">
-                </td>
-                <td>12-11-2024</td>
-                <td>14:00</td>
-                <td>Biblioteca centrale</td>
-                <td>Analisi Matematica</td>
-                <td>Mario Rossi</td>
-                </tr>
-                <tr> <td>
-                    <input type="radio" name="scelta" class="custom-check">
+            <!-- <tbody> 
+                <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+                    <td>
+                    <input type="radio" name="studente" class="custom-check">
                     </td>
-                    <td>12-11-2024</td>
-                    <td>14:00</td>
-                    <td>Biblioteca centrale</td>
-                    <td>Analisi Matematica</td>
-                    <td>Mario Rossi</td>
-                </tr>
-            </tbody>
+                    <td>{{ prenotazione.Data }}</td>
+                    <td>{{ prenotazione.Ora }}</td>
+                    <td>{{ prenotazione.Luogo }}</td>
+                    <td>{{ prenotazione.Materia }}</td>
+                    <td>{{ prenotazione.Tutor }}</td>
+                    </tr>
+                </tbody>-->
             </table>
         </div>
 
@@ -222,7 +214,7 @@
                         <th>Tutor</th>
                     </tr>
                 </thead>
-                <tbody> <!-- <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+                <!-- <tbody>  <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                     <td>
                     <input type="radio" name="studente" class="custom-check">
                     </td>
@@ -231,26 +223,8 @@
                     <td>{{ prenotazione.Luogo }}</td>
                     <td>{{ prenotazione.Materia }}</td>
                     <td>{{ prenotazione.Tutor }}</td>
-                    </tr> -->
-                    <tr> <td>
-                        <input type="radio" class="custom-check">
-                    </td>
-                    <td>12-11-2024</td>
-                    <td>14:00</td>
-                    <td>Biblioteca centrale</td>
-                    <td>Analisi Matematica</td>
-                    <td>Mario Rossi</td>
                     </tr>
-                    <tr> <td>
-                        <input type="radio" class="custom-check">
-                        </td>
-                        <td>12-11-2024</td>
-                        <td>14:00</td>
-                        <td>Biblioteca centrale</td>
-                        <td>Analisi Matematica</td>
-                        <td>Mario Rossi</td>
-                    </tr>
-                </tbody>
+                </tbody>-->
                 </table>
             </div>
 

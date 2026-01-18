@@ -20,7 +20,7 @@ export default defineComponent({
           return;
         }
         try {
-          await axios.post("/api/registrazione", {
+          await axios.post("/api/auth/login", {
             nome: this.nome,
             cognome: this.cognome,
             matricola: this.matricola,

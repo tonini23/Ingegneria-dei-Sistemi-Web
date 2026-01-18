@@ -37,6 +37,7 @@ const updatePrenotazione = () => {
 onMounted(() => {
     getPrenotazioni();
 });
+const boh = [1, 2, 3, 4];
 const __VLS_ctx = {
     ...{},
     ...{},
@@ -269,31 +270,6 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.tbody, __VLS_intrinsics.tbody)({});
-for (const [prenotazione] of __VLS_vFor((__VLS_ctx.prenotazioni))) {
-    __VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({
-        key: (prenotazione.Id),
-    });
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    __VLS_asFunctionalElement1(__VLS_intrinsics.input)({
-        type: "checkbox",
-        ...{ class: "custom-check" },
-    });
-    /** @type {__VLS_StyleScopedClasses['custom-check']} */ ;
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (__VLS_ctx.formattaData(prenotazione.Data));
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (__VLS_ctx.formattaOra(prenotazione.Ora));
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.Localita);
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.materia_nome);
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.nome_studente);
-    (prenotazione.cognome_studente);
-    // @ts-ignore
-    [prenotazioni, formattaData, formattaOra,];
-}
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "row justify-content-center mt-3 gap-4" },
 });
@@ -552,30 +528,6 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.tbody, __VLS_intrinsics.tbody)({});
-for (const [prenotazione] of __VLS_vFor((__VLS_ctx.prenotazioni))) {
-    __VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({
-        key: (prenotazione.Id),
-    });
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    __VLS_asFunctionalElement1(__VLS_intrinsics.input)({
-        type: "checkbox",
-        ...{ class: "custom-check" },
-    });
-    /** @type {__VLS_StyleScopedClasses['custom-check']} */ ;
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (__VLS_ctx.formattaData(prenotazione.Data));
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (__VLS_ctx.formattaOra(prenotazione.Ora));
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.Localita);
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.materia_nome);
-    __VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-    (prenotazione.nome_studente);
-    (prenotazione.cognome_studente);
-    // @ts-ignore
-    [prenotazioni, formattaData, formattaOra, updatePrenotazione, deletePrenotazione,];
-}
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "row justify-content-center mt-3 gap-4" },
 });
@@ -584,27 +536,18 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 /** @type {__VLS_StyleScopedClasses['mt-3']} */ ;
 /** @type {__VLS_StyleScopedClasses['gap-4']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
-    ...{ onClick: (__VLS_ctx.updatePrenotazione) },
-    ...{ class: "col-4 btn btn-blue shadow fw-bold py-2" },
-});
-/** @type {__VLS_StyleScopedClasses['col-4']} */ ;
-/** @type {__VLS_StyleScopedClasses['btn']} */ ;
-/** @type {__VLS_StyleScopedClasses['btn-blue']} */ ;
-/** @type {__VLS_StyleScopedClasses['shadow']} */ ;
-/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
-/** @type {__VLS_StyleScopedClasses['py-2']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
     ...{ onClick: (__VLS_ctx.deletePrenotazione) },
-    ...{ class: "col-4 btn btn-red shadow fw-bold py-2" },
+    ...{ class: "col-4 btn text-white btn-red shadow fw-bold py-2" },
 });
 /** @type {__VLS_StyleScopedClasses['col-4']} */ ;
 /** @type {__VLS_StyleScopedClasses['btn']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-white']} */ ;
 /** @type {__VLS_StyleScopedClasses['btn-red']} */ ;
 /** @type {__VLS_StyleScopedClasses['shadow']} */ ;
 /** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
 /** @type {__VLS_StyleScopedClasses['py-2']} */ ;
 // @ts-ignore
-[updatePrenotazione, deletePrenotazione,];
+[updatePrenotazione, deletePrenotazione, deletePrenotazione,];
 const __VLS_export = (await import('vue')).defineComponent({});
 export default {};
 //# sourceMappingURL=Profilo.vue.js.map

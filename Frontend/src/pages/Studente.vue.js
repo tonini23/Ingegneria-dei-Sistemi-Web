@@ -42,34 +42,51 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "" },
 });
 /** @type {__VLS_StyleScopedClasses['']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "text",
-    name: "",
-    ...{ class: "col-3 input-base input-narrow input-custom" },
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "d-flex gap-2 mb-2 justify-content-center" },
 });
-/** @type {__VLS_StyleScopedClasses['col-3']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-base']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-narrow']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "text",
-    name: "",
-    ...{ class: "col-6 input-base input-narrow input-custom" },
+/** @type {__VLS_StyleScopedClasses['d-flex']} */ ;
+/** @type {__VLS_StyleScopedClasses['gap-2']} */ ;
+/** @type {__VLS_StyleScopedClasses['mb-2']} */ ;
+/** @type {__VLS_StyleScopedClasses['justify-content-center']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.select, __VLS_intrinsics.select)({
+    ...{ class: "form-select rounded-pill border-0 text-center fw-bold" },
+    ...{ style: {} },
 });
-/** @type {__VLS_StyleScopedClasses['col-6']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-base']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-narrow']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "text",
-    name: "",
-    ...{ class: "col-6 mt-1 input-base input-narrow input-custom" },
+/** @type {__VLS_StyleScopedClasses['form-select']} */ ;
+/** @type {__VLS_StyleScopedClasses['rounded-pill']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-0']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.select, __VLS_intrinsics.select)({
+    ...{ class: "form-select rounded-pill border-0 text-center fw-bold" },
+    ...{ style: {} },
 });
-/** @type {__VLS_StyleScopedClasses['col-6']} */ ;
-/** @type {__VLS_StyleScopedClasses['mt-1']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-base']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-narrow']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
+/** @type {__VLS_StyleScopedClasses['form-select']} */ ;
+/** @type {__VLS_StyleScopedClasses['rounded-pill']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-0']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "d-flex justify-content-center" },
+});
+/** @type {__VLS_StyleScopedClasses['d-flex']} */ ;
+/** @type {__VLS_StyleScopedClasses['justify-content-center']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.select, __VLS_intrinsics.select)({
+    ...{ class: "form-select rounded-pill border-0 text-center fw-bold w-100" },
+});
+/** @type {__VLS_StyleScopedClasses['form-select']} */ ;
+/** @type {__VLS_StyleScopedClasses['rounded-pill']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-0']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+/** @type {__VLS_StyleScopedClasses['w-100']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "col-5 shadow-lg p-4 mb-1 text-white filter-box" },
 });
@@ -137,11 +154,6 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.select, __VLS_intrinsics.select)({
 /** @type {__VLS_StyleScopedClasses['mt-1']} */ ;
 /** @type {__VLS_StyleScopedClasses['input-base']} */ ;
 /** @type {__VLS_StyleScopedClasses['input-wide']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "col-5 shadow-lg p-4 mb-1 text-white filter-box" },
 });
@@ -196,32 +208,6 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.tbody, __VLS_intrinsics.tbody)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.input)({
-    type: "radio",
-    ...{ class: "custom-check" },
-});
-/** @type {__VLS_StyleScopedClasses['custom-check']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.input)({
-    type: "radio",
-    name: "scelta",
-    ...{ class: "custom-check" },
-});
-/** @type {__VLS_StyleScopedClasses['custom-check']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
     ...{ class: "btn btn-danger shadow-lg fw-bold p-1 mb-2" },
     ...{ style: {} },
@@ -264,65 +250,113 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.form, __VLS_intrinsics.form)({
 /** @type {__VLS_StyleScopedClasses['mb-2']} */ ;
 /** @type {__VLS_StyleScopedClasses['mt-3']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-    ...{ class: "row justify-content-center align-items-center text-center mt-4 mb-3" },
+    ...{ class: "col-12 col-md-8 text-white p-4 shadow-lg" },
+    ...{ style: {} },
+});
+/** @type {__VLS_StyleScopedClasses['col-12']} */ ;
+/** @type {__VLS_StyleScopedClasses['col-md-8']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-white']} */ ;
+/** @type {__VLS_StyleScopedClasses['p-4']} */ ;
+/** @type {__VLS_StyleScopedClasses['shadow-lg']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.h2, __VLS_intrinsics.h2)({
+    ...{ class: "text-center mb-3" },
+});
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['mb-3']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "row align-items-center" },
+});
+/** @type {__VLS_StyleScopedClasses['row']} */ ;
+/** @type {__VLS_StyleScopedClasses['align-items-center']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "col-5 text-center border-end border-white" },
+});
+/** @type {__VLS_StyleScopedClasses['col-5']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-end']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-white']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.label, __VLS_intrinsics.label)({
+    ...{ class: "mb-1 fs-5" },
+});
+/** @type {__VLS_StyleScopedClasses['mb-1']} */ ;
+/** @type {__VLS_StyleScopedClasses['fs-5']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.input)({
+    type: "time",
+    ...{ class: "form-control rounded-pill text-center border-0 fw-bold" },
+    value: "16:40",
+});
+/** @type {__VLS_StyleScopedClasses['form-control']} */ ;
+/** @type {__VLS_StyleScopedClasses['rounded-pill']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-0']} */ ;
+/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "col-7" },
+});
+/** @type {__VLS_StyleScopedClasses['col-7']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "d-flex gap-2 mb-2 justify-content-center" },
+});
+/** @type {__VLS_StyleScopedClasses['d-flex']} */ ;
+/** @type {__VLS_StyleScopedClasses['gap-2']} */ ;
+/** @type {__VLS_StyleScopedClasses['mb-2']} */ ;
+/** @type {__VLS_StyleScopedClasses['justify-content-center']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.select, __VLS_intrinsics.select)({
+    ...{ class: "form-select rounded-pill border-0 text-center fw-bold" },
+    ...{ style: {} },
+});
+/** @type {__VLS_StyleScopedClasses['form-select']} */ ;
+/** @type {__VLS_StyleScopedClasses['rounded-pill']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-0']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.select, __VLS_intrinsics.select)({
+    ...{ class: "form-select rounded-pill border-0 text-center fw-bold" },
+    ...{ style: {} },
+});
+/** @type {__VLS_StyleScopedClasses['form-select']} */ ;
+/** @type {__VLS_StyleScopedClasses['rounded-pill']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-0']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "d-flex justify-content-center" },
+});
+/** @type {__VLS_StyleScopedClasses['d-flex']} */ ;
+/** @type {__VLS_StyleScopedClasses['justify-content-center']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.select, __VLS_intrinsics.select)({
+    ...{ class: "form-select rounded-pill border-0 text-center fw-bold w-100" },
+});
+/** @type {__VLS_StyleScopedClasses['form-select']} */ ;
+/** @type {__VLS_StyleScopedClasses['rounded-pill']} */ ;
+/** @type {__VLS_StyleScopedClasses['border-0']} */ ;
+/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['fw-bold']} */ ;
+/** @type {__VLS_StyleScopedClasses['w-100']} */ ;
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
+__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+    ...{ class: "row justify-content-center gap-5 align-items-center text-center mt-4 mb-3" },
 });
 /** @type {__VLS_StyleScopedClasses['row']} */ ;
 /** @type {__VLS_StyleScopedClasses['justify-content-center']} */ ;
+/** @type {__VLS_StyleScopedClasses['gap-5']} */ ;
 /** @type {__VLS_StyleScopedClasses['align-items-center']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-center']} */ ;
 /** @type {__VLS_StyleScopedClasses['mt-4']} */ ;
 /** @type {__VLS_StyleScopedClasses['mb-3']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-    ...{ class: "col-2 shadow-lg p-3 mb-1 mx-3 text-white filter-box" },
+    ...{ class: "col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box" },
 });
-/** @type {__VLS_StyleScopedClasses['col-2']} */ ;
-/** @type {__VLS_StyleScopedClasses['shadow-lg']} */ ;
-/** @type {__VLS_StyleScopedClasses['p-3']} */ ;
-/** @type {__VLS_StyleScopedClasses['mb-1']} */ ;
-/** @type {__VLS_StyleScopedClasses['mx-3']} */ ;
-/** @type {__VLS_StyleScopedClasses['text-white']} */ ;
-/** @type {__VLS_StyleScopedClasses['filter-box']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.h2, __VLS_intrinsics.h2)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-    ...{ class: "" },
-});
-/** @type {__VLS_StyleScopedClasses['']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "text",
-    name: "",
-    ...{ class: "col-3 input-base input-narrow input-custom" },
-});
-/** @type {__VLS_StyleScopedClasses['col-3']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-base']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-narrow']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "text",
-    name: "",
-    ...{ class: "col-6 input-base input-narrow input-custom" },
-});
-/** @type {__VLS_StyleScopedClasses['col-6']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-base']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-narrow']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
-    type: "text",
-    name: "",
-    ...{ class: "col-6 mt-1 input-base input-narrow input-custom" },
-});
-/** @type {__VLS_StyleScopedClasses['col-6']} */ ;
-/** @type {__VLS_StyleScopedClasses['mt-1']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-base']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-narrow']} */ ;
-/** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-    ...{ class: "col-2 shadow-lg p-4 mb-1 mx-3 text-white filter-box" },
-});
-/** @type {__VLS_StyleScopedClasses['col-2']} */ ;
+/** @type {__VLS_StyleScopedClasses['col-4']} */ ;
+/** @type {__VLS_StyleScopedClasses['col-md-3']} */ ;
 /** @type {__VLS_StyleScopedClasses['shadow-lg']} */ ;
 /** @type {__VLS_StyleScopedClasses['p-4']} */ ;
 /** @type {__VLS_StyleScopedClasses['mb-1']} */ ;
-/** @type {__VLS_StyleScopedClasses['mx-3']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-white']} */ ;
 /** @type {__VLS_StyleScopedClasses['filter-box']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.h2, __VLS_intrinsics.h2)({});
@@ -347,13 +381,13 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.input, __VLS_intrinsics.input)({
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 /** @type {__VLS_StyleScopedClasses['input-custom']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-    ...{ class: "col-2 shadow-lg p-4 mb-1 mx-3 text-white filter-box" },
+    ...{ class: "col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box" },
 });
-/** @type {__VLS_StyleScopedClasses['col-2']} */ ;
+/** @type {__VLS_StyleScopedClasses['col-4']} */ ;
+/** @type {__VLS_StyleScopedClasses['col-md-3']} */ ;
 /** @type {__VLS_StyleScopedClasses['shadow-lg']} */ ;
 /** @type {__VLS_StyleScopedClasses['p-4']} */ ;
 /** @type {__VLS_StyleScopedClasses['mb-1']} */ ;
-/** @type {__VLS_StyleScopedClasses['mx-3']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-white']} */ ;
 /** @type {__VLS_StyleScopedClasses['filter-box']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.h2, __VLS_intrinsics.h2)({});
@@ -380,13 +414,13 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({})
 __VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.option, __VLS_intrinsics.option)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-    ...{ class: "col-2 shadow-lg p-4 mb-1 mx-3 text-white filter-box" },
+    ...{ class: "col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box" },
 });
-/** @type {__VLS_StyleScopedClasses['col-2']} */ ;
+/** @type {__VLS_StyleScopedClasses['col-4']} */ ;
+/** @type {__VLS_StyleScopedClasses['col-md-3']} */ ;
 /** @type {__VLS_StyleScopedClasses['shadow-lg']} */ ;
 /** @type {__VLS_StyleScopedClasses['p-4']} */ ;
 /** @type {__VLS_StyleScopedClasses['mb-1']} */ ;
-/** @type {__VLS_StyleScopedClasses['mx-3']} */ ;
 /** @type {__VLS_StyleScopedClasses['text-white']} */ ;
 /** @type {__VLS_StyleScopedClasses['filter-box']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.h2, __VLS_intrinsics.h2)({});
@@ -436,31 +470,6 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.th, __VLS_intrinsics.th)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.tbody, __VLS_intrinsics.tbody)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.input)({
-    type: "radio",
-    ...{ class: "custom-check" },
-});
-/** @type {__VLS_StyleScopedClasses['custom-check']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.tr, __VLS_intrinsics.tr)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.input)({
-    type: "radio",
-    ...{ class: "custom-check" },
-});
-/** @type {__VLS_StyleScopedClasses['custom-check']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.td, __VLS_intrinsics.td)({});
 __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
     ...{ class: "col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-search" },
     ...{ style: {} },

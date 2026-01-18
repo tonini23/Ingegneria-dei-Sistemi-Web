@@ -45,7 +45,14 @@ onMounted(() => {
     getPrenotazioni();
 });
 
-const boh = [1, 2, 3, 4];
+async function logout() {
+    try {
+        await axios.post('/api/auth/logout');
+        location.reload();
+    } catch (error) {
+        console.error("Errore durante il logout:", error);
+    }
+}
 </script>
 
 <template>
@@ -96,7 +103,7 @@ const boh = [1, 2, 3, 4];
       </div>
 
       <div class="row justify-content-center mb-5 gap-3">
-        <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
+        <button @click="logout" class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
           Logout
         </button>
       </div>
@@ -118,7 +125,7 @@ const boh = [1, 2, 3, 4];
                   <th>Studente</th>
                 </tr>
               </thead>
-              <tbody>
+             <!-- <tbody>
                 <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                   <td>
                     <input type="checkbox" class="custom-check">
@@ -129,7 +136,7 @@ const boh = [1, 2, 3, 4];
                   <td>{{ prenotazione.materia_nome }}</td>
                   <td>{{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}</td>
                 </tr>
-              </tbody>
+              </tbody>-->
             </table>
           </div>
 
@@ -191,7 +198,7 @@ const boh = [1, 2, 3, 4];
           </div>
 
           <div class="row justify-content-center mb-5 gap-3">
-            <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
+            <button @click="logout" class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
               Logout
             </button>
           </div>
@@ -216,7 +223,7 @@ const boh = [1, 2, 3, 4];
                     </tr>
                   </thead>
                   <tbody>
-    <tr v-for="prenotazione in boh" :key="prenotazione.id">
+    <!--<tr v-for="prenotazione in boh" :key="prenotazione.id">
         <td><input type="checkbox" class="custom-check"></td>
         <td></td>
         <td></td>
@@ -238,7 +245,7 @@ const boh = [1, 2, 3, 4];
                 Studente
             </span>
         </td>
-    </tr>
+    </tr>-->
 </tbody>
                 </table>
               </div>
