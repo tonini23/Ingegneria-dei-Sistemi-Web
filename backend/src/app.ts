@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser";
 import type { Request, Response, NextFunction } from 'express'; // <--- Nota "import type" e la riga separata
 import { prenotazioniRouter } from './routes/prenotazioniRouter'; 
 import { authRouter } from './routes/authRouter';
+import { materieRouter } from './routes/materieRouter';
+import { utentiRouter } from './routes/utentiRouter';
 
 
 const app: Express = express()
@@ -21,6 +23,8 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/', prenotazioniRouter);
 app.use('/', authRouter);
+app.use('/', materieRouter);
+app.use('/', utentiRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Content-Type', 'text/plain');
