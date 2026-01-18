@@ -132,21 +132,39 @@
               
         <form class="row justify-content-center align-items-center text-center mb-2 mt-3">
             
-
+            <div class="col-12 col-md-8 text-white p-4 shadow-lg" style="background-color: #6B0808; border-radius: 20px;">
+                <h2 class="text-center mb-3">Data</h2>
                 
-            <div class="row justify-content-center align-items-center text-center mt-4 mb-3">
-                        <div class="col-2 shadow-lg p-3 mb-1 mx-3 text-white filter-box">
-                            <h2>
-                                Data
-                            </h2>
-                            <div class="">
-                                <input type="text" name="" class="col-3 input-base input-narrow input-custom">
-                                <input type="text" name="" class="col-6 input-base input-narrow input-custom">
-                                <input type="text" name="" class="col-6 mt-1 input-base input-narrow input-custom">
-                            </div>
+                <div class="row align-items-center">
+                    <div class="col-5 text-center border-end border-white">
+                        <label class="mb-1 fs-5">Ora</label>
+                        <input type="time" class="form-control rounded-pill text-center border-0 fw-bold" value="16:40">
+                    </div>
+
+                    <div class="col-7">
+                        <div class="d-flex gap-2 mb-2 justify-content-center">
+                            <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                <option>29</option>
+                                <option>30</option>
+                            </select>
+                            <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                <option>Nov</option>
+                                <option>Dic</option>
+                            </select>
                         </div>
-                    
-                    <div class="col-2 shadow-lg p-4 mb-1 mx-3 text-white filter-box">
+                        <div class="d-flex justify-content-center">
+                            <select class="form-select rounded-pill border-0 text-center fw-bold w-100">
+                                <option>2025</option>
+                                <option>2026</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="row justify-content-center gap-5 align-items-center text-center mt-4 mb-3">
+
+                    <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
                         <h2>
                             Località
                         </h2>
@@ -159,7 +177,7 @@
                 
 
                 
-                    <div class="col-2 shadow-lg p-4 mb-1 mx-3 text-white filter-box">
+                    <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
                         <h2>
                             Materia
                         </h2>
@@ -175,7 +193,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2 shadow-lg p-4 mb-1 mx-3 text-white filter-box">
+                    <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
                         <h2>
                             Tutor
                         </h2>
@@ -189,7 +207,7 @@
 
             </div>
                         
-                <button class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-search" style="width: 25%;">
+                <button class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-search" style="width: 20%;">
                     Cerca
                 </button>
                     
@@ -236,7 +254,7 @@
                 </table>
             </div>
 
-            <button class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-search" style="width: 25%;">
+            <button class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-search" style="width: 20%;">
                     Conferma
             </button>
         </div>

@@ -212,7 +212,7 @@ const boh = [1, 2, 3, 4];
                       <th>Ora</th>
                       <th>Località</th>
                       <th>Materia</th>
-                      <th>Studente</th>
+                      <th>Partner</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -244,7 +244,7 @@ const boh = [1, 2, 3, 4];
               </div>
 
               <div class="row justify-content-center mt-3 gap-4">
-                <button class="col-4 btn btn-red shadow fw-bold py-2" @click="deletePrenotazione">
+                <button class="col-4 btn text-white btn-red shadow fw-bold py-2" @click="deletePrenotazione">
                   Disdici
                 </button>
               </div>
