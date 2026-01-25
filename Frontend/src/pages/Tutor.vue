@@ -1,5 +1,27 @@
 <script setup lang="ts">
-// Logica per recupero password
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
+import { Utente } from '../types';
+
+//CONFIGURAZIONE SELEZIONE DATA DINAMICA
+const nomiMesi = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+
+const annoCorrente = new Date().getFullYear();
+const anniDisponibili = [annoCorrente, annoCorrente + 1];
+const selectedAnno = ref(annoCorrente);
+const selectedMeseIndex = ref(new Date().getMonth()); // 0 = Gennaio, 11 = Dicembre
+const selectedGiorno = ref(new Date().getDate());
+
+// Calcola quanti giorni ha il mese scelto
+const giorniDisponibili = computed(() => {
+    // new Date(anno, mese + 1, 0).getDate() restituisce l'ultimo giorno del mese precedente
+    // Esempio: new Date(2025, 2, 0) -> Ultimo giorno di Febbraio 2025 (28)
+    const numeroGiorni = new Date(selectedAnno.value, selectedMeseIndex.value + 1, 0).getDate();
+    
+    // Crea un array da 1 a numeroGiorni [1, 2, ..., 30, 31]
+    return Array.from({ length: numeroGiorni }, (_, i) => i + 1);
+});
+
 </script>
 
 
@@ -24,19 +46,22 @@
 
                         <div class="col-7">
                             <div class="d-flex gap-2 mb-2 justify-content-center">
-                                <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
-                                    <option>29</option>
-                                    <option>30</option>
+                                <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                    <option v-for="giorno in giorniDisponibili" :key="giorno" :value="giorno">
+                                        {{ giorno }}
+                                    </option>
                                 </select>
-                                <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
-                                    <option>Nov</option>
-                                    <option>Dic</option>
+                                <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                    <option v-for="(mese, index) in nomiMesi" :key="index" :value="index">
+                                        {{ mese }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <select class="form-select rounded-pill border-0 text-center fw-bold w-100">
-                                    <option>2025</option>
-                                    <option>2026</option>
+                                <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100">
+                                    <option v-for="anno in anniDisponibili" :key="anno" :value="anno">
+                                        {{ anno }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -105,21 +130,24 @@
 
                                     <div class="col-7">
                                         <div class="d-flex gap-2 mb-2 justify-content-center">
-                                            <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
-                                                <option>29</option>
-                                                <option>30</option>
-                                            </select>
-                                            <select class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
-                                                <option>Nov</option>
-                                                <option>Dic</option>
-                                            </select>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <select class="form-select rounded-pill border-0 text-center fw-bold">
-                                                <option>2025</option>
-                                                <option>2026</option>
-                                            </select>
-                                        </div>
+                                <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                    <option v-for="giorno in giorniDisponibili" :key="giorno" :value="giorno">
+                                        {{ giorno }}
+                                    </option>
+                                </select>
+                                <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+                                    <option v-for="(mese, index) in nomiMesi" :key="index" :value="index">
+                                        {{ mese }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100">
+                                    <option v-for="anno in anniDisponibili" :key="anno" :value="anno">
+                                        {{ anno }}
+                                    </option>
+                                </select>
+                            </div>
                                     </div>
                                 </div>
                             </div>

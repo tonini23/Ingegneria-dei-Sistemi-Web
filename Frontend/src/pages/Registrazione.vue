@@ -1,6 +1,7 @@
 <script lang="ts">
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import { mostraNotifica } from '../notification';
 
 export default defineComponent({
   data() {
@@ -11,10 +12,27 @@ export default defineComponent({
       email: '',
       password: '',
       conferma_password: '',
+      erroreMatricola: '',
     };
   },
   methods: {
       async onSubmit(){
+
+        this.erroreMatricola = ''; 
+
+        const regexMatricola = /^\d+$/; 
+
+        if (!regexMatricola.test(this.matricola)) {
+          this.erroreMatricola = "La matricola deve contenere solo numeri.";
+          return; 
+        }
+
+      
+        if (this.matricola.length > 10 || this.matricola.length < 7) {
+          this.erroreMatricola = "La matricola Deve avere almeno 7 cifre e massimo 10 cifre.";
+          return; 
+        }
+
         try {
           await axios.post("/api/auth/register", {
             nome: this.nome,
@@ -23,11 +41,15 @@ export default defineComponent({
             email: this.email,
             password: this.password,
           });
-          console.log("Registrazione avvenuta con successo!");
-          location.href = "/";
+          mostraNotifica("Registrazione completata! Ora sei loggato.", "success");
+          
+          setTimeout(() => {
+            location.href = "/"; 
+        }, 2000);
         } catch (e: any) {
           if(e.response){
             console.log(e.response.data.message);
+            mostraNotifica(e.response.data.message, "error");
           }
       }
     },
@@ -53,7 +75,10 @@ export default defineComponent({
         </div>
         <div class="mb-4 d-flex justify-content-center align-items-center">
           <label for="matricola" class="fw-bold label-custom">Matricola</label>
-          <input type="number" v-model="matricola" class="input-custom" name="matricola">
+          <input type="text" maxlength="10" v-model="matricola" class="input-custom" name="matricola">
+        </div>
+        <div v-if="erroreMatricola" class="text-danger mt-1 small fw-bold">
+                {{ erroreMatricola }}
         </div>
         <div class="mb-4 d-flex justify-content-center align-items-center">
           <label for="email" class="fw-bold label-custom">Email</label>
@@ -90,7 +115,11 @@ export default defineComponent({
             </div>
             <div>
               <label for="matricola" class="fw-bold label-custom">Matricola</label>
-              <input type="number" v-model="matricola" class="input-custom" name="matricola">
+              <input type="text" maxlength="10" v-model="matricola" class="input-custom" name="matricola">
+            </div>
+
+            <div v-if="erroreMatricola" class="text-danger mt-1 small fw-bold">
+                {{ erroreMatricola }}
             </div>
           </div>
           <div class="row col-5 row-gap-5 mb-5">

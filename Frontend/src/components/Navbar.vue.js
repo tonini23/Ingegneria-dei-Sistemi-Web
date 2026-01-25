@@ -2,26 +2,6 @@ const __VLS_ctx = {};
 let __VLS_components;
 let __VLS_intrinsics;
 let __VLS_directives;
-__VLS_asFunctionalElement1(__VLS_intrinsics.header, __VLS_intrinsics.header)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-    ...{ class: "d-flex justify-content-center align-items-center pt-4 pb-2" },
-});
-/** @type {__VLS_StyleScopedClasses['d-flex']} */ ;
-/** @type {__VLS_StyleScopedClasses['justify-content-center']} */ ;
-/** @type {__VLS_StyleScopedClasses['align-items-center']} */ ;
-/** @type {__VLS_StyleScopedClasses['pt-4']} */ ;
-/** @type {__VLS_StyleScopedClasses['pb-2']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.h1, __VLS_intrinsics.h1)({
-    ...{ class: "m-0 text-white me-3" },
-});
-/** @type {__VLS_StyleScopedClasses['m-0']} */ ;
-/** @type {__VLS_StyleScopedClasses['text-white']} */ ;
-/** @type {__VLS_StyleScopedClasses['me-3']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.img, __VLS_intrinsics.img)({
-    src: "./img/download (4).png",
-    alt: "Unibo Logo",
-    ...{ style: {} },
-});
 __VLS_asFunctionalElement1(__VLS_intrinsics.nav, __VLS_intrinsics.nav)({
     ...{ class: "navbar navbar-expand-lg pb-3" },
 });
@@ -190,23 +170,6 @@ const __VLS_26 = __VLS_25({
 /** @type {__VLS_StyleScopedClasses['ps-0']} */ ;
 const { default: __VLS_29 } = __VLS_27.slots;
 var __VLS_27;
-let __VLS_30;
-/** @ts-ignore @type {typeof __VLS_components.routerView | typeof __VLS_components.RouterView | typeof __VLS_components.routerView | typeof __VLS_components.RouterView} */
-routerView;
-// @ts-ignore
-const __VLS_31 = __VLS_asFunctionalComponent1(__VLS_30, new __VLS_30({}));
-const __VLS_32 = __VLS_31({}, ...__VLS_functionalComponentArgsRest(__VLS_31));
-__VLS_asFunctionalElement1(__VLS_intrinsics.footer, __VLS_intrinsics.footer)({
-    ...{ class: "text-white footer fixed-bottom" },
-});
-/** @type {__VLS_StyleScopedClasses['text-white']} */ ;
-/** @type {__VLS_StyleScopedClasses['footer']} */ ;
-/** @type {__VLS_StyleScopedClasses['fixed-bottom']} */ ;
-__VLS_asFunctionalElement1(__VLS_intrinsics.p, __VLS_intrinsics.p)({});
-__VLS_asFunctionalElement1(__VLS_intrinsics.p, __VLS_intrinsics.p)({
-    ...{ class: "text-center" },
-});
-/** @type {__VLS_StyleScopedClasses['text-center']} */ ;
 const __VLS_export = (await import('vue')).defineComponent({});
 export default {};
-//# sourceMappingURL=App.vue.js.map
+//# sourceMappingURL=Navbar.vue.js.map

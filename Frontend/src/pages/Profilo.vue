@@ -2,9 +2,12 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { format } from 'path';
+import { Prenotazione } from '../types';
 
-const prenotazioni = ref<any[]>([]);
 
+const prenotazioni = ref<Prenotazione[]>([]);
+const currentUserId = ref<number | null>(null);
+  
 // Funzione per formattare la data
 const formattaData = (dataString: string) => {
     if (!dataString) return "";
@@ -22,30 +25,47 @@ const formattaOra = (oraString: string) => {
     return oraString.slice(0, 5); 
 };
 
-const getPrenotazioni = async () => {
-   try {
-        const response = await axios.get('/api/prenotazioni/');
+
+const getUtenteAndPrenotazioni = async () => {
+    try {
+        const resUtente = await axios.get('/api/auth/utente');
         
-        console.log("Dati ricevuti:", response.data);
-        prenotazioni.value = response.data;
+        currentUserId.value = resUtente.data.Id || resUtente.data.id;
+
+        if (currentUserId.value) {
+            await getPrenotazioni(currentUserId.value);
+        }
     } catch (error) {
-        console.error("Errore caricamento:", error);
+        console.error("Errore recupero utente:", error);
+        // Se non è loggato, magari rimandiamo al login o non mostriamo nulla
     }
 };
 
-const deletePrenotazione = () => {
-    console.log("Elimina prenotazione");
+// Funzione che scarica le prenotazioni passando l'ID
+const getPrenotazioni = async (id: number) => {
+   try {
+        const response = await axios.get(`/api/prenotazioni/${id}`);
+        console.log("Prenotazioni ricevute:", response.data);
+        prenotazioni.value = response.data;
+    } catch (error) {
+        console.error("Errore caricamento prenotazioni:", error);
+    }
 };
 
-const updatePrenotazione = () => {
-    console.log("Modifica prenotazione");
-};
+const updatePrenotazione = () => { console.log("Modifica"); };
+
+const logout = async () => {
+    try {
+        await axios.post('/api/auth/logout');
+        location.href = '/login'; // Meglio di reload per pulire lo stato
+    } catch (error) {
+        console.error("Errore logout:", error);
+    }
+}
 
 onMounted(() => {
-    getPrenotazioni();
+    getUtenteAndPrenotazioni();
 });
-
-const boh = [1, 2, 3, 4];
 </script>
 
 <template>
@@ -96,7 +116,7 @@ const boh = [1, 2, 3, 4];
       </div>
 
       <div class="row justify-content-center mb-5 gap-3">
-        <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
+        <button @click="logout" class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
           Logout
         </button>
       </div>
@@ -118,18 +138,35 @@ const boh = [1, 2, 3, 4];
                   <th>Studente</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
-                  <td>
-                    <input type="checkbox" class="custom-check">
-                  </td>
-                  <td>{{ formattaData(prenotazione.Data) }}</td>
-                  <td>{{ formattaOra(prenotazione.Ora) }}</td>
-                  <td>{{ prenotazione.Localita }}</td>
-                  <td>{{ prenotazione.materia_nome }}</td>
-                  <td>{{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}</td>
-                </tr>
-              </tbody>
+             <tbody>
+                      <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+                          <td>
+                              <input type="checkbox" class="custom-check">
+                          </td>
+                          <td>{{ formattaData(prenotazione.Data) }}</td>
+                          <td>{{ formattaOra(prenotazione.Ora) }}</td>
+                          
+                          <td>{{ prenotazione.Localita }}</td>
+                          
+                          <td>{{ prenotazione.materia_nome }}</td>
+                          
+                          <td>
+                              {{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}
+                          </td>
+                                                    <td>
+                            <span v-if="prenotazione.id_tutor == currentUserId" class="badge bg-warning text-dark">
+                                Sei il Tutor
+                            </span>
+                            <span v-else class="badge bg-danger">
+                                Sei lo Studente
+                            </span>
+                          </td>
+                      </tr>
+                      
+                      <tr v-if="prenotazioni.length === 0">
+                          <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
+                      </tr>
+                </tbody>
             </table>
           </div>
 
@@ -137,7 +174,7 @@ const boh = [1, 2, 3, 4];
             <button class="col-4 btn btn-blue shadow fw-bold py-2" @click="updatePrenotazione">
               Modifica
             </button>
-            <button class="col-4 btn btn-red shadow fw-bold py-2" @click="deletePrenotazione">
+            <button class="col-4 btn btn-red shadow fw-bold py-2" >
               Elimina
             </button>
           </div>
@@ -191,7 +228,7 @@ const boh = [1, 2, 3, 4];
           </div>
 
           <div class="row justify-content-center mb-5 gap-3">
-            <button class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
+            <button @click="logout" class="col-5 btn text-white shadow fw-bold py-2" style="background-color: #6B0808; width: 60%; border-radius: 20px;">
               Logout
             </button>
           </div>
@@ -216,38 +253,38 @@ const boh = [1, 2, 3, 4];
                     </tr>
                   </thead>
                   <tbody>
-    <tr v-for="prenotazione in boh" :key="prenotazione.id">
-        <td><input type="checkbox" class="custom-check"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        
-        <td>
-             {{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}
-        </td>
-
-        <td>
-            <span v-if="prenotazione % 2 === 0" 
-                  class="badge rounded-pill bg-warning text-dark">
-                Tutor
-            </span>
-
-            <span v-else 
-                  class="badge rounded-pill" style="background-color: #CE1126;">
-                Studente
-            </span>
-        </td>
-    </tr>
-</tbody>
+                      <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+                          <td>
+                              <input type="checkbox" class="custom-check">
+                          </td>
+                          <td>{{ formattaData(prenotazione.Data) }}</td>
+                          <td>{{ formattaOra(prenotazione.Ora) }}</td>
+                          
+                          <td>{{ prenotazione.Localita }}</td>
+                          
+                          <td>{{ prenotazione.materia_nome }}</td>
+                          
+                          <td>
+                              {{ prenotazione.nome_studente }} {{ prenotazione.cognome_studente }}
+                          </td>
+                          <td>
+                            <span v-if="prenotazione.id_tutor == currentUserId" class="badge bg-warning text-dark">
+                                Sei il Tutor
+                            </span>
+                            <span v-else class="badge bg-danger">
+                                Sei lo Studente
+                            </span>
+                          </td>
+                      </tr>
+                      
+                      <tr v-if="prenotazioni.length === 0">
+                          <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
+                      </tr>
+                  </tbody>
                 </table>
               </div>
 
-              <div class="row justify-content-center mt-3 gap-4">
-                <button class="col-4 btn text-white btn-red shadow fw-bold py-2" @click="deletePrenotazione">
-                  Disdici
-                </button>
-              </div>
+              
             </div>
         </div>
         </div>

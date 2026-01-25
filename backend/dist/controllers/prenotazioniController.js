@@ -49,15 +49,6 @@ function addPrenotazione(req, res) {
         INSERT INTO prenotazioni (id_studente, id_tutor, id_materia, data_prenotazione)
         VALUES (?, ?, ?, ?)
     `;
-        db_1.connection.query(sql, [userId, id_tutor, id_materia, data_prenotazione], function (error, results, fields) {
-            if (error) {
-                console.error("Errore DB:", error);
-                res.status(500).send('Errore del server');
-            }
-            else {
-                res.json({ message: "Prenotazione aggiunta con successo" });
-            }
-        });
     });
 }
 function deletePrenotazione(req, res) {

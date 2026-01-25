@@ -7,6 +7,8 @@ const express_1 = __importDefault(require("express"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const prenotazioniRouter_1 = require("./routes/prenotazioniRouter");
 const authRouter_1 = require("./routes/authRouter");
+const materieRouter_1 = require("./routes/materieRouter");
+const utentiRouter_1 = require("./routes/utentiRouter");
 const app = (0, express_1.default)();
 const port = 3001; // Per convenzione sarebbe 3000 ma per problemi personali uso 3001
 app.use(express_1.default.static('public'));
@@ -19,6 +21,8 @@ app.get('/', (req, res) => {
 });
 app.use('/', prenotazioniRouter_1.prenotazioniRouter);
 app.use('/', authRouter_1.authRouter);
+app.use('/', materieRouter_1.materieRouter);
+app.use('/', utentiRouter_1.utentiRouter);
 app.use((req, res, next) => {
     res.setHeader('Content-Type', 'text/plain');
     res.status(404).send('Pagina non trovata');

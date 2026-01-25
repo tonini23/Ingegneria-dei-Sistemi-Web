@@ -9,18 +9,20 @@ export interface Utente {
 
 
 export interface Materia {
-    id: number;
-    nome: string;
-    corso: string;
+    Id: number;
+    Nome: string;
+    Corso: string;
 }
 
 
 export interface Prenotazione {
-    id: number;
-    data: string;     
-    ora: string;      
-    localita: string;
-    id_materia: number;
+    Id: number;        // Maiuscola
+    Data: string;      // Maiuscola
+    Ora: string;       // Maiuscola
+    Localita: string;  // Maiuscola
+    materia_nome?: string; 
+    nome_studente: string;    
+    cognome_studente: string; 
     id_tutor: number;
     id_studente: number;
 }
