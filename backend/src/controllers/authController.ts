@@ -5,7 +5,7 @@ import { SetUtente, UnsetUtente, Utente, GetUtente } from '../utils/auth';
 import bcrypt from 'bcrypt';
 
 
-export const register = async (req: Request, res: Response) => {
+export const registrazione = async (req: Request, res: Response) => {
     const utente = GetUtente(req, res);
     if (utente) {
         res.status(401).json({ message: 'Questa operazione richiede il logout' });

@@ -41,7 +41,7 @@ const express_1 = __importDefault(require("express"));
 const authController = __importStar(require("../controllers/authController"));
 const router = express_1.default.Router();
 exports.authRouter = router;
-router.post('/api/auth/register', authController.register);
+router.post('/api/auth/registrazione', authController.registrazione);
 router.post('/api/auth/login', authController.login);
 router.post('/api/auth/logout', authController.logout);
 router.get('/api/auth/utente', authController.getProfile);

@@ -34,7 +34,7 @@ export default defineComponent({
         }
 
         try {
-          await axios.post("/api/auth/register", {
+          await axios.post("/api/auth/registrazione", {
             nome: this.nome,
             cognome: this.cognome,
             matricola: this.matricola,

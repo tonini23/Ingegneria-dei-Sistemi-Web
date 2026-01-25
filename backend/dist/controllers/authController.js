@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProfile = exports.logout = exports.login = exports.register = void 0;
+exports.getProfile = exports.logout = exports.login = exports.registrazione = void 0;
 const db_1 = require("../utils/db");
 const auth_1 = require("../utils/auth");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const registrazione = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const utente = (0, auth_1.GetUtente)(req, res);
     if (utente) {
         res.status(401).json({ message: 'Questa operazione richiede il logout' });
@@ -42,7 +42,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, auth_1.SetUtente)(req, res, newUtente);
     res.json({ message: 'Utente registrato con successo', user: newUtente });
 });
-exports.register = register;
+exports.registrazione = registrazione;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const utente = (0, auth_1.GetUtente)(req, res);
     if (utente) {
