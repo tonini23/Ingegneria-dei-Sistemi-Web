@@ -23,17 +23,18 @@ app.use(cookieParser());
 app.get('/', (req: Request, res: Response) => {
     res.sendFile('index.html', { root: 'public' });
 });
-
 app.use('/', prenotazioniRouter);
 app.use('/', authRouter);
 app.use('/', materieRouter);
 app.use('/', utentiRouter);
 
+// Gestione rotte non esistenti
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Content-Type', 'text/plain');
     res.status(404).send('Pagina non trovata');
 }); 
 
+// Avvio server
 app.listen(port, () => {
     console.log('Server in ascolto alla porta ' + port);
 }); 

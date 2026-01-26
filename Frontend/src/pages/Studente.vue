@@ -17,7 +17,7 @@ const selectedTutorId = ref<number | string>("");
 const tutorsFiltrati = computed(() => {
     if (!currentUserId.value) return listaTutors.value; // Se non sei loggato, vedi tutti
 
-    return listaTutors.value.filter(utente => utente.id !== currentUserId.value);
+    return listaTutors.value.filter(utente => utente.Id !== currentUserId.value);
 });
 
 /*const cercaDisponibilita = async () => {

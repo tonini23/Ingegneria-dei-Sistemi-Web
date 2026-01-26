@@ -135,7 +135,8 @@ onMounted(() => {
                   <th>Ora</th>
                   <th>Località</th>
                   <th>Materia</th>
-                  <th>Studente</th>
+                  <th>Partner</th>
+                  <th>Ruolo</th>
                 </tr>
               </thead>
              <tbody>
@@ -250,6 +251,7 @@ onMounted(() => {
                       <th>Località</th>
                       <th>Materia</th>
                       <th>Partner</th>
+                      <th>Ruolo</th>
                     </tr>
                   </thead>
                   <tbody>

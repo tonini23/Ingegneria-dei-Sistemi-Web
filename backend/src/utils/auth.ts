@@ -33,6 +33,7 @@ export const GetUtente = (req: Request, res: Response) => {
     }
 }
 
+// Funzione per rimuovere il cookie di autenticazione con il tasto logout
 export const UnsetUtente = (req: Request, res: Response) => {
     res.clearCookie(COOKIE_NAME);
 }

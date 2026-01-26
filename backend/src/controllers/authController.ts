@@ -96,13 +96,11 @@ export const getProfile = async (req: Request, res: Response) => {
     const utente = GetUtente(req, res);
     
     // 2. Se il cookie non c'è o è scaduto, restituisci errore 401
-    // (Così il frontend capisce che deve mandarti al login)
     if (!utente) {
         res.status(401).json({ message: "Nessun utente loggato" });
         return;
     }
 
     // 3. FONDAMENTALE: Restituisci l'oggetto utente (che contiene Id, Nome, ecc.)
-    // PRIMA avevi scritto: res.json({});  <-- QUESTO ERA L'ERRORE
     res.json(utente); 
 };

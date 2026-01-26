@@ -1,10 +1,10 @@
 export interface Utente {
-    id: number;
-    nome: string;
-    cognome: string;
-    matricola: number; 
-    email: string;
-    password: string;
+    Id: number;
+    Nome: string;
+    Cognome: string;
+    Matricola: number; 
+    Email: string;
+    Password: string;
 }
 
 
