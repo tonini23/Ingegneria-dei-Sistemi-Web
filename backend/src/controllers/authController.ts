@@ -21,6 +21,9 @@ export const registrazione = async (req: Request, res: Response) => {
         res.status(400).json({ message: 'Email già registrata' });
         return;
     }
+
+    // Verifica se la matricola è già registrata 
+    // (opzionale dato che viene già controllata nel frontend)
     /*const [matricole] = await connection.promise().execute(
         'SELECT matricola FROM utenti WHERE matricola = ? ', [matricola]);
 

@@ -3,8 +3,10 @@ import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { Materia } from '../types';
 import { Utente } from '../types';
+import { Prenotazione } from '../types';
 
 
+const prenotazioni = ref<Prenotazione[]>([]);
 const listaMaterie = ref<Materia[]>([]);
 const listaTutors = ref<Utente[]>([]); // Lista grezza dal DB
 const currentUserId = ref<number | null>(null); // Il tuo ID
@@ -202,18 +204,18 @@ onMounted(() => {
                     <th>Tutor</th>
                 </tr>
             </thead>
-            <!-- <tbody> 
+            <tbody> 
                 <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                     <td>
                     <input type="radio" name="studente" class="custom-check">
                     </td>
                     <td>{{ prenotazione.Data }}</td>
                     <td>{{ prenotazione.Ora }}</td>
-                    <td>{{ prenotazione.Luogo }}</td>
+                    <td>{{ prenotazione.Localita }}</td>
                     <td>{{ prenotazione.Materia }}</td>
                     <td>{{ prenotazione.Tutor }}</td>
                     </tr>
-                </tbody>-->
+                </tbody>
             </table>
         </div>
 
@@ -338,7 +340,7 @@ onMounted(() => {
                         <th>Tutor</th>
                     </tr>
                 </thead>
-                <!-- <tbody>  <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+                <tbody>  <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                     <td>
                     <input type="radio" name="studente" class="custom-check">
                     </td>
@@ -348,7 +350,11 @@ onMounted(() => {
                     <td>{{ prenotazione.Materia }}</td>
                     <td>{{ prenotazione.Tutor }}</td>
                     </tr>
-                </tbody>-->
+                </tbody>
+
+                <tr v-if="prenotazioni.length === 0">
+                          <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
+                      </tr>
                 </table>
             </div>
 

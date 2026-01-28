@@ -77,7 +77,7 @@ onMounted(() => {
       </div>
 
       <div class="row justify-content-center mb-4">
-        <div class="col-12 col-md-10 col-lg-8">
+        <div class="col-12 col-md-10 ">
           <div class="filter-box p-4 text-white">
             <div class="row align-items-center">
               <div class="col-3 text-center">
@@ -90,7 +90,7 @@ onMounted(() => {
                 </div>
                 <div class="d-flex align-items-center mb-2">
                   <label class="w-25 text-start" for="Cognome_">Cognome</label>
-                  <input type="text" class="profile-input" name="Cognome" id="Cognome_" value="Rossi">
+                  <input type="text" class="profile-input" name="Cognome" id="Cognome_" value="{{ utente.Cognome }}">
                 </div>
                 <div class="d-flex align-items-center mb-2">
                   <label class="w-25 text-start" for="Email_">Email</label>
@@ -126,17 +126,17 @@ onMounted(() => {
           <div class="section-header text-center mb-0 border border-white border-bottom-0">
             Prenotazioni
           </div>
-          <div class="">
+          <div class="table-responsive shadow-lg rounded">
             <table class="table-unibo">
               <thead>
                 <tr>
-                  <th><input type="checkbox" class="custom-check"></th>
-                  <th>Data</th>
-                  <th>Ora</th>
-                  <th>Località</th>
-                  <th>Materia</th>
-                  <th>Partner</th>
-                  <th>Ruolo</th>
+                  <th scope="col"><input type="checkbox" class="custom-check"></th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Ora</th>
+                  <th scope="col">Località</th>
+                  <th scope="col">Materia</th>
+                  <th scope="col">Partner</th>
+                  <th scope="col">Ruolo</th>
                 </tr>
               </thead>
              <tbody>
@@ -239,19 +239,19 @@ onMounted(() => {
           <div class="row justify-content-center">
             <div class="col-12 col-md-10">
               <div class="section-header text-center mb-0 border border-white border-bottom-0">
-                Prenotazioni
+                Prenotazioni  
               </div>
               <div class="">
                 <table class="table-unibo">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>Data</th>
-                      <th>Ora</th>
-                      <th>Località</th>
-                      <th>Materia</th>
-                      <th>Partner</th>
-                      <th>Ruolo</th>
+                      <th scope="col" ></th>
+                      <th scope="col" >Data</th>
+                      <th scope="col" >Ora</th>
+                      <th scope="col" >Località</th>
+                      <th scope="col" >Materia</th>
+                      <th scope="col" >Partner</th>
+                      <th scope="col" >Ruolo</th>
                     </tr>
                   </thead>
                   <tbody>

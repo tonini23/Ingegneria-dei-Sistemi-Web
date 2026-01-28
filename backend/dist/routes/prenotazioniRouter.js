@@ -44,3 +44,4 @@ exports.prenotazioniRouter = router;
 router.get('/api/prenotazioni/:id', prenotazioniController.allPrenotazioni);
 router.post('/api/prenotazioni/:id', prenotazioniController.addPrenotazione);
 router.delete('/api/prenotazioni/:id', prenotazioniController.deletePrenotazione);
+router.get('/api/disponibilita/search', prenotazioniController.searchDisponibilita);

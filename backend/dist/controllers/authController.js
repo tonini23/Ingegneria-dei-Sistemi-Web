@@ -28,6 +28,8 @@ const registrazione = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(400).json({ message: 'Email già registrata' });
         return;
     }
+    // Verifica se la matricola è già registrata 
+    // (opzionale dato che viene già controllata nel frontend)
     /*const [matricole] = await connection.promise().execute(
         'SELECT matricola FROM utenti WHERE matricola = ? ', [matricola]);
 
@@ -80,13 +82,11 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     // 1. Recupera i dati decodificati dal cookie
     const utente = (0, auth_1.GetUtente)(req, res);
     // 2. Se il cookie non c'è o è scaduto, restituisci errore 401
-    // (Così il frontend capisce che deve mandarti al login)
     if (!utente) {
         res.status(401).json({ message: "Nessun utente loggato" });
         return;
     }
     // 3. FONDAMENTALE: Restituisci l'oggetto utente (che contiene Id, Nome, ecc.)
-    // PRIMA avevi scritto: res.json({});  <-- QUESTO ERA L'ERRORE
     res.json(utente);
 });
 exports.getProfile = getProfile;
