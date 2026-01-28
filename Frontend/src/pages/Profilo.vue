@@ -188,7 +188,7 @@ onMounted(() => {
         <h1 class="title-custom fw-bold">Profilo</h1>
       </div>
       <div class="row my-5">
-        <div class="col-6">
+        <div class="col-6 mt-5">
           <div class="row justify-content-center mb-4">
             <div class="col-12">
               <div class="filter-box p-5 text-white">
@@ -238,7 +238,7 @@ onMounted(() => {
         <div class="col-6">
           <div class="row justify-content-center">
             <div class="col-12 col-md-10">
-              <div class="section-header text-center mb-0 border border-white border-bottom-0">
+              <div class="section-header text-center my-0 border border-white border-bottom-0">
                 Prenotazioni  
               </div>
               <div class="">

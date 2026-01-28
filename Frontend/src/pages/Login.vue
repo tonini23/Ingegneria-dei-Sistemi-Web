@@ -80,7 +80,7 @@ export default defineComponent({
         <h2>Non hai un account?</h2>
       </div>
 
-      <div class="d-flex flex-column align-items-center gap-3 mb-5">
+      <div class="d-flex flex-column align-items-center gap-3 mt-3">
         <router-link to="/registrazione" class="w-100 text-center">
              <button class="btn btn-danger shadow-lg fw-bold py-2" style="width: 60%; border-radius: 20px;">
                 Registrati
@@ -89,7 +89,7 @@ export default defineComponent({
 
       </div>
 
-      <div class="d-flex flex-column align-items-center gap-3 mb-5">
+      <div class="d-flex flex-column align-items-center gap-3 mt-3">
         <router-link to="/registrazione" class="w-100 text-center">
              <button class="btn btn-danger shadow-lg fw-bold py-2" style="width: 60%; border-radius: 20px;">
                 Entra come Guest
@@ -105,21 +105,21 @@ export default defineComponent({
       <div class="row justify-content-center align-items-start mt-5">
         
         <div class="col-5 border-end border-2 pe-5">
-            <div class="align-items-center text-center mb-5">
+            <div class="align-items-center text-center mt-4 mb-5">
                 <h1 class="title-custom">Accedi</h1>
             </div>
             
             <form class="align-items-center text-center mb-4" @submit.prevent="onSubmit">
-                <div class="mb-4 d-flex justify-content-center align-items-center">
+                <div class="my-5 d-flex justify-content-center align-items-center">
                     <label for="email" class="fw-bold label-custom">Email</label>
                     <input type="email" v-model="email" class="input-custom" name="email">
                 </div>
-                <div class="mb-2 d-flex justify-content-center align-items-center">
+                <div class="mt-5 mb-3 d-flex justify-content-center align-items-center">
                     <label for="password" class="fw-bold label-custom">Password</label>
                     <input type="password" v-model="password" class="input-custom" name="password">
                 </div>
 
-                <div class="mb-5 text-end pe-5 me-5">
+                <div class="mb-5 text-end pe-5 me-1">
                     <router-link to="/pass_dimenticata" class="text-decoration-none fst-italic text-dark">
                         Password Dimenticata?
                     </router-link>
@@ -136,7 +136,7 @@ export default defineComponent({
                 <h2>Non hai un account?</h2>
             </div>
 
-            <div class="d-flex flex-column align-items-center gap-4 mt-3">
+            <div class="d-flex flex-column align-items-center gap-4 my-5">
                 <router-link to="/registrazione" class="w-100">
                     <button class="btn btn-danger shadow-lg fw-bold py-3 px-5" style="border-radius: 30px; font-size: 1.2rem; width: 60%;">
                         Registrati
@@ -145,7 +145,7 @@ export default defineComponent({
 
             </div>
 
-            <div class="d-flex flex-column align-items-center gap-4 mt-3">
+            <div class="d-flex flex-column align-items-center gap-4 mb-5">
                 <router-link to="/studente" class="w-100">
                     <button class="btn btn-danger shadow-lg fw-bold py-3 px-5" style="border-radius: 30px; font-size: 1.2rem; width: 60%;">
                         Entra come Guest

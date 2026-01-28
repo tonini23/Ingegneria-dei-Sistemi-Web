@@ -116,8 +116,7 @@
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
+        border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
         background-color: white; 
