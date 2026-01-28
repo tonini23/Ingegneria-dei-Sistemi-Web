@@ -89,6 +89,15 @@ export default defineComponent({
 
       </div>
 
+      <div class="d-flex flex-column align-items-center gap-3 mb-5">
+        <router-link to="/registrazione" class="w-100 text-center">
+             <button class="btn btn-danger shadow-lg fw-bold py-2" style="width: 60%; border-radius: 20px;">
+                Entra come Guest
+             </button>
+        </router-link>
+
+      </div>
+
     </div>
 
 
@@ -131,6 +140,15 @@ export default defineComponent({
                 <router-link to="/registrazione" class="w-100">
                     <button class="btn btn-danger shadow-lg fw-bold py-3 px-5" style="border-radius: 30px; font-size: 1.2rem; width: 60%;">
                         Registrati
+                    </button>
+                </router-link>
+
+            </div>
+
+            <div class="d-flex flex-column align-items-center gap-4 mt-3">
+                <router-link to="/studente" class="w-100">
+                    <button class="btn btn-danger shadow-lg fw-bold py-3 px-5" style="border-radius: 30px; font-size: 1.2rem; width: 60%;">
+                        Entra come Guest
                     </button>
                 </router-link>
 

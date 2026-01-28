@@ -30,7 +30,8 @@ export default defineComponent({
 
   <router-view></router-view>
 
-  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055">
+  <!-- Notifica -->
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2">
     <div class="toast align-items-center text-white border-0" 
         :class="{'show': statoNotifica.show, 'text-bg-success': statoNotifica.type === 'success', 'text-bg-danger': statoNotifica.type === 'error'}"
         role="alert" aria-live="assertive" aria-atomic="true">
@@ -42,7 +43,7 @@ export default defineComponent({
                 @click="statoNotifica.show = false"></button>
         </div>
     </div>
-    </div>
+  </div>
 
   <footer class="text-white footer fixed-bottom">
     <p> Progetto svolto da: </p>

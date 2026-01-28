@@ -15,11 +15,4 @@ export const mostraNotifica = (message: string, type: 'success' | 'error' = 'suc
     statoNotifica.type = type;
     statoNotifica.show = true;
 
-    // Resetta il timer precedente se l'utente clicca velocemente
-    if (timeoutId) clearTimeout(timeoutId);
-
-    // Nascondi automaticamente dopo 4 secondi
-    timeoutId = setTimeout(() => {
-        statoNotifica.show = false;
-    }, 4000);
 };

@@ -1,10 +1,10 @@
 export interface Utente {
-    id: number;
-    nome: string;
-    cognome: string;
-    matricola: number; 
-    email: string;
-    password: string;
+    Id: number;
+    Nome: string;
+    Cognome: string;
+    Matricola: number; 
+    Email: string;
+    Password: string;
 }
 
 
@@ -16,10 +16,10 @@ export interface Materia {
 
 
 export interface Prenotazione {
-    Id: number;        // Maiuscola
-    Data: string;      // Maiuscola
-    Ora: string;       // Maiuscola
-    Localita: string;  // Maiuscola
+    Id: number;        
+    Data: string;      
+    Ora: string;       
+    Localita: string;  
     materia_nome?: string; 
     nome_studente: string;    
     cognome_studente: string; 
