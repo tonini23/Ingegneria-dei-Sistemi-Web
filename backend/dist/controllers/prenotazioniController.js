@@ -14,12 +14,11 @@ exports.addPrenotazione = addPrenotazione;
 exports.deletePrenotazione = deletePrenotazione;
 exports.searchDisponibilita = searchDisponibilita;
 const db_1 = require("../utils/db");
+const auth_1 = require("../utils/auth");
 function allPrenotazioni(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.params.id;
         // Aggiungiamo la JOIN con la tabella 'materie'
-        // Assumiamo che la tabella si chiami 'materie' e abbia un campo 'nome'
-        // e che in 'prenotazioni' ci sia la chiave esterna 'id_materia'
         const sql = `
         SELECT 
             p.*, 
@@ -44,14 +43,23 @@ function allPrenotazioni(req, res) {
 }
 function addPrenotazione(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const tutorId = req.params.id;
+        // Prendiamo l'ID dal Token
+        console.log("aaaaaaaaaaaaaaaaaaa");
+        const utenteLoggato = (0, auth_1.GetUtente)(req, res);
+        console.log("bbbbbbbbbbbbbbbbbbb");
+        if (!utenteLoggato) {
+            res.status(401).json({ message: 'Devi essere loggato come Tutor.' });
+            return;
+        }
         const { id_materia, data, ora, localita } = req.body;
-        console.log("Creazione disponibilità Tutor:", { tutorId, id_materia, data, ora, localita });
+        const tutorId = utenteLoggato.Id; // Usiamo l'ID reale
+        console.log("Inserimento in Disponibilità:", { tutorId, id_materia, data, ora, localita });
+        // Query di inserimento nella tabella 'disponibilita'
         const sql = `
-        INSERT INTO prenotazioni (id_tutor, id_studente, id_materia, Data, Ora, Localita)
-        VALUES (?, NULL, ?, ?, ?, ?)
+        INSERT INTO disponibilita (id_tutor, id_materia, Data, Ora, Localita)
+        VALUES (?, ?, ?, ?, ?)
     `;
-        db_1.connection.query(sql, [tutorId, id_materia, data, ora, localita], function (error, results, fields) {
+        db_1.connection.query(sql, [tutorId, id_materia, data, ora, localita], function (error, results) {
             if (error) {
                 console.error("Errore DB:", error);
                 res.status(500).send('Errore salvataggio disponibilità');

@@ -4,7 +4,7 @@ import * as prenotazioniController from '../controllers/prenotazioniController';
 const router = express.Router();
 
 router.get('/api/prenotazioni/:id', prenotazioniController.allPrenotazioni);
-router.post('/api/prenotazioni/:id', prenotazioniController.addPrenotazione);
+router.post('/api/prenotazioni', prenotazioniController.addPrenotazione);
 router.delete('/api/prenotazioni/:id', prenotazioniController.deletePrenotazione);
 
 router.get('/api/disponibilita/search', prenotazioniController.searchDisponibilita);

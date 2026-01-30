@@ -33,6 +33,11 @@ export default defineComponent({
           return; 
         }
 
+        if (this.password !== this.conferma_password) {
+          mostraNotifica("Le password non corrispondono", "error");
+          return;
+        }
+
         try {
           await axios.post("/api/auth/registrazione", {
             nome: this.nome,
