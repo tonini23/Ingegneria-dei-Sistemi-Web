@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { connection } from '../utils/db';
 import { QueryError, RowDataPacket } from 'mysql2';
 
-export const getAllMaterie = (req: Request, res: Response) => {
+async function getAllMaterie(req: Request, res: Response) {
     const sql = 'SELECT * FROM materie';
 
     connection.query(sql, (error: QueryError | null, results: RowDataPacket[]) => {
@@ -14,3 +14,5 @@ export const getAllMaterie = (req: Request, res: Response) => {
         }
     });
 };
+
+export { getAllMaterie };

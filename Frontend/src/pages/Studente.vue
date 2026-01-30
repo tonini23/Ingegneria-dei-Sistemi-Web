@@ -51,17 +51,15 @@ const tutorsFiltrati = computed(() => {
 // --- CHIAMATE API ---
 const getDatiIniziali = async () => {
     try {
-        // 1. Scarichiamo le Materie
+        // Riempio la lista con le materie
         const resMaterie = await axios.get('/api/materie');
         listaMaterie.value = resMaterie.data;
 
-        // 2. Scarichiamo TUTTI gli utenti
+        // Riempio la lista con tutti gli utenti
         const resUtenti = await axios.get('/api/utenti');
         listaTutors.value = resUtenti.data;
 
-        // 3. Scarichiamo i TUOI dati (per sapere chi escludere)
-        // Usiamo un try/catch interno perché se non sei loggato questa chiamata fallisce (401)
-        // ma noi vogliamo mostrare comunque la pagina
+        // Escludo l'utente corrente dalla lista dei tutor
         try {
             const resMe = await axios.get('/api/auth/utente');
             currentUserId.value = resMe.data.Id || resMe.data.id;
@@ -167,7 +165,7 @@ onMounted(() => {
                                         {{ materia.Nome }}
                                     </option>
                                 
-                            </select>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -212,8 +210,8 @@ onMounted(() => {
                     <td>{{ prenotazione.Data }}</td>
                     <td>{{ prenotazione.Ora }}</td>
                     <td>{{ prenotazione.Localita }}</td>
-                    <td>{{ prenotazione.Materia }}</td>
-                    <td>{{ prenotazione.Tutor }}</td>
+                    <td>{{ prenotazione.materia_nome }}</td>
+                    <td>{{  }} </td>
                     </tr>
                 </tbody>
             </table>
@@ -346,9 +344,9 @@ onMounted(() => {
                     </td>
                     <td>{{ prenotazione.Data }}</td>
                     <td>{{ prenotazione.Ora }}</td>
-                    <td>{{ prenotazione.Luogo }}</td>
-                    <td>{{ prenotazione.Materia }}</td>
-                    <td>{{ prenotazione.Tutor }}</td>
+                    <td>{{ prenotazione.Localita }}</td>
+                    <td>{{ prenotazione.materia_nome }}</td>
+                    <td> </td>
                     </tr>
                 </tbody>
 
