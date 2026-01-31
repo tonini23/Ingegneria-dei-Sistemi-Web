@@ -5,6 +5,7 @@ import { Utente } from '../types';
 import { Materia } from '../types';
 import { defineComponent } from 'vue';
 import { mostraNotifica } from '../notification'; 
+import { auth } from '../stores/auth';
 
 
 // ------------------ VARIABILI DI STATO --------------------------------------
@@ -12,6 +13,7 @@ const localita = ref('');
 const ora = ref('');
 const selectedMateriaId = ref<number | string>("");
 const listaMaterie = ref<Materia[]>([]);
+const currentUserId = ref<number | null>(null);
 
 // ------------------ CONFIGURAZIONE DATA DINAMICA ---------------------------  
 const nomiMesi = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
@@ -39,6 +41,31 @@ const getDatiIniziali = async () => {
         listaMaterie.value = resMaterie.data;
     } catch (error) {
         console.error("Errore caricamento dati:", error);
+    }
+};
+
+const getUtente = async () => {
+    try {
+        // Se la memoria è vuota, chiediamo al server se c'è una sessione attiva, 
+        // utile per non essere reindirizzati al login ad ogni refresh
+        if (!auth.isLoggedIn) {
+            const sessioneRecuperata = await auth.checkAuth();
+            
+            // Se neanche il server ci riconosce, ALLORA andiamo al login
+            if (!sessioneRecuperata) {
+                location.href = "/login";
+                return;
+            }
+        }
+
+        // Se siamo qui, siamo loggati 
+        currentUserId.value = auth.utente?.Id ?? null;
+
+       
+    } catch (error) {
+        console.error("Errore recupero utente:", error);
+        // In caso di errore grave, meglio mandare al login
+        location.href = "/login";
     }
 };
 
@@ -89,7 +116,7 @@ const onSubmit = async () => {
 
 // Montiamo la funzione
 onMounted(() => {
-    getDatiIniziali();
+    getDatiIniziali();getUtente();
 });
 </script>
 

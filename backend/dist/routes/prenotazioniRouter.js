@@ -43,5 +43,6 @@ const router = express_1.default.Router();
 exports.prenotazioniRouter = router;
 router.get('/api/prenotazioni/:id', prenotazioniController.allPrenotazioni);
 router.post('/api/prenotazioni', prenotazioniController.addPrenotazione);
-router.delete('/api/prenotazioni/:id', prenotazioniController.deletePrenotazione);
-router.get('/api/disponibilita/search', prenotazioniController.searchDisponibilita);
+router.put('/api/prenotazioni/:id/prenota', prenotazioniController.prenotaLezione);
+router.get('/api/disponibilita/cerca', prenotazioniController.cercaDisponibilita);
+router.post('/api/prenotazioni/prenota/:id', prenotazioniController.prenotaLezione);

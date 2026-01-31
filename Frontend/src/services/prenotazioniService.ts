@@ -10,7 +10,7 @@ interface AddPrenotazioneRequest {
   id_studente?: number;
 }
 
-interface SearchDisponibilitaRequest {
+interface cercaDisponibilitaRequest {
   data?: string;
   id_materia?: number;
   localita?: string;
@@ -18,7 +18,7 @@ interface SearchDisponibilitaRequest {
 
 interface PrenotazioniResponse extends Array<Prenotazione> {}
 
-interface SearchDisponibilitaResponse {
+interface cercaDisponibilitaResponse {
   disponibili: Prenotazione[];
   count: number;
 }
@@ -71,12 +71,12 @@ export const prenotazioniService = {
     }
   },
 
-  async searchDisponibilita(
-    params: SearchDisponibilitaRequest,
-  ): Promise<SearchDisponibilitaResponse> {
+  async cercaDisponibilita(
+    params: cercaDisponibilitaRequest,
+  ): Promise<cercaDisponibilitaResponse> {
     try {
-      const response = await axios.get<SearchDisponibilitaResponse>(
-        "/api/disponibilita/search",
+      const response = await axios.get<cercaDisponibilitaResponse>(
+        "/api/disponibilita/cerca",
         {
           params: {
             data: params.data,

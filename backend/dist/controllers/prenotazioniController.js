@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.allPrenotazioni = allPrenotazioni;
 exports.addPrenotazione = addPrenotazione;
 exports.deletePrenotazione = deletePrenotazione;
-exports.searchDisponibilita = searchDisponibilita;
+exports.cercaDisponibilita = cercaDisponibilita;
+exports.prenotaLezione = prenotaLezione;
 const db_1 = require("../utils/db");
 const auth_1 = require("../utils/auth");
 function allPrenotazioni(req, res) {
@@ -44,28 +45,26 @@ function allPrenotazioni(req, res) {
 function addPrenotazione(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         // Prendiamo l'ID dal Token
-        console.log("aaaaaaaaaaaaaaaaaaa");
         const utenteLoggato = (0, auth_1.GetUtente)(req, res);
-        console.log("bbbbbbbbbbbbbbbbbbb");
         if (!utenteLoggato) {
             res.status(401).json({ message: 'Devi essere loggato come Tutor.' });
             return;
         }
         const { id_materia, data, ora, localita } = req.body;
         const tutorId = utenteLoggato.Id; // Usiamo l'ID reale
-        console.log("Inserimento in Disponibilità:", { tutorId, id_materia, data, ora, localita });
-        // Query di inserimento nella tabella 'disponibilita'
+        console.log("Inserimento in prenotazioni:", { tutorId, id_materia, data, ora, localita });
+        // Query di inserimento nella tabella 'prenotazioni'
         const sql = `
-        INSERT INTO disponibilita (id_tutor, id_materia, Data, Ora, Localita)
+        INSERT INTO prenotazioni (id_tutor, id_materia, Data, Ora, Localita)
         VALUES (?, ?, ?, ?, ?)
     `;
         db_1.connection.query(sql, [tutorId, id_materia, data, ora, localita], function (error, results) {
             if (error) {
                 console.error("Errore DB:", error);
-                res.status(500).send('Errore salvataggio disponibilità');
+                res.status(500).send('Errore salvataggio prenotazione');
             }
             else {
-                res.json({ message: "Disponibilità creata con successo" });
+                res.json({ message: "Prenotazione creata con successo" });
             }
         });
     });
@@ -88,51 +87,86 @@ function deletePrenotazione(req, res) {
         });
     });
 }
-function searchDisponibilita(req, res) {
+function cercaDisponibilita(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { data, id_materia, id_tutor, luogo } = req.query;
-        console.log("Ricerca disponibilità:", req.query);
-        // Query sulla tabella 'disponibilita' (non prenotazioni)
-        // Mostriamo il nome del tutor e la materia
+        const { data, id_materia, id_tutor, localita } = req.query;
+        // Ottieni l'utente corrente per escludere le sue prenotazioni (se è un tutor)
+        const utenteLoggato = (0, auth_1.GetUtente)(req, res);
+        // Query: Seleziona tutto da prenotazioni dove NON c'è ancora uno studente
         let sql = `
         SELECT 
-            d.Id, d.Data, d.Ora, d.Localita,
+            p.Id, p.Data, p.Ora, p.Localita, p.id_tutor,
             m.Nome as materia_nome,
             u.Nome as tutor_nome, u.Cognome as tutor_cognome
-        FROM disponibilita d
-        JOIN materie m ON d.id_materia = m.Id
-        JOIN utenti u ON d.id_tutor = u.Id
-        WHERE 1=1
+        FROM prenotazioni p
+        JOIN materie m ON p.id_materia = m.Id
+        JOIN utenti u ON p.id_tutor = u.Id
+        WHERE p.id_studente IS NULL
     `;
         const params = [];
-        // --- VINCOLO RICHIESTO: La data non deve essere futura ---
-        // (Mostra solo disponibilità di oggi o passate)
-        sql += ` AND d.Data <= CURDATE() `;
-        // Filtri opzionali (se l'utente li ha selezionati)
+        // ESCLUDI le prenotazioni create dal tutor corrente
+        if (utenteLoggato && utenteLoggato.Id) {
+            sql += ` AND p.id_tutor != ?`;
+            params.push(utenteLoggato.Id);
+        }
+        // Filtri opzionali
         if (data) {
-            sql += ` AND d.Data = ?`;
+            sql += ` AND p.Data = ?`;
             params.push(data);
         }
         if (id_materia) {
-            sql += ` AND d.id_materia = ?`;
+            sql += ` AND p.id_materia = ?`;
             params.push(id_materia);
         }
         if (id_tutor) {
-            sql += ` AND d.id_tutor = ?`;
+            sql += ` AND p.id_tutor = ?`;
             params.push(id_tutor);
         }
-        if (luogo) {
-            sql += ` AND d.Localita LIKE ?`;
-            params.push(`%${luogo}%`);
+        // AGGIUNTO FILTRO LOCALITÀ
+        if (localita) {
+            sql += ` AND p.Localita LIKE ?`;
+            params.push(`%${localita}%`); // Usa LIKE per ricerca parziale
         }
-        db_1.connection.query(sql, params, (error, results) => {
-            if (error) {
-                console.error("Errore ricerca disponibilità:", error);
-                res.status(500).send('Errore del server');
+        // Ordina per data e ora più vicine
+        sql += ` ORDER BY p.Data ASC, p.Ora ASC`;
+        db_1.connection.query(sql, params, (err, results) => {
+            if (err) {
+                console.error("Errore ricerca:", err);
+                res.status(500).send('Errore server durante la ricerca');
             }
             else {
                 res.json(results);
             }
+        });
+    });
+}
+// PRENOTA LA LEZIONE (Aggiorna id_studente)
+function prenotaLezione(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const utenteLoggato = (0, auth_1.GetUtente)(req, res);
+        const id_prenotazione = req.params.id; // L'ID della lezione da prenotare
+        if (!utenteLoggato) {
+            res.status(401).json({ message: "Devi essere loggato per prenotare." });
+            return;
+        }
+        // Controlliamo che la lezione sia ancora libera
+        const checkSql = "SELECT * FROM prenotazioni WHERE Id = ? AND id_studente IS NULL";
+        db_1.connection.query(checkSql, [id_prenotazione], (err, results) => {
+            if (err || results.length === 0) {
+                res.status(400).json({ message: "Lezione non disponibile o inesistente." });
+                return;
+            }
+            // Se è libera, assegniamo lo studente
+            const updateSql = "UPDATE prenotazioni SET id_studente = ? WHERE Id = ?";
+            db_1.connection.query(updateSql, [utenteLoggato.Id || utenteLoggato.Id, id_prenotazione], (errUpdate) => {
+                if (errUpdate) {
+                    console.error(errUpdate);
+                    res.status(500).json({ message: "Errore durante la prenotazione." });
+                }
+                else {
+                    res.json({ message: "Prenotazione confermata con successo!" });
+                }
+            });
         });
     });
 }
