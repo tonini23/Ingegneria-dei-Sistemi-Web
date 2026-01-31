@@ -26,11 +26,19 @@ const formattaOra = (oraString: string) => {
 
 const getUtenteAndPrenotazioni = async () => {
     try {
+        // Se la memoria è vuota, chiediamo al server se c'è una sessione attiva, 
+        // utile per non essere reindirizzati al login ad ogni refresh
         if (!auth.isLoggedIn) {
-            location.href = "/login";
-            return;
+            const sessioneRecuperata = await auth.checkAuth();
+            
+            // Se neanche il server ci riconosce, ALLORA andiamo al login
+            if (!sessioneRecuperata) {
+                location.href = "/login";
+                return;
+            }
         }
 
+        // Se siamo qui, siamo loggati 
         currentUserId.value = auth.utente?.Id ?? null;
 
         if (currentUserId.value) {
@@ -38,6 +46,8 @@ const getUtenteAndPrenotazioni = async () => {
         }
     } catch (error) {
         console.error("Errore recupero utente:", error);
+        // In caso di errore grave, meglio mandare al login
+        location.href = "/login";
     }
 };
 
@@ -60,6 +70,9 @@ const logout = async () => {
     await auth.logout();
     location.href = "/login";
 };
+
+
+
 
 onMounted(() => {
     getUtenteAndPrenotazioni();

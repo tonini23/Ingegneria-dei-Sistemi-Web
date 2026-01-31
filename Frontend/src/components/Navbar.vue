@@ -63,14 +63,6 @@
                                 >Login</router-link
                             >
                         </li>
-                        <li class="nav-item" v-if="auth.isLoggedIn">
-                            <a
-                                href="#"
-                                @click.prevent="handleLogout"
-                                class="nav-link text-white ps-0"
-                                >Logout</a
-                            >
-                        </li>
                     </ul>
                 </div>
             </div>

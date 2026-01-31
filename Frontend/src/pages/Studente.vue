@@ -4,99 +4,145 @@ import axios from 'axios';
 import { Materia } from '../types';
 import { Utente } from '../types';
 import { Prenotazione } from '../types';
+import { mostraNotifica } from '../notification';
 
 
-const prenotazioni = ref<Prenotazione[]>([]);
-const listaMaterie = ref<Materia[]>([]);
-const listaTutors = ref<Utente[]>([]); // Lista grezza dal DB
-const currentUserId = ref<number | null>(null); // Il tuo ID
-
-const selectedMateriaId = ref<number | string>("");
-const selectedTutorId = ref<number | string>("");
-
-// --- COMPUTED: LISTA FILTRATA ---
-// Questa proprietà restituisce la lista dei tutor TRANNE te stesso
+// Questa proprietà restituisce la lista dei tutor TRANNE l'utente corrente
 const tutorsFiltrati = computed(() => {
     if (!currentUserId.value) return listaTutors.value; // Se non sei loggato, vedi tutti
 
     return listaTutors.value.filter(utente => utente.Id !== currentUserId.value);
 });
 
-/*const cercaDisponibilita = async () => {
+const listaMaterie = ref<Materia[]>([]);
+const listaTutors = ref<Utente[]>([]);
+const prenotazioni = ref<Prenotazione[]>([]); // Risultati ricerca
+const selectedSlotId = ref<number | null>(null); // ID della lezione scelta (Radio button)
+
+const selectedMateriaId = ref<number | string>("");
+const selectedTutorId = ref<number | string>("");
+const selectedLocalita = ref<string>("");
+const currentUserId = ref<number | null>(null);
+
+// Flag per filtrare per data
+const filterByDate = ref<boolean>(false);
+
+const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+
+// Funzione per formattare la data
+const formattaData = (dataString: string) => {
+    if (!dataString) return "";
+    const data = new Date(dataString);
+    const giorno = String(data.getDate()).padStart(2, "0");
+    const mese = String(data.getMonth() + 1).padStart(2, "0");
+    const anno = data.getFullYear();
+    return `${giorno}-${mese}-${anno}`;
+};
+
+// Funzione per formattare l'ora (toglie :00 finale)
+const formattaOra = (oraString: string) => {
+    if (!oraString) return "";
+    // Prende solo i primi 5 caratteri (es. "16:30")
+    return oraString.slice(0, 5);
+};
+
+// --- CARICAMENTO INIZIALE ---
+onMounted(async () => {
     try {
-        const dataSelezionata = formattaDataPerDb(selectedAnno.value, selectedMeseIndex.value, selectedGiorno.value);
-        
-        // La chiamata punta alla rotta che abbiamo appena definito
-        const response = await axios.get('/api/disponibilita/search', {
-            params: {
-                data: dataSelezionata,
-                id_materia: selectedMateriaId.value,
-                id_tutor: selectedTutorId.value,
-                luogo: luogoRicerca.value
-            }
-        });
+        const userRes = await axios.get('/api/auth/utente');
+        currentUserId.value = userRes.data.Id || userRes.data.id;
 
-        risultatiRicerca.value = response.data;
+        const matRes = await axios.get('/api/materie');
+        listaMaterie.value = matRes.data;
 
-        // Feedback utente
-        if (risultatiRicerca.value.length === 0) {
-           alert("Nessuna disponibilità trovata per i criteri selezionati (o data futura).");
-        }
+        // Carica gli utenti
+        const utentiRes = await axios.get('/api/utenti');
+        const tuttiUtenti = utentiRes.data;
+
+        // Cerca nelle disponibilità per trovare gli ID dei tutor
+        const dispRes = await axios.get('/api/disponibilita/cerca');
+        const disponibilita = dispRes.data;
+
+        // Estrai gli ID univoci dei tutor
+        const tutorIds = [...new Set(disponibilita.map((d: any) => d.id_tutor))];
+
+        // Filtra gli utenti per ottenere solo i tutor
+        listaTutors.value = tuttiUtenti.filter((u: any) => tutorIds.includes(u.Id));
+
+        console.log("Lista tutor caricata:", listaTutors.value);
 
     } catch (error) {
-        console.error("Errore ricerca:", error);
+        console.error("Errore init", error);
     }
-};*/
+});
 
-// --- CHIAMATE API ---
-const getDatiIniziali = async () => {
+// --- FUNZIONE CERCA ---
+const cercaDisponibilita = async () => {
     try {
-        // Riempio la lista con le materie
-        const resMaterie = await axios.get('/api/materie');
-        listaMaterie.value = resMaterie.data;
+        const params: any = {};
+        
+        // Data solo se checkbox attiva
+        if (filterByDate.value && selectedGiorno.value && selectedMeseIndex.value !== null && selectedAnno.value) {
+            const mese = String(selectedMeseIndex.value + 1).padStart(2, '0');
+            const giorno = String(selectedGiorno.value).padStart(2, '0');
+            params.data = `${selectedAnno.value}-${mese}-${giorno}`;
+        }
 
-        // Riempio la lista con tutti gli utenti
-        const resUtenti = await axios.get('/api/utenti');
-        listaTutors.value = resUtenti.data;
+        if (selectedMateriaId.value) params.id_materia = selectedMateriaId.value;
+        if (selectedTutorId.value) params.id_tutor = selectedTutorId.value;
+        if (selectedLocalita.value) params.localita = selectedLocalita.value;
 
-        // Escludo l'utente corrente dalla lista dei tutor
-        try {
-            const resMe = await axios.get('/api/auth/utente');
-            currentUserId.value = resMe.data.Id || resMe.data.id;
-        } catch (e) {
-            console.log("Utente non loggato (modalità ospite)");
+        const res = await axios.get('/api/disponibilita/cerca', { params });
+        prenotazioni.value = res.data;
+        
+        selectedSlotId.value = null;
+
+        if (prenotazioni.value.length === 0) {
+            mostraNotifica("Nessuna disponibilità trovata.", "error");
         }
 
     } catch (error) {
-        console.error("Errore caricamento dati:", error);
+        console.error(error);
+        mostraNotifica("Errore durante la ricerca", "error");
     }
 };
 
-//CONFIGURAZIONE SELEZIONE DATA DINAMICA
+// --- FUNZIONE PRENOTA ---
+const confermaPrenotazione = async () => {
+    if (!selectedSlotId.value) {
+        mostraNotifica("Seleziona una lezione dalla tabella prima di confermare.", "error");
+        return;
+    }
+
+    try {
+        await axios.put(`/api/prenotazioni/${selectedSlotId.value}/prenota`);
+        mostraNotifica("Lezione prenotata con successo!", "success");
+        
+        prenotazioni.value = prenotazioni.value.filter(p => p.Id !== selectedSlotId.value);
+        selectedSlotId.value = null;
+        
+    } catch (error: any) {
+        console.error(error);
+        const msg = error.response?.data?.message || "Errore prenotazione";
+        mostraNotifica(msg, "error");
+    }
+};
+
+// CONFIGURAZIONE DATA
 const nomiMesi = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
 
 const annoCorrente = new Date().getFullYear();
 const anniDisponibili = [annoCorrente, annoCorrente + 1];
 const selectedAnno = ref(annoCorrente);
-const selectedMeseIndex = ref(new Date().getMonth()); // 0 = Gennaio, 11 = Dicembre
+const selectedMeseIndex = ref(new Date().getMonth());
 const selectedGiorno = ref(new Date().getDate());
 
-// Calcola quanti giorni ha il mese scelto
 const giorniDisponibili = computed(() => {
-    // new Date(anno, mese + 1, 0).getDate() restituisce l'ultimo giorno del mese precedente
-    // Esempio: new Date(2025, 2, 0) -> Ultimo giorno di Febbraio 2025 (28)
     const numeroGiorni = new Date(selectedAnno.value, selectedMeseIndex.value + 1, 0).getDate();
-    
-    // Crea un array da 1 a numeroGiorni [1, 2, ..., 30, 31]
     return Array.from({ length: numeroGiorni }, (_, i) => i + 1);
 });
 
-onMounted(() => {
-    getDatiIniziali();});
-
 </script>
-
-
 
 <template>
     <main>
@@ -111,19 +157,25 @@ onMounted(() => {
                 
         <div class="row justify-content-center align-items-center text-center mb-2 mt-3">
             <div class="col-5 shadow-lg p-3 mb-1 text-white me-3 filter-box">
-                <h2>
-                    Data
-                </h2>
-                <div class="">
+                <h2>Data</h2>
+                
+                <div class="mb-2">
+                    <label class="d-flex align-items-center justify-content-center gap-2">
+                        <input type="checkbox" v-model="filterByDate" class="form-check-input">
+                        <span>Filtra per data</span>
+                    </label>
+                </div>
+                
+                <div class="" :class="{ 'opacity-50': !filterByDate }">
                     <div class="d-flex gap-2 mb-2 justify-content-center">
     
-    <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+    <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
         <option v-for="giorno in giorniDisponibili" :key="giorno" :value="giorno">
             {{ giorno }}
         </option>
     </select>
 
-    <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+    <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
         <option v-for="(mese, index) in nomiMesi" :key="index" :value="index">
             {{ mese }}
         </option>
@@ -131,7 +183,7 @@ onMounted(() => {
 </div>
 
 <div class="d-flex justify-content-center">
-    <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100">
+    <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100" :disabled="!filterByDate">
         <option v-for="anno in anniDisponibili" :key="anno" :value="anno">
             {{ anno }}
         </option>
@@ -140,54 +192,52 @@ onMounted(() => {
                 </div>     
             </div>
             <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
-                <h2>
-                    Località
-                </h2>
+                <h2>Località</h2>
                 <div class="row">
                     <div class="pt-1 pb-2 mt-1">
-                        <input type="text" name="luogo" class="mt-1 input-base input-wide input-custom input-custom">
+                        <input type="text" 
+                               v-model="selectedLocalita" 
+                               name="luogo" 
+                               placeholder="Es. Bologna"
+                               class="mt-1 input-base input-wide input-custom">
                     </div>
                 </div>
             </div>
         </div>
 
-        <form class="row justify-content-center align-items-center text-center mb-2 mt-3">
+        <form class="row justify-content-center align-items-center text-center mb-2 mt-3"
+        @submit.prevent="cercaDisponibilita">
+
             <div class="col-5 shadow-lg p-4 mb-1 text-white me-3 filter-box">
-                <h2>
-                    Materia
-                </h2>
+                <h2>Materia</h2>
                 <div class="row">
                     <div class="pt-1 pb-2 mt-1">
                         <select v-model="selectedMateriaId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
-                                    <option value="" disabled selected>Seleziona Materia</option>
-                                    
-                                    <option v-for="materia in listaMaterie" :key="materia.Id" :value="materia.Id">
-                                        {{ materia.Nome }}
-                                    </option>
-                                
+                            <option value="" disabled selected>Seleziona Materia</option>
+                            
+                            <option v-for="materia in listaMaterie" :key="materia.Id" :value="materia.Id">
+                                {{ materia.Nome }}
+                            </option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
-                <h2>
-                    Tutor
-                </h2>
+                <h2>Tutor</h2>
                 <div class="row">
                     <div class="pt-1 pb-2 mt-1">
-                       <select v-model="selectedTutorId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
+                        <select v-model="selectedTutorId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
                             <option value="" disabled selected>Seleziona Tutor</option>
                             
                             <option v-for="tutor in tutorsFiltrati" :key="tutor.Id" :value="tutor.Id">
                                 {{ tutor.Nome }} {{ tutor.Cognome }}
                             </option>
-                                    
                         </select>
                     </div>
                 </div>        
             </div>
                     
-            <button class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-search">
+            <button type="submit" class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-cerca">
                 Cerca
             </button>
                 
@@ -205,21 +255,30 @@ onMounted(() => {
             <tbody> 
                 <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                     <td>
-                    <input type="radio" name="studente" class="custom-check">
+                    <input type="radio" 
+                           name="studente" 
+                           class="custom-check" 
+                           :value="prenotazione.Id"
+                           v-model="selectedSlotId">
                     </td>
-                    <td>{{ prenotazione.Data }}</td>
-                    <td>{{ prenotazione.Ora }}</td>
+                    <td>{{ formattaData(prenotazione.Data) }}</td>
+                    <td>{{ formattaOra(prenotazione.Ora) }}</td>
                     <td>{{ prenotazione.Localita }}</td>
                     <td>{{ prenotazione.materia_nome }}</td>
-                    <td>{{  }} </td>
+                    <td>{{ prenotazione.tutor_nome }} {{ prenotazione.tutor_cognome }}</td>
+                    </tr>
+                    <tr v-if="prenotazioni.length === 0">
+                            <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-2" style="background-color:#6B0808; border-radius:20px; color:white; display:block; margin-left:auto; margin-right:auto;">
+        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-2"
+            :disabled="!selectedSlotId"
+            @click="confermaPrenotazione">
             Conferma
-        </button>
+            </button>
 
     </div>
 
@@ -233,27 +292,35 @@ onMounted(() => {
                 </h1>
             </div>
               
-        <form class="row justify-content-center align-items-center text-center mb-2 mt-3">
+        <form class="row justify-content-center align-items-center text-center mb-2 mt-3"
+         @submit.prevent="cercaDisponibilita">
             
             <div class="col-12 col-md-8 text-white p-4 shadow-lg" style="background-color: #6B0808; border-radius: 20px;">
                 <h2 class="text-center mb-3">Data</h2>
                 
-                <div class="row align-items-center">
+                <div class="mb-2 text-center">
+                    <label class="d-inline-flex align-items-center gap-2">
+                        <input type="checkbox" v-model="filterByDate" class="form-check-input">
+                        <span>Filtra per data</span>
+                    </label>
+                </div>
+                
+                <div class="row align-items-center" :class="{ 'opacity-50': !filterByDate }">
                     <div class="col-5 text-center border-end border-white">
                         <label class="mb-1 fs-5">Ora</label>
-                        <input type="time" class="form-control rounded-pill text-center border-0 fw-bold" value="16:40">
+                        <input type="time" class="form-control rounded-pill text-center border-0 fw-bold" value="16:40" :disabled="!filterByDate">
                     </div>
 
                     <div class="col-7">
                         <div class="d-flex gap-2 mb-2 justify-content-center">
     
-    <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+    <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
         <option v-for="giorno in giorniDisponibili" :key="giorno" :value="giorno">
             {{ giorno }}
         </option>
     </select>
 
-    <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;">
+    <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
         <option v-for="(mese, index) in nomiMesi" :key="index" :value="index">
             {{ mese }}
         </option>
@@ -261,7 +328,7 @@ onMounted(() => {
 </div>
 
 <div class="d-flex justify-content-center">
-    <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100">
+    <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100" :disabled="!filterByDate">
         <option v-for="anno in anniDisponibili" :key="anno" :value="anno">
             {{ anno }}
         </option>
@@ -274,12 +341,14 @@ onMounted(() => {
             <div class="row justify-content-center gap-5 align-items-center text-center mt-4 mb-3">
 
                     <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
-                        <h2>
-                            Località
-                        </h2>
+                        <h2>Località</h2>
                         <div class="row">
                             <div class="pt-1 pb-2 mt-1">
-                                <input type="text" name="luogo" class="mt-1 input-base input-wide input-custom input-custom">
+                                <input type="text" 
+                                       v-model="selectedLocalita" 
+                                       name="luogo" 
+                                       placeholder="Es. Bologna"
+                                       class="mt-1 input-base input-wide input-custom">
                             </div>
                         </div>
                     </div>
@@ -287,9 +356,7 @@ onMounted(() => {
 
                 
                     <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
-                        <h2>
-                            Materia
-                        </h2>
+                        <h2>Materia</h2>
                         <div class="row">
                             <div class="pt-1 pb-2 mt-1">
                                 <select v-model="selectedMateriaId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
@@ -298,15 +365,12 @@ onMounted(() => {
                                     <option v-for="materia in listaMaterie" :key="materia.Id" :value="materia.Id">
                                         {{ materia.Nome }}
                                     </option>
-                                
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
-                        <h2>
-                            Tutor
-                        </h2>
+                        <h2>Tutor</h2>
                         <div class="row">
                             <div class="pt-1 pb-2 mt-1">
                                 <select v-model="selectedTutorId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
@@ -315,7 +379,6 @@ onMounted(() => {
                                     <option v-for="tutor in tutorsFiltrati" :key="tutor.Id" :value="tutor.Id">
                                         {{ tutor.Nome }} {{ tutor.Cognome }}
                                     </option>
-                                    
                                 </select>
                             </div>
                         </div>        
@@ -323,7 +386,7 @@ onMounted(() => {
 
             </div>
                         
-                <button class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-search" style="width: 20%;">
+                <button type="submit" class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-cerca" style="width: 20%;">
                     Cerca
                 </button>
                     
@@ -340,23 +403,32 @@ onMounted(() => {
                 </thead>
                 <tbody>  <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
                     <td>
-                    <input type="radio" name="studente" class="custom-check">
+                    <input type="radio" 
+                           name="studente" 
+                           class="custom-check"
+                           :value="prenotazione.Id"
+                           v-model="selectedSlotId">
                     </td>
-                    <td>{{ prenotazione.Data }}</td>
-                    <td>{{ prenotazione.Ora }}</td>
+                    <td>{{ formattaData(prenotazione.Data) }}</td>
+                    <td>{{ formattaOra(prenotazione.Ora) }}</td>
                     <td>{{ prenotazione.Localita }}</td>
                     <td>{{ prenotazione.materia_nome }}</td>
-                    <td> </td>
+                    <td>{{ prenotazione.tutor_nome }} {{ prenotazione.tutor_cognome }}</td>
+                    </tr>
+
+                    <tr v-if="prenotazioni.length === 0">
+                            <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
                     </tr>
                 </tbody>
 
-                <tr v-if="prenotazioni.length === 0">
-                          <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
-                      </tr>
+
                 </table>
             </div>
 
-            <button class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-search" style="width: 20%;">
+            <button @click="confermaPrenotazione" 
+                    :disabled="!selectedSlotId"
+                    class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-cerca" 
+                    style="width: 20%;">
                     Conferma
             </button>
         </div>
