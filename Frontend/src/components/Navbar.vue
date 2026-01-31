@@ -107,4 +107,5 @@ const handleLogout = async () => {
 .nav-link.router-link-exact-active:hover {
     background-color: #6b0808 !important;
 }
+
 </style>
