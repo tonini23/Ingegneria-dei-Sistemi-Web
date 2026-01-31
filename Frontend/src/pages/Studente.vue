@@ -7,6 +7,11 @@ import { Prenotazione } from '../types';
 import { mostraNotifica } from '../notification';
 
 
+// Interfaccia estesa per le prenotazioni con compatibilità
+interface PrenotazioneConMatch extends Prenotazione {
+    matchPercentage?: number;
+}
+
 // Questa proprietà restituisce la lista dei tutor TRANNE l'utente corrente
 const tutorsFiltrati = computed(() => {
     if (!currentUserId.value) return listaTutors.value; // Se non sei loggato, vedi tutti
@@ -46,6 +51,77 @@ const formattaOra = (oraString: string) => {
     return oraString.slice(0, 5);
 };
 
+const calcolaCompatibilita = (prenotazione: any, filtri: any): number => {
+    let punti = 0;
+    let filtriAttivi = 0;
+
+    // Filtro DATA (peso: 25%)
+    if (filtri.data) {
+        filtriAttivi++;
+        if (prenotazione.Data === filtri.data) {
+            punti += 25;
+        }
+    }
+
+    // Filtro MATERIA (peso: 30%)
+    if (filtri.id_materia) {
+        filtriAttivi++;
+        if (prenotazione.id_materia == filtri.id_materia) {
+            punti += 30;
+        }
+    }
+
+    // Filtro TUTOR (peso: 25%)
+    if (filtri.id_tutor) {
+        filtriAttivi++;
+        if (prenotazione.id_tutor == filtri.id_tutor) {
+            punti += 25;
+        }
+    }
+
+    // Filtro LOCALITÀ (peso: 20%)
+    if (filtri.localita) {
+        filtriAttivi++;
+        const localitaPrenotazione = prenotazione.Localita?.toLowerCase() || '';
+        const localitaFiltro = filtri.localita.toLowerCase();
+
+        // Match esatto
+        if (localitaPrenotazione === localitaFiltro) {
+            punti += 20;
+        }
+        // Match parziale (contiene la parola)
+        else if (localitaPrenotazione.includes(localitaFiltro)) {
+            punti += 15;
+        }
+        // Match molto parziale (inizia con)
+        else if (localitaPrenotazione.startsWith(localitaFiltro)) {
+            punti += 10;
+        }
+    }
+
+    // Se non ci sono filtri attivi, tutti hanno 100%
+    if (filtriAttivi === 0) {
+        return 100;
+    }
+
+    // Calcola la percentuale basata sui filtri attivi
+    const percentuale = (punti / (filtriAttivi === 1 ?
+        (filtri.data ? 25 : filtri.id_materia ? 30 : filtri.id_tutor ? 25 : 20) :
+        100)) * 100;
+
+    return Math.round(percentuale);
+};
+
+const getMatchColor = (percentage?: number): string => {
+    if (!percentage) return 'bg-secondary';
+    if (percentage >= 90) return 'bg-success';
+    if (percentage >= 70) return 'bg-primary';
+    if (percentage >= 50) return 'bg-warning';
+    return 'bg-danger';
+};
+
+
+
 // --- CARICAMENTO INIZIALE ---
 onMounted(async () => {
     try {
@@ -79,26 +155,46 @@ onMounted(async () => {
 // --- FUNZIONE CERCA ---
 const cercaDisponibilita = async () => {
     try {
-        const params: any = {};
-        
-        // Data solo se checkbox attiva
+        // NON inviamo filtri al backend - prendiamo TUTTO
+        // e filtriamo/ordiniamo lato client per la compatibilità
+        const res = await axios.get('/api/disponibilita/cerca');
+
+        // Costruisci l'oggetto filtri per il calcolo compatibilità
+        const filtri: any = {};
+
         if (filterByDate.value && selectedGiorno.value && selectedMeseIndex.value !== null && selectedAnno.value) {
             const mese = String(selectedMeseIndex.value + 1).padStart(2, '0');
             const giorno = String(selectedGiorno.value).padStart(2, '0');
-            params.data = `${selectedAnno.value}-${mese}-${giorno}`;
+            filtri.data = `${selectedAnno.value}-${mese}-${giorno}`;
         }
 
-        if (selectedMateriaId.value) params.id_materia = selectedMateriaId.value;
-        if (selectedTutorId.value) params.id_tutor = selectedTutorId.value;
-        if (selectedLocalita.value) params.localita = selectedLocalita.value;
+        if (selectedMateriaId.value) filtri.id_materia = selectedMateriaId.value;
+        if (selectedTutorId.value) filtri.id_tutor = selectedTutorId.value;
+        if (selectedLocalita.value) filtri.localita = selectedLocalita.value;
 
-        const res = await axios.get('/api/disponibilita/cerca', { params });
-        prenotazioni.value = res.data;
-        
+        // Calcola la compatibilità per ogni prenotazione
+        const prenotazioniConMatch = res.data.map((p: any) => ({
+            ...p,
+            matchPercentage: calcolaCompatibilita(p, filtri)
+        }));
+
+        // Ordina per percentuale di compatibilità (dal più alto al più basso)
+        prenotazioniConMatch.sort((a: any, b: any) => b.matchPercentage - a.matchPercentage);
+
+        prenotazioni.value = prenotazioniConMatch;
         selectedSlotId.value = null;
 
         if (prenotazioni.value.length === 0) {
             mostraNotifica("Nessuna disponibilità trovata.", "error");
+        } else {
+            const haFiltri = Object.keys(filtri).length > 0;
+            if (haFiltri) {
+                const miglioreMatch = prenotazioni.value[0].matchPercentage;
+                mostraNotifica(
+                    `Trovate ${prenotazioni.value.length} disponibilità. Migliore compatibilità: ${miglioreMatch}%`,
+                    "success"
+                );
+            }
         }
 
     } catch (error) {
@@ -117,10 +213,10 @@ const confermaPrenotazione = async () => {
     try {
         await axios.put(`/api/prenotazioni/${selectedSlotId.value}/prenota`);
         mostraNotifica("Lezione prenotata con successo!", "success");
-        
+
         prenotazioni.value = prenotazioni.value.filter(p => p.Id !== selectedSlotId.value);
         selectedSlotId.value = null;
-        
+
     } catch (error: any) {
         console.error(error);
         const msg = error.response?.data?.message || "Errore prenotazione";
@@ -141,298 +237,434 @@ const giorniDisponibili = computed(() => {
     const numeroGiorni = new Date(selectedAnno.value, selectedMeseIndex.value + 1, 0).getDate();
     return Array.from({ length: numeroGiorni }, (_, i) => i + 1);
 });
-
 </script>
 
 <template>
-    <main>
+  <main>
+    <div class="d-lg-none">
+      <div class="align-items-center text-center mt-3 mb-2">
+        <h1 class="page-title">Trova Disponibilità</h1>
+      </div>
 
-    <div class="d-lg-none">   
+      <div
+        class="row justify-content-center align-items-center text-center mb-2 mt-3"
+      >
+        <div class="col-5 shadow-lg p-3 mb-1 text-white me-3 filter-box">
+          <h2>Data</h2>
 
-        <div class="align-items-center text-center mt-3 mb-2">
-            <h1 class="page-title">
-                Trova Disponibilità
-            </h1>
+          <div class="mb-2">
+            <label
+              class="d-flex align-items-center justify-content-center gap-2"
+            >
+              <input
+                type="checkbox"
+                v-model="filterByDate"
+                class="form-check-input"
+              />
+              <span>Filtra per data</span>
+            </label>
+          </div>
+
+          <div class="" :class="{ 'opacity-50': !filterByDate }">
+            <div class="d-flex gap-2 mb-2 justify-content-center">
+              <select
+                v-model="selectedGiorno"
+                class="form-select rounded-pill border-0 text-center fw-bold"
+                style="width: 48%"
+                :disabled="!filterByDate"
+              >
+                <option
+                  v-for="giorno in giorniDisponibili"
+                  :key="giorno"
+                  :value="giorno"
+                >
+                  {{ giorno }}
+                </option>
+              </select>
+
+              <select
+                v-model="selectedMeseIndex"
+                class="form-select rounded-pill border-0 text-center fw-bold"
+                style="width: 48%"
+                :disabled="!filterByDate"
+              >
+                <option
+                  v-for="(mese, index) in nomiMesi"
+                  :key="index"
+                  :value="index"
+                >
+                  {{ mese }}
+                </option>
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <select
+                v-model="selectedAnno"
+                class="form-select rounded-pill border-0 text-center fw-bold w-100"
+                :disabled="!filterByDate"
+              >
+                <option
+                  v-for="anno in anniDisponibili"
+                  :key="anno"
+                  :value="anno"
+                >
+                  {{ anno }}
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
-                
-        <div class="row justify-content-center align-items-center text-center mb-2 mt-3">
-            <div class="col-5 shadow-lg p-3 mb-1 text-white me-3 filter-box">
-                <h2>Data</h2>
-                
-                <div class="mb-2">
-                    <label class="d-flex align-items-center justify-content-center gap-2">
-                        <input type="checkbox" v-model="filterByDate" class="form-check-input">
-                        <span>Filtra per data</span>
-                    </label>
-                </div>
-                
-                <div class="" :class="{ 'opacity-50': !filterByDate }">
-                    <div class="d-flex gap-2 mb-2 justify-content-center">
-    
-    <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
-        <option v-for="giorno in giorniDisponibili" :key="giorno" :value="giorno">
-            {{ giorno }}
-        </option>
-    </select>
-
-    <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
-        <option v-for="(mese, index) in nomiMesi" :key="index" :value="index">
-            {{ mese }}
-        </option>
-    </select>
-</div>
-
-<div class="d-flex justify-content-center">
-    <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100" :disabled="!filterByDate">
-        <option v-for="anno in anniDisponibili" :key="anno" :value="anno">
-            {{ anno }}
-        </option>
-    </select>
-</div>
-                </div>     
+        <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
+          <h2>Località</h2>
+          <div class="row">
+            <div class="pt-1 pb-2 mt-1">
+              <input
+                type="text"
+                v-model="selectedLocalita"
+                name="luogo"
+                placeholder="Es. Bologna"
+                class="mt-1 input-base input-wide input-custom"
+              />
             </div>
-            <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
-                <h2>Località</h2>
-                <div class="row">
-                    <div class="pt-1 pb-2 mt-1">
-                        <input type="text" 
-                               v-model="selectedLocalita" 
-                               name="luogo" 
-                               placeholder="Es. Bologna"
-                               class="mt-1 input-base input-wide input-custom">
-                    </div>
-                </div>
+          </div>
+        </div>
+      </div>
+
+      <form
+        class="row justify-content-center align-items-center text-center mb-2 mt-3"
+        @submit.prevent="cercaDisponibilita"
+      >
+        <div class="col-5 shadow-lg p-4 mb-1 text-white me-3 filter-box">
+          <h2>Materia</h2>
+          <div class="row">
+            <div class="pt-1 pb-2 mt-1">
+              <select
+                v-model="selectedMateriaId"
+                class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+              >
+                <option value="" disabled selected>Seleziona Materia</option>
+
+                <option
+                  v-for="materia in listaMaterie"
+                  :key="materia.Id"
+                  :value="materia.Id"
+                >
+                  {{ materia.Nome }}
+                </option>
+              </select>
             </div>
+          </div>
+        </div>
+        <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
+          <h2>Tutor</h2>
+          <div class="row">
+            <div class="pt-1 pb-2 mt-1">
+              <select
+                v-model="selectedTutorId"
+                class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+              >
+                <option value="" disabled selected>Seleziona Tutor</option>
+
+                <option
+                  v-for="tutor in tutorsFiltrati"
+                  :key="tutor.Id"
+                  :value="tutor.Id"
+                >
+                  {{ tutor.Nome }} {{ tutor.Cognome }}
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
 
-        <form class="row justify-content-center align-items-center text-center mb-2 mt-3"
-        @submit.prevent="cercaDisponibilita">
+        <button
+          type="submit"
+          class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-cerca"
+        >
+          Cerca
+        </button>
+      </form>
+      <div class="mb-3 table-responsive">
+        <table class="table-unibo">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Match</th>
+              <th>Data</th>
+              <th>Ora</th>
+              <th>Luogo</th>
+              <th>Materia</th>
+              <th>Tutor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+              <td>
+                <input
+                  type="radio"
+                  name="studente"
+                  class="custom-check"
+                  :value="prenotazione.Id"
+                  v-model="selectedSlotId"
+                />
+              </td>
+              <td>
+                <span
+                  class="badge"
+                  :class="getMatchColor(prenotazione.matchPercentage)"
+                >
+                  {{ prenotazione.matchPercentage }}%
+                </span>
+              </td>
+              <td>{{ formattaData(prenotazione.Data) }}</td>
+              <td>{{ formattaOra(prenotazione.Ora) }}</td>
+              <td>{{ prenotazione.Localita }}</td>
+              <td>{{ prenotazione.materia_nome }}</td>
+              <td>
+                {{ prenotazione.tutor_nome }} {{ prenotazione.tutor_cognome }}
+              </td>
+            </tr>
+            <tr v-if="prenotazioni.length === 0">
+              <td colspan="6" class="text-center py-3">
+                Nessuna prenotazione trovata
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-            <div class="col-5 shadow-lg p-4 mb-1 text-white me-3 filter-box">
-                <h2>Materia</h2>
-                <div class="row">
-                    <div class="pt-1 pb-2 mt-1">
-                        <select v-model="selectedMateriaId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
-                            <option value="" disabled selected>Seleziona Materia</option>
-                            
-                            <option v-for="materia in listaMaterie" :key="materia.Id" :value="materia.Id">
-                                {{ materia.Nome }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-5 shadow-lg p-4 mb-1 text-white filter-box">
-                <h2>Tutor</h2>
-                <div class="row">
-                    <div class="pt-1 pb-2 mt-1">
-                        <select v-model="selectedTutorId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
-                            <option value="" disabled selected>Seleziona Tutor</option>
-                            
-                            <option v-for="tutor in tutorsFiltrati" :key="tutor.Id" :value="tutor.Id">
-                                {{ tutor.Nome }} {{ tutor.Cognome }}
-                            </option>
-                        </select>
-                    </div>
-                </div>        
-            </div>
-                    
-            <button type="submit" class="col-4 btn btn-danger shadow-lg fw-bold p-1 btn-cerca">
-                Cerca
-            </button>
-                
-            </form>    
-            <div class="mb-3 table-responsive"> <table class="table-unibo">
-                <thead> <tr>
-                    <th></th>
-                    <th>Data</th>
-                    <th>Ora</th>
-                    <th>Luogo</th>
-                    <th>Materia</th>
-                    <th>Tutor</th>
-                </tr>
-            </thead>
-            <tbody> 
-                <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
-                    <td>
-                    <input type="radio" 
-                           name="studente" 
-                           class="custom-check" 
-                           :value="prenotazione.Id"
-                           v-model="selectedSlotId">
-                    </td>
-                    <td>{{ formattaData(prenotazione.Data) }}</td>
-                    <td>{{ formattaOra(prenotazione.Ora) }}</td>
-                    <td>{{ prenotazione.Localita }}</td>
-                    <td>{{ prenotazione.materia_nome }}</td>
-                    <td>{{ prenotazione.tutor_nome }} {{ prenotazione.tutor_cognome }}</td>
-                    </tr>
-                    <tr v-if="prenotazioni.length === 0">
-                            <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <button class="btn btn-danger shadow-lg fw-bold p-1 mb-2"
-            :disabled="!selectedSlotId"
-            @click="confermaPrenotazione">
-            Conferma
-            </button>
-
+      <button
+        class="btn btn-danger shadow-lg fw-bold p-1 mb-2 align-center"
+        :disabled="!selectedSlotId"
+        @click="confermaPrenotazione"
+      >
+        Conferma
+      </button>
     </div>
 
+    <div
+      class="align-items-center text-center mt-5 mb-5 row justify-content-center d-none d-lg-flex"
+    >
+      <div class="align-items-center text-center mt-3 mb-2">
+        <h1 class="page-title">Trova Disponibilità</h1>
+      </div>
 
+      <form
+        class="row justify-content-center align-items-center text-center mb-2 mt-3"
+        @submit.prevent="cercaDisponibilita"
+      >
+        <div
+          class="col-12 col-md-8 text-white p-4 shadow-lg"
+          style="background-color: #6b0808; border-radius: 20px"
+        >
+          <h2 class="text-center mb-3">Data</h2>
 
-    <div class="align-items-center text-center mt-5 mb-5 row justify-content-center d-none d-lg-flex">
+          <div class="mb-2 text-center">
+            <label class="d-inline-flex align-items-center gap-2">
+              <input
+                type="checkbox"
+                v-model="filterByDate"
+                class="form-check-input"
+              />
+              <span>Filtra per data</span>
+            </label>
+          </div>
 
-        <div class="align-items-center text-center mt-3 mb-2">
-                <h1 class="page-title">
-                    Trova Disponibilità
-                </h1>
-            </div>
-              
-        <form class="row justify-content-center align-items-center text-center mb-2 mt-3"
-         @submit.prevent="cercaDisponibilita">
-            
-            <div class="col-12 col-md-8 text-white p-4 shadow-lg" style="background-color: #6B0808; border-radius: 20px;">
-                <h2 class="text-center mb-3">Data</h2>
-                
-                <div class="mb-2 text-center">
-                    <label class="d-inline-flex align-items-center gap-2">
-                        <input type="checkbox" v-model="filterByDate" class="form-check-input">
-                        <span>Filtra per data</span>
-                    </label>
-                </div>
-                
-                <div class="row align-items-center" :class="{ 'opacity-50': !filterByDate }">
-                    <div class="col-5 text-center border-end border-white">
-                        <label class="mb-1 fs-5">Ora</label>
-                        <input type="time" class="form-control rounded-pill text-center border-0 fw-bold" value="16:40" :disabled="!filterByDate">
-                    </div>
-
-                    <div class="col-7">
-                        <div class="d-flex gap-2 mb-2 justify-content-center">
-    
-    <select v-model="selectedGiorno" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
-        <option v-for="giorno in giorniDisponibili" :key="giorno" :value="giorno">
-            {{ giorno }}
-        </option>
-    </select>
-
-    <select v-model="selectedMeseIndex" class="form-select rounded-pill border-0 text-center fw-bold" style="width: 48%;" :disabled="!filterByDate">
-        <option v-for="(mese, index) in nomiMesi" :key="index" :value="index">
-            {{ mese }}
-        </option>
-    </select>
-</div>
-
-<div class="d-flex justify-content-center">
-    <select v-model="selectedAnno" class="form-select rounded-pill border-0 text-center fw-bold w-100" :disabled="!filterByDate">
-        <option v-for="anno in anniDisponibili" :key="anno" :value="anno">
-            {{ anno }}
-        </option>
-    </select>
-</div>
-                    </div>
-                </div>
-            </div>
-                
-            <div class="row justify-content-center gap-5 align-items-center text-center mt-4 mb-3">
-
-                    <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
-                        <h2>Località</h2>
-                        <div class="row">
-                            <div class="pt-1 pb-2 mt-1">
-                                <input type="text" 
-                                       v-model="selectedLocalita" 
-                                       name="luogo" 
-                                       placeholder="Es. Bologna"
-                                       class="mt-1 input-base input-wide input-custom">
-                            </div>
-                        </div>
-                    </div>
-                
-
-                
-                    <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
-                        <h2>Materia</h2>
-                        <div class="row">
-                            <div class="pt-1 pb-2 mt-1">
-                                <select v-model="selectedMateriaId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
-                                    <option value="" disabled selected>Seleziona Materia</option>
-                                    
-                                    <option v-for="materia in listaMaterie" :key="materia.Id" :value="materia.Id">
-                                        {{ materia.Nome }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
-                        <h2>Tutor</h2>
-                        <div class="row">
-                            <div class="pt-1 pb-2 mt-1">
-                                <select v-model="selectedTutorId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
-                                    <option value="" disabled selected>Seleziona Tutor</option>
-                                    
-                                    <option v-for="tutor in tutorsFiltrati" :key="tutor.Id" :value="tutor.Id">
-                                        {{ tutor.Nome }} {{ tutor.Cognome }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>        
-                    </div>
-
-            </div>
-                        
-                <button type="submit" class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-cerca" style="width: 20%;">
-                    Cerca
-                </button>
-                    
-            </form>    
-                <div class="mb-3 table-responsive"> <table class="table-unibo">
-                    <thead> <tr>
-                        <th></th>
-                        <th>Data</th>
-                        <th>Ora</th>
-                        <th>Luogo</th>
-                        <th>Materia</th>
-                        <th>Tutor</th>
-                    </tr>
-                </thead>
-                <tbody>  <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
-                    <td>
-                    <input type="radio" 
-                           name="studente" 
-                           class="custom-check"
-                           :value="prenotazione.Id"
-                           v-model="selectedSlotId">
-                    </td>
-                    <td>{{ formattaData(prenotazione.Data) }}</td>
-                    <td>{{ formattaOra(prenotazione.Ora) }}</td>
-                    <td>{{ prenotazione.Localita }}</td>
-                    <td>{{ prenotazione.materia_nome }}</td>
-                    <td>{{ prenotazione.tutor_nome }} {{ prenotazione.tutor_cognome }}</td>
-                    </tr>
-
-                    <tr v-if="prenotazioni.length === 0">
-                            <td colspan="6" class="text-center py-3">Nessuna prenotazione trovata</td>
-                    </tr>
-                </tbody>
-
-
-                </table>
+          <div
+            class="row align-items-center"
+            :class="{ 'opacity-50': !filterByDate }"
+          >
+            <div class="col-5 text-center border-end border-white">
+              <label class="mb-1 fs-5">Ora</label>
+              <input
+                type="time"
+                class="form-control rounded-pill text-center border-0 fw-bold"
+                value="16:40"
+                :disabled="!filterByDate"
+              />
             </div>
 
-            <button @click="confermaPrenotazione" 
-                    :disabled="!selectedSlotId"
-                    class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-cerca" 
-                    style="width: 20%;">
-                    Conferma
-            </button>
+            <div class="col-7">
+              <div class="d-flex gap-2 mb-2 justify-content-center">
+                <select
+                  v-model="selectedGiorno"
+                  class="form-select rounded-pill border-0 text-center fw-bold"
+                  style="width: 48%"
+                  :disabled="!filterByDate"
+                >
+                  <option
+                    v-for="giorno in giorniDisponibili"
+                    :key="giorno"
+                    :value="giorno"
+                  >
+                    {{ giorno }}
+                  </option>
+                </select>
+
+                <select
+                  v-model="selectedMeseIndex"
+                  class="form-select rounded-pill border-0 text-center fw-bold"
+                  style="width: 48%"
+                  :disabled="!filterByDate"
+                >
+                  <option
+                    v-for="(mese, index) in nomiMesi"
+                    :key="index"
+                    :value="index"
+                  >
+                    {{ mese }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="d-flex justify-content-center">
+                <select
+                  v-model="selectedAnno"
+                  class="form-select rounded-pill border-0 text-center fw-bold w-100"
+                  :disabled="!filterByDate"
+                >
+                  <option
+                    v-for="anno in anniDisponibili"
+                    :key="anno"
+                    :value="anno"
+                  >
+                    {{ anno }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-</main>
 
+        <div
+          class="row justify-content-center gap-5 align-items-center text-center mt-4 mb-3"
+        >
+          <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
+            <h2>Località</h2>
+            <div class="row">
+              <div class="pt-1 pb-2 mt-1">
+                <input
+                  type="text"
+                  v-model="selectedLocalita"
+                  name="luogo"
+                  placeholder="Es. Bologna"
+                  class="mt-1 input-base input-wide input-custom"
+                />
+              </div>
+            </div>
+          </div>
 
+          <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
+            <h2>Materia</h2>
+            <div class="row">
+              <div class="pt-1 pb-2 mt-1">
+                <select
+                  v-model="selectedMateriaId"
+                  class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+                >
+                  <option value="" disabled selected>Seleziona Materia</option>
+
+                  <option
+                    v-for="materia in listaMaterie"
+                    :key="materia.Id"
+                    :value="materia.Id"
+                  >
+                    {{ materia.Nome }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 col-md-3 shadow-lg p-4 mb-1 text-white filter-box">
+            <h2>Tutor</h2>
+            <div class="row">
+              <div class="pt-1 pb-2 mt-1">
+                <select
+                  v-model="selectedTutorId"
+                  class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+                >
+                  <option value="" disabled selected>Seleziona Tutor</option>
+
+                  <option
+                    v-for="tutor in tutorsFiltrati"
+                    :key="tutor.Id"
+                    :value="tutor.Id"
+                  >
+                    {{ tutor.Nome }} {{ tutor.Cognome }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-cerca"
+          style="width: 20%"
+        >
+          Cerca
+        </button>
+      </form>
+      <div class="mb-3 table-responsive">
+        <table class="table-unibo">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Match</th>
+              <th>Data</th>
+              <th>Ora</th>
+              <th>Luogo</th>
+              <th>Materia</th>
+              <th>Tutor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="prenotazione in prenotazioni" :key="prenotazione.Id">
+              <td>
+                <input
+                  type="radio"
+                  name="studente"
+                  class="custom-check"
+                  :value="prenotazione.Id"
+                  v-model="selectedSlotId"
+                />
+              </td>
+              <td>
+                <span
+                  class="badge"
+                  :class="getMatchColor(prenotazione.matchPercentage)"
+                >
+                  {{ prenotazione.matchPercentage }}%
+                </span>
+              </td>
+              <td>{{ formattaData(prenotazione.Data) }}</td>
+              <td>{{ formattaOra(prenotazione.Ora) }}</td>
+              <td>{{ prenotazione.Localita }}</td>
+              <td>{{ prenotazione.materia_nome }}</td>
+              <td>
+                {{ prenotazione.tutor_nome }} {{ prenotazione.tutor_cognome }}
+              </td>
+            </tr>
+
+            <tr v-if="prenotazioni.length === 0">
+              <td colspan="6" class="text-center py-3">
+                Nessuna prenotazione trovata
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button
+        @click="confermaPrenotazione"
+        :disabled="!selectedSlotId"
+        class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-cerca align-center"
+        style="width: 20%"
+      >
+        Conferma
+      </button>
+    </div>
+  </main>
 </template>
