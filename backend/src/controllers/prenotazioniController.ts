@@ -108,7 +108,6 @@ async function cercaDisponibilita(req: Request, res: Response) {
     const utenteLoggato = GetUtente(req, res);
     
     // Query: Seleziona tutto da prenotazioni dove NON c'è ancora uno studente
-    // IMPORTANTE: Aggiunti p.id_materia e p.id_tutor per il matching lato client
     let sql = `
         SELECT 
             p.Id, p.Data, p.Ora, p.Localita,
@@ -161,7 +160,7 @@ async function cercaDisponibilita(req: Request, res: Response) {
 }
 
 
-// PRENOTA LA LEZIONE (Aggiorna id_studente)
+// PRENOTA LA LEZIONE 
 async function prenotaLezione(req: Request, res: Response) {
     const utenteLoggato = GetUtente(req, res);
     const id_prenotazione = req.params.id; // L'ID della lezione da prenotare

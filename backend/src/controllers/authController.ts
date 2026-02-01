@@ -22,16 +22,6 @@ export const registrazione = async (req: Request, res: Response) => {
         return;
     }
 
-    // Verifica se la matricola è già registrata 
-    // (opzionale dato che viene già controllata nel frontend)
-    /*const [matricole] = await connection.promise().execute(
-        'SELECT matricola FROM utenti WHERE matricola = ? ', [matricola]);
-
-    if (Array.isArray(matricole) && matricole.length > 0) {
-        res.status(400).json({ message: 'Matricola già registrata' });
-        return;
-    }*/
-
     const passwordHash = await bcrypt.hash(password, 10);
 
     await connection.promise().execute(
@@ -95,15 +85,36 @@ export const logout = async (req: Request, res: Response) => {
 };
 
 export const getProfile = async (req: Request, res: Response) => {
-    // 1. Recupera i dati decodificati dal cookie
+    // Recupera i dati decodificati dal cookie
     const utente = GetUtente(req, res);
     
-    // 2. Se il cookie non c'è o è scaduto, restituisci errore 401
+    // Se il cookie non c'è o è scaduto, restituisci errore 401
     if (!utente) {
         res.status(401).json({ message: "Nessun utente loggato" });
         return;
     }
 
-    // 3. FONDAMENTALE: Restituisci l'oggetto utente (che contiene Id, Nome, ecc.)
+    // Restituisci l'oggetto utente (che contiene Id, Nome, ecc.)
     res.json(utente); 
+};
+
+export const updateUtente = (req: Request, res: Response) => {
+    const id = req.params.id;
+    const { Nome, Cognome, Email } = req.body;
+
+    // Nota: La matricola NON è inclusa nella query UPDATE, quindi non verrà modificata
+    const sql = `
+        UPDATE utenti 
+        SET Nome = ?, Cognome = ?, Email = ? 
+        WHERE Id = ?
+    `;
+
+    connection.query(sql, [Nome, Cognome, Email, id], (err: QueryError | null, results: any) => {
+        if (err) {
+            console.error("Errore aggiornamento utente:", err);
+            res.status(500).json({ message: "Errore durante l'aggiornamento del profilo." });
+        } else {
+            res.json({ message: "Profilo aggiornato con successo!" });
+        }
+    });
 };
