@@ -7,4 +7,5 @@ Da terminale nella root del progetto (Dove si trova questo file)
 usa il comando
 #  npm i 
 per installare le dipendenze
+esegui il file build_backend.bat
 poi esegui i 2 file .bat per startare il frontend e il backend.

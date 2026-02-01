@@ -381,6 +381,7 @@ onMounted(() => {
                                                 name="Nome"
                                                 id="Nome"
                                                 :value="auth.utente?.Nome || ''"
+                                                :placeholder="auth.utente?.Nome || ''"
                                                 
                                             />
                                         </div>
@@ -400,6 +401,7 @@ onMounted(() => {
                                                 :value="
                                                     auth.utente?.Cognome || ''
                                                 "
+                                                :placeholder="auth.utente?.Cognome || ''"
                                                 
                                             />
                                         </div>
@@ -419,6 +421,7 @@ onMounted(() => {
                                                 :value="
                                                     auth.utente?.Email || ''
                                                 "
+                                                :placeholder="auth.utente?.Email || ''"
                                                 
                                             />
                                         </div>
@@ -453,6 +456,7 @@ onMounted(() => {
                                 width: 40%;
                                 border-radius: 20px;
                             "
+                            @click="salvaModifiche"
                         >
                             Modifica Dati
                         </button>

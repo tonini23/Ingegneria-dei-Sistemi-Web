@@ -453,13 +453,15 @@ const giorniDisponibili = computed(() => {
         </table>
       </div>
 
-      <button
-        class="btn btn-danger shadow-lg fw-bold p-1 mb-2 d-flex align-center"
-        :disabled="!selectedSlotId"
-        @click="confermaPrenotazione"
-      >
-        Conferma
-      </button>
+      <div class="d-flex justify-content-center mt-3">
+        <button
+          class="btn btn-danger shadow-lg fw-bold py-2 px-4"
+          :disabled="!selectedSlotId"
+          @click="confermaPrenotazione"
+        >
+          Conferma
+        </button>
+      </div>
     </div>
 
     <div
