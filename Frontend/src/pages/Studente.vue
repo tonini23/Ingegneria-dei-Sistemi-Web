@@ -53,79 +53,78 @@ const formattaOra = (oraString: string) => {
 };
 
 const calcolaCompatibilita = (prenotazione: any, filtri: any): number => {
-    let punti = 0;
+    // Prima conta i filtri attivi
     let filtriAttivi = 0;
-
-    // Filtro DATA (peso: 25%)
-    if (filtri.data) {
-        filtriAttivi++;
-
-        
-        // Conversione date in formato YYYY-MM-DD per confronto, altrimenti calcola un giorno indietro
-        const date = new Date(prenotazione.Data);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const dataPrenotazione = `${year}-${month}-${day}`;
-        const dataFiltro = filtri.data;
-        if (dataPrenotazione === dataFiltro) {
-            punti += 25;
-        }
-
-        console.log('Confronto date:', { 
-                dataPrenotazione, 
-                dataFiltro, 
-                match: dataPrenotazione === dataFiltro 
-            });
-    }
-
-    // Filtro MATERIA (peso: 30%)
-    if (filtri.id_materia) {
-        filtriAttivi++;
-        if (prenotazione.id_materia == filtri.id_materia) {
-            punti += 30;
-        }
-    }
-
-    // Filtro TUTOR (peso: 25%)
-    if (filtri.id_tutor) {
-        filtriAttivi++;
-        if (prenotazione.id_tutor == filtri.id_tutor) {
-            punti += 25;
-        }
-    }
-
-    // Filtro LOCALITÀ (peso: 20%)
-    if (filtri.localita) {
-        filtriAttivi++;
-        const localitaPrenotazione = prenotazione.Localita?.toLowerCase() || '';
-        const localitaFiltro = filtri.localita.toLowerCase();
-
-        // Match esatto
-        if (localitaPrenotazione === localitaFiltro) {
-            punti += 20;
-        }
-        // Match parziale (contiene la parola)
-        else if (localitaPrenotazione.includes(localitaFiltro)) {
-            punti += 15;
-        }
-        // Match molto parziale (inizia con)
-        else if (localitaPrenotazione.startsWith(localitaFiltro)) {
-            punti += 10;
-        }
-    }
+    if (filtri.data) filtriAttivi++;
+    if (filtri.id_materia) filtriAttivi++;
+    if (filtri.id_tutor) filtriAttivi++;
+    if (filtri.localita) filtriAttivi++;
 
     // Se non ci sono filtri attivi, tutti hanno 100%
     if (filtriAttivi === 0) {
         return 100;
     }
 
-    // Calcola la percentuale basata sui filtri attivi
-    const percentuale = (punti / (filtriAttivi === 1 ?
-        (filtri.data ? 25 : filtri.id_materia ? 30 : filtri.id_tutor ? 25 : 20) :
-        100)) * 100;
+    // Calcola il peso per ogni filtro (distribuzione equa)
+    const pesoPerFiltro = 100 / filtriAttivi;
+    
+    let punti = 0;
 
-    return Math.round(percentuale);
+    // Filtro DATA
+    if (filtri.data) {
+        const date = new Date(prenotazione.Data);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const dataPrenotazione = `${year}-${month}-${day}`;
+        const dataFiltro = filtri.data;
+        
+        if (dataPrenotazione === dataFiltro) {
+            punti += pesoPerFiltro;
+        }
+
+    }
+
+    // Filtro MATERIA
+    if (filtri.id_materia) {
+        const materiaPrenotazione = Number(prenotazione.id_materia);
+        const materiaFiltro = Number(filtri.id_materia);
+        
+        if (materiaPrenotazione === materiaFiltro) {
+            punti += pesoPerFiltro;
+        }
+    }
+
+    // Filtro TUTOR
+    if (filtri.id_tutor) {
+        const tutorPrenotazione = Number(prenotazione.id_tutor);
+        const tutorFiltro = Number(filtri.id_tutor);
+        
+        if (tutorPrenotazione === tutorFiltro) {
+            punti += pesoPerFiltro;
+        }
+    }
+
+    // Filtro LOCALITÀ (con match parziale)
+    if (filtri.localita) {
+        const localitaPrenotazione = prenotazione.Localita?.toLowerCase() || '';
+        const localitaFiltro = filtri.localita.toLowerCase();
+        
+        // Match esatto
+        if (localitaPrenotazione === localitaFiltro) {
+            punti += pesoPerFiltro;
+        }
+        // Match parziale (contiene la parola) - 75% del peso
+        else if (localitaPrenotazione.includes(localitaFiltro)) {
+            punti += pesoPerFiltro * 0.75;
+        }
+        // Match molto parziale (inizia con) - 50% del peso
+        else if (localitaPrenotazione.startsWith(localitaFiltro)) {
+            punti += pesoPerFiltro * 0.5;
+        }
+    }
+
+    return Math.round(punti);
 };
 
 const getMatchColor = (percentage?: number): string => {
@@ -344,7 +343,7 @@ const giorniDisponibili = computed(() => {
                 v-model="selectedLocalita"
                 name="luogo"
                 placeholder="Es. Bologna"
-                class="mt-1 input-base input-wide input-custom"
+                class="mt-1 input-base input-custom"
               />
             </div>
           </div>
@@ -361,7 +360,7 @@ const giorniDisponibili = computed(() => {
             <div class="pt-1 pb-2 mt-1">
               <select
                 v-model="selectedMateriaId"
-                class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+                class="mt-1 input-base form-select border-0 fw-bold text-center"
               >
                 <option value="" disabled selected>Seleziona Materia</option>
 
@@ -382,7 +381,7 @@ const giorniDisponibili = computed(() => {
             <div class="pt-1 pb-2 mt-1">
               <select
                 v-model="selectedTutorId"
-                class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+                class="mt-1 input-base form-select border-0 fw-bold text-center"
               >
                 <option value="" disabled selected>Seleziona Tutor</option>
 
@@ -495,17 +494,9 @@ const giorniDisponibili = computed(() => {
             class="row align-items-center"
             :class="{ 'opacity-50': !filterByDate }"
           >
-            <div class="col-5 text-center border-end border-white">
-              <label class="mb-1 fs-5">Ora</label>
-              <input
-                type="time"
-                class="form-control rounded-pill text-center border-0 fw-bold"
-                value="16:40"
-                :disabled="!filterByDate"
-              />
-            </div>
-
-            <div class="col-7">
+            
+             <div class="col-md-1"></div>
+            <div class="col-md-10">
               <div class="d-flex gap-2 mb-2 justify-content-center">
                 <select
                   v-model="selectedGiorno"
@@ -569,7 +560,7 @@ const giorniDisponibili = computed(() => {
                   v-model="selectedLocalita"
                   name="luogo"
                   placeholder="Es. Bologna"
-                  class="mt-1 input-base input-wide input-custom"
+                  class="mt-1 input-base input-custom"
                 />
               </div>
             </div>
@@ -581,7 +572,7 @@ const giorniDisponibili = computed(() => {
               <div class="pt-1 pb-2 mt-1">
                 <select
                   v-model="selectedMateriaId"
-                  class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+                  class="mt-1 input-base form-select border-0 fw-bold text-center"
                 >
                   <option value="" disabled selected>Seleziona Materia</option>
 
@@ -602,7 +593,7 @@ const giorniDisponibili = computed(() => {
               <div class="pt-1 pb-2 mt-1">
                 <select
                   v-model="selectedTutorId"
-                  class="mt-1 input-base input-wide form-select border-0 fw-bold text-center"
+                  class="mt-1 input-base form-select border-0 fw-bold text-center"
                 >
                   <option value="" disabled selected>Seleziona Tutor</option>
 

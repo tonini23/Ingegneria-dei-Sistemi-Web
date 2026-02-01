@@ -4,6 +4,8 @@ import axios from "axios";
 import { Prenotazione } from "../types";
 import { auth } from "../stores/auth";
 import { mostraNotifica } from "../notification";
+import { Utente } from "../types";
+import { get } from "http";
 
 // Lista delle prenotazioni dell'utente
 const prenotazioni = ref<Prenotazione[]>([]);
@@ -13,6 +15,17 @@ const currentUserId = ref<number | null>(null);
 
 // ID della prenotazione selezionata da cancellare
 const selectedPrenotazioneId = ref<number | null>(null);
+
+    // Usiamo una ref locale per l'utente per aggiornarla subito dopo la modifica
+const utente = ref<Utente | null>(null);
+
+// --- STATO MODIFICA ---
+const isEditing = ref(false);
+const formDati = ref({
+    Nome: '',
+    Cognome: '',
+    Email: '',
+});
 
 // Funzione per formattare la data
 const formattaData = (dataString: string) => {
@@ -31,6 +44,7 @@ const formattaOra = (oraString: string) => {
     return oraString.slice(0, 5);
 };
 
+// Funzione per cancellare una prenotazione
 const disdiciPrenotazione = async () => {
     if (!selectedPrenotazioneId.value) {
         mostraNotifica("Seleziona una prenotazione.", "error");
@@ -58,19 +72,15 @@ const disdiciPrenotazione = async () => {
 
 const getUtenteAndPrenotazioni = async () => {
     try {
-        // Se la memoria è vuota, chiediamo al server se c'è una sessione attiva, 
-        // utile per non essere reindirizzati al login ad ogni refresh
         if (!auth.isLoggedIn) {
-            const sessioneRecuperata = await auth.checkAuth();
-            
-            // Se neanche il server ci riconosce, ALLORA andiamo al login
-            if (!sessioneRecuperata) {
+            const logged = await auth.checkAuth();
+            if (!logged) {
                 location.href = "/login";
                 return;
             }
         }
-
-        // Se siamo qui, siamo loggati 
+        // Salviamo l'utente nello stato locale
+        utente.value = auth.utente;
         currentUserId.value = auth.utente?.Id ?? null;
 
         if (currentUserId.value) {
@@ -78,32 +88,65 @@ const getUtenteAndPrenotazioni = async () => {
         }
     } catch (error) {
         console.error("Errore recupero utente:", error);
-        // In caso di errore grave, meglio mandare al login
-        location.href = "/login";
     }
 };
+
+// --- FUNZIONI PER LA MODIFICA ---
+
+const attivaModifica = () => {
+    if (utente.value) {
+        // Copiamo i dati attuali nel form
+        formDati.value = {
+            Nome: utente.value.Nome,
+            Cognome: utente.value.Cognome,
+            Email: utente.value.Email,
+        };
+        isEditing.value = true;
+    }
+};
+
+const salvaModifiche = async () => {
+    if (!utente.value?.Id) return;
+
+    try {
+        // Chiamata PUT al backend
+        await axios.put(`/api/utenti/${utente.value.Id}`, {
+            Nome: formDati.value.Nome,
+            Cognome: formDati.value.Cognome,
+            Email: formDati.value.Email
+            // Non mandiamo la matricola o il backend la ignora
+        });
+
+        mostraNotifica("Profilo aggiornato con successo!", "success");
+        
+        // Aggiorniamo i dati locali ricaricandoli dal server per sicurezza
+        await auth.checkAuth(); 
+        utente.value = auth.utente; // Aggiorna la vista
+        isEditing.value = false;
+        attivaModifica(); // Ricarica i dati nel form
+
+    } catch (error) {
+        console.error("Errore salvataggio:", error);
+        mostraNotifica("Errore durante l'aggiornamento.", "error");
+    }
+};
+
 
 // Funzione che scarica le prenotazioni passando l'ID
 const getPrenotazioni = async (id: number) => {
     try {
         const response = await axios.get(`/api/prenotazioni/${id}`);
-        console.log("Prenotazioni ricevute:", response.data);
         prenotazioni.value = response.data;
     } catch (error) {
         console.error("Errore caricamento prenotazioni:", error);
     }
 };
 
-const updatePrenotazione = () => {
-    console.log("Modifica");
-};
 
 const logout = async () => {
     await auth.logout();
     location.href = "/login";
 };
-
-
 
 
 onMounted(() => {
@@ -122,18 +165,11 @@ onMounted(() => {
                 <div class="col-12 col-md-10">
                     <div class="filter-box p-4 text-white">
                         <div class="row align-items-center">
-                            <div class="col-3 text-center">
-                                <img
-                                    src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg"
-                                    alt="Foto Profilo"
-                                    class="profile-img shadow-lg"
-                                />
-                            </div>
-                            <div class="col-9">
+                            <div class="col-12">
                                 <div class="d-flex align-items-center mb-2">
                                     <label
                                         class="ms-0 w-25 text-start"
-                                        for="Nome_"
+                                        for="Nome_" 
                                         >Nome</label
                                     >
                                     <input
@@ -141,8 +177,8 @@ onMounted(() => {
                                         class="profile-input"
                                         name="Nome"
                                         id="Nome_"
-                                        :value="auth.utente?.Nome || ''"
-                                        readonly
+                                        v-model="formDati.Nome"
+                                        :placeholder="auth.utente?.Nome || ''"
                                     />
                                 </div>
                                 <div class="d-flex align-items-center mb-2">
@@ -156,8 +192,8 @@ onMounted(() => {
                                         class="profile-input"
                                         name="Cognome"
                                         id="Cognome_"
-                                        :value="auth.utente?.Cognome || ''"
-                                        readonly
+                                        v-model="formDati.Cognome"
+                                         :placeholder="auth.utente?.Cognome || ''"
                                     />
                                 </div>
                                 <div class="d-flex align-items-center mb-2">
@@ -169,8 +205,8 @@ onMounted(() => {
                                         class="profile-input"
                                         name="Email"
                                         id="Email_"
-                                        :value="auth.utente?.Email || ''"
-                                        readonly
+                                        v-model="formDati.Email"
+                                        :placeholder="auth.utente?.Email || ''"
                                     />
                                 </div>
                                 <div class="d-flex align-items-center">
@@ -196,6 +232,7 @@ onMounted(() => {
 
             <div class="row justify-content-center mb-3 gap-3">
                 <button
+                    @click="salvaModifiche"
                     class="col-5 btn text-white shadow fw-bold py-2"
                     style="
                         background-color: #6b0808;
@@ -206,6 +243,7 @@ onMounted(() => {
                     Modifica Dati
                 </button>
                 <button
+                    @click="logout"
                     class="col-5 btn text-white shadow fw-bold py-2"
                     style="
                         background-color: #6b0808;
@@ -213,23 +251,11 @@ onMounted(() => {
                         border-radius: 20px;
                     "
                 >
-                    Modifica Immagine
-                </button>
-            </div>
-
-            <div class="row justify-content-center mb-5 gap-3">
-                <button
-                    @click="logout"
-                    class="col-5 btn text-white shadow fw-bold py-2"
-                    style="
-                        background-color: #6b0808;
-                        width: 60%;
-                        border-radius: 20px;
-                    "
-                >
                     Logout
                 </button>
             </div>
+
+            
 
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10 col-lg-8">
@@ -318,6 +344,7 @@ onMounted(() => {
                         <button @click="disdiciPrenotazione"
                                 :disabled="!selectedPrenotazioneId"
                                 class="btn btn-red shadow fw-bold py-2 px-4 rounded-pill"
+
                                 :class="{ 'opacity-50 text-white': !selectedPrenotazioneId }"
                         >
                             Disdici Prenotazione
@@ -339,14 +366,7 @@ onMounted(() => {
                         <div class="col-12">
                             <div class="filter-box p-5 text-white">
                                 <div class="row align-items-center">
-                                    <div class="col-3 text-center">
-                                        <img
-                                            src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg"
-                                            alt="Foto Profilo"
-                                            class="profile-img shadow-lg"
-                                        />
-                                    </div>
-                                    <div class="col-9">
+                                    <div class="col-12">
                                         <div
                                             class="d-flex align-items-center mb-3"
                                         >
@@ -361,7 +381,7 @@ onMounted(() => {
                                                 name="Nome"
                                                 id="Nome"
                                                 :value="auth.utente?.Nome || ''"
-                                                readonly
+                                                
                                             />
                                         </div>
                                         <div
@@ -380,7 +400,7 @@ onMounted(() => {
                                                 :value="
                                                     auth.utente?.Cognome || ''
                                                 "
-                                                readonly
+                                                
                                             />
                                         </div>
                                         <div
@@ -399,7 +419,7 @@ onMounted(() => {
                                                 :value="
                                                     auth.utente?.Email || ''
                                                 "
-                                                readonly
+                                                
                                             />
                                         </div>
                                         <div class="d-flex align-items-center">
@@ -436,7 +456,8 @@ onMounted(() => {
                         >
                             Modifica Dati
                         </button>
-                        <button
+                                             <button
+                            @click="logout"
                             class="col-5 btn text-white shadow fw-bold py-2"
                             style="
                                 background-color: #6b0808;
@@ -444,23 +465,12 @@ onMounted(() => {
                                 border-radius: 20px;
                             "
                         >
-                            Modifica Immagine
-                        </button>
-                    </div>
-
-                    <div class="row justify-content-center mb-5 gap-3">
-                        <button
-                            @click="logout"
-                            class="col-5 btn text-white shadow fw-bold py-2"
-                            style="
-                                background-color: #6b0808;
-                                width: 60%;
-                                border-radius: 20px;
-                            "
-                        >
                             Logout
                         </button>
+                    
                     </div>
+
+   
                 </div>
 
                 <div class="col-6">
@@ -566,6 +576,7 @@ onMounted(() => {
                             </div>
                             <div class="justify-content-center mt-3 gap-4">
                             <button @click="disdiciPrenotazione"
+                                style="width: 70%;"
                                 :disabled="!selectedPrenotazioneId"
                                 class="btn btn-red shadow fw-bold py-2 px-4 rounded-pill"
                                 :class="{ 'opacity-50 text-white': !selectedPrenotazioneId }"

@@ -101,7 +101,7 @@ export default defineComponent({
                 <div class="mb-4 text-end" style="width: 85%; margin: 0 auto">
                     <router-link
                         to="/pass_dimenticata"
-                        class="text-decoration-none fst-italic text-dark"
+                        class="text-decoration-none fst-italic text-blue"
                         style="font-size: 0.9rem"
                     >
                         Password Dimenticata?
@@ -187,7 +187,7 @@ export default defineComponent({
                         <div class="mb-5 text-end pe-5 me-1">
                             <router-link
                                 to="/pass_dimenticata"
-                                class="text-decoration-none fst-italic text-dark"
+                                class="text-decoration-none fst-italic text-blue"
                             >
                                 Password Dimenticata?
                             </router-link>

@@ -184,7 +184,7 @@ onMounted(() => {
                     <h2>Materia</h2>
                     <div class= "row"> 
                         <div class="pt-3 pb-2 mt-1">
-                            <select v-model="selectedMateriaId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
+                            <select v-model="selectedMateriaId" class="mt-1 input-base form-select border-0 fw-bold text-center">
                                     <option value="" disabled selected>Seleziona Materia</option>
                                     
                                     <option v-for="materia in listaMaterie" :key="materia.Id" :value="materia.Id">
@@ -284,8 +284,9 @@ onMounted(() => {
                 <div class="col-6 shadow-lg p-4 mb-1 text-white" style="background-color: #6B0808; border-radius: 20px;">
                     <h2>Materia</h2>
                     <div class= "row"> 
-                        <div class="pt-3 pb-2 mt-1">
-                            <select v-model="selectedMateriaId" class="mt-1 input-base input-wide form-select border-0 fw-bold text-center">
+                        <div class="col-1"></div>
+                        <div class="col-10 pt-3 pb-2 mt-1">
+                            <select v-model="selectedMateriaId" class="mt-1 input-base form-select border-0 fw-bold text-center ">
                                     <option value="" disabled selected>Seleziona Materia</option>
                                     
                                     <option v-for="materia in listaMaterie" :key="materia.Id" :value="materia.Id">

@@ -8,6 +8,6 @@ router.post('/api/auth/registrazione', authController.registrazione);
 router.post('/api/auth/login', authController.login);
 router.post('/api/auth/logout', authController.logout);
 router.get('/api/auth/utente', authController.getProfile);
-//router.get('/api/auth/cancella', authController.deleteProfile);
+router.put('/api/utenti/:id', authController.updateUtente);
 
 export { router as authRouter };
