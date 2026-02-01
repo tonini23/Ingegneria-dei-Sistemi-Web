@@ -76,18 +76,26 @@ function addPrenotazione(req, res) {
 }
 function deletePrenotazione(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.params.id;
-        const sql = `
-        DELETE FROM prenotazioni
-        WHERE id_studente = ?
-    `;
-        db_1.connection.query(sql, [userId], function (error, results, fields) {
-            if (error) {
-                console.error("Errore DB:", error);
-                res.status(500).send('Errore del server');
+        const utenteLoggato = (0, auth_1.GetUtente)(req, res);
+        const id_prenotazione = req.params.id;
+        if (!utenteLoggato) {
+            res.status(401).json({ message: "Non autorizzato" });
+            return;
+        }
+        let sql = "";
+        console.log(`Tutor ${utenteLoggato.Id} elimina disponibilità ${id_prenotazione}`);
+        sql = "DELETE FROM prenotazioni WHERE Id = ?";
+        db_1.connection.query(sql, [id_prenotazione], (err, results) => {
+            if (err) {
+                console.error("Errore disdetta:", err);
+                res.status(500).json({ message: "Errore nel database" });
+            }
+            else if (results.affectedRows === 0) {
+                // Questo è il controllo che mancava!
+                res.status(404).json({ message: "Prenotazione non trovata o già cancellata" });
             }
             else {
-                res.json({ message: "Prenotazione eliminata con successo" });
+                res.json({ message: "Disdetta effettuata con successo" });
             }
         });
     });

@@ -33,26 +33,26 @@ const formattaOra = (oraString: string) => {
 
 const disdiciPrenotazione = async () => {
     if (!selectedPrenotazioneId.value) {
-        mostraNotifica("Seleziona una prenotazione da cancellare.", "error");
-        return;
-    }
-
-    if (!confirm("Sei sicuro di voler cancellare questa prenotazione?")) {
+        mostraNotifica("Seleziona una prenotazione.", "error");
         return;
     }
 
     try {
         await axios.delete(`/api/prenotazioni/${selectedPrenotazioneId.value}`);
         
-        mostraNotifica("Prenotazione cancellata con successo.", "success");
-        
-        // Rimuovi la riga dalla tabella senza ricaricare tutto
+        mostraNotifica("Prenotazione disdetta correttamente", "success");
+
+        // Rimuoviamo la riga dalla tabella visiva
         prenotazioni.value = prenotazioni.value.filter(p => p.Id !== selectedPrenotazioneId.value);
         selectedPrenotazioneId.value = null; // Reset selezione
 
     } catch (error: any) {
-        console.error("Errore cancellazione:", error);
-        mostraNotifica("Impossibile cancellare la prenotazione.", "error");
+        console.error("Errore:", error);
+        const messaggio = error.response?.data?.message || "Errore durante la cancellazione";
+        mostraNotifica(messaggio, "error");
+        
+        // Se c'è un errore, ricarichiamo i dati veri dal server per sicurezza
+        if (currentUserId.value) await getPrenotazioni(currentUserId.value);
     }
 };
 
@@ -242,12 +242,7 @@ onMounted(() => {
                         <table class="table-unibo">
                             <thead>
                                 <tr>
-                                    <th scope="col">
-                                        <input
-                                            type="checkbox"
-                                            class="custom-check"
-                                        />
-                                    </th>
+                                    <th scope="col">Scelta</th>
                                     <th scope="col">Data</th>
                                     <th scope="col">Ora</th>
                                     <th scope="col">Località</th>
@@ -261,11 +256,15 @@ onMounted(() => {
                                     v-for="prenotazione in prenotazioni"
                                     :key="prenotazione.Id"
                                 >
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            class="custom-check"
-                                        />
+                                    <td class="text-center">
+                                       <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            name="prenotazioneCheck"
+                                            :value="prenotazione.Id" 
+                                            v-model="selectedPrenotazioneId"
+                                            style="cursor: pointer;"
+                                        >
                                     </td>
                                     <td>
                                         {{ formattaData(prenotazione.Data) }}
@@ -316,7 +315,11 @@ onMounted(() => {
                     </div>
 
                     <div class="row justify-content-center mt-3 gap-4">
-                        <button class="col-4 btn btn-red shadow fw-bold py-2">
+                        <button @click="disdiciPrenotazione"
+                                :disabled="!selectedPrenotazioneId"
+                                class="btn btn-red shadow fw-bold py-2 px-4 rounded-pill"
+                                :class="{ 'opacity-50 text-white': !selectedPrenotazioneId }"
+                        >
                             Disdici Prenotazione
                         </button>
                     </div>
@@ -487,10 +490,14 @@ onMounted(() => {
                                             :key="prenotazione.Id"
                                         >
                                             <td>
-                                                <input
-                                                    type="checkbox"
-                                                    class="custom-check"
-                                                />
+                                            <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            name="prenotazioneCheck"
+                                            :value="prenotazione.Id" 
+                                            v-model="selectedPrenotazioneId"
+                                            style="cursor: pointer;"
+                                            >
                                             </td>
                                             <td>
                                                 {{
@@ -558,7 +565,11 @@ onMounted(() => {
                                 </table>
                             </div>
                             <div class="justify-content-center mt-3 gap-4">
-                            <button class="btn btn-red shadow fw-bold py-2 ">
+                            <button @click="disdiciPrenotazione"
+                                :disabled="!selectedPrenotazioneId"
+                                class="btn btn-red shadow fw-bold py-2 px-4 rounded-pill"
+                                :class="{ 'opacity-50 text-white': !selectedPrenotazioneId }"
+                            >
                                 Disdici Prenotazione
                             </button>
                         </div>
