@@ -58,9 +58,24 @@ const calcolaCompatibilita = (prenotazione: any, filtri: any): number => {
     // Filtro DATA (peso: 25%)
     if (filtri.data) {
         filtriAttivi++;
-        if (prenotazione.Data === filtri.data) {
+
+        
+        // Conversione date in formato YYYY-MM-DD per confronto, altrimenti calcola un giorno indietro
+        const date = new Date(prenotazione.Data);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const dataPrenotazione = `${year}-${month}-${day}`;
+        const dataFiltro = filtri.data;
+        if (dataPrenotazione === dataFiltro) {
             punti += 25;
         }
+
+        console.log('Confronto date:', { 
+                dataPrenotazione, 
+                dataFiltro, 
+                match: dataPrenotazione === dataFiltro 
+            });
     }
 
     // Filtro MATERIA (peso: 30%)
@@ -427,7 +442,7 @@ const giorniDisponibili = computed(() => {
             </tr>
             <tr v-if="prenotazioni.length === 0">
               <td colspan="6" class="text-center py-3">
-                Nessuna prenotazione trovata
+                Clicca sul tasto "Cerca" per trovare disponibilità senza filtri.
               </td>
             </tr>
           </tbody>
@@ -435,7 +450,7 @@ const giorniDisponibili = computed(() => {
       </div>
 
       <button
-        class="btn btn-danger shadow-lg fw-bold p-1 mb-2 align-center"
+        class="btn btn-danger shadow-lg fw-bold p-1 mb-2 d-flex align-center"
         :disabled="!selectedSlotId"
         @click="confermaPrenotazione"
       >
@@ -650,7 +665,7 @@ const giorniDisponibili = computed(() => {
 
             <tr v-if="prenotazioni.length === 0">
               <td colspan="6" class="text-center py-3">
-                Nessuna prenotazione trovata
+                Clicca sul tasto "Cerca" per trovare disponibilità senza filtri.
               </td>
             </tr>
           </tbody>

@@ -23,6 +23,8 @@ export interface Prenotazione {
     materia_nome?: string; 
     nome_studente: string;    
     cognome_studente: string; 
+    nome_tutor: string;    
+    cognome_tutor: string; 
     id_tutor: number;
     id_studente: number;
 }
