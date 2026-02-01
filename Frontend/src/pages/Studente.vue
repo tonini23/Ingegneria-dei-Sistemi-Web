@@ -5,6 +5,7 @@ import { Materia } from '../types';
 import { Utente } from '../types';
 import { Prenotazione } from '../types';
 import { mostraNotifica } from '../notification';
+import { auth } from '../stores/auth';
 
 
 // Interfaccia estesa per le prenotazioni con compatibilità
@@ -222,6 +223,10 @@ const cercaDisponibilita = async () => {
 const confermaPrenotazione = async () => {
     if (!selectedSlotId.value) {
         mostraNotifica("Seleziona una lezione dalla tabella prima di confermare.", "error");
+        return;
+    }
+    if (!auth.isLoggedIn) {
+        mostraNotifica("Devi essere loggato per prenotare una lezione.", "error");
         return;
     }
 
@@ -676,7 +681,7 @@ const giorniDisponibili = computed(() => {
         @click="confermaPrenotazione"
         :disabled="!selectedSlotId"
         class="col-6 btn btn-danger shadow-lg fw-bold p-1 mb-5 btn-cerca align-center"
-        style="width: 20%"
+        style="width: 20%" 
       >
         Conferma
       </button>

@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { auth } from "../stores/auth";
+
+onMounted(async () => {
+    await auth.checkAuth();
+});
+
+</script>
+
 <template>
     <nav class="navbar navbar-expand-lg pb-3">
         <div class="container-fluid">
@@ -70,19 +80,6 @@
     </nav>
 </template>
 
-<script setup lang="ts">
-import { onMounted } from "vue";
-import { auth } from "../stores/auth";
-
-onMounted(async () => {
-    await auth.checkAuth();
-});
-
-const handleLogout = async () => {
-    await auth.logout();
-    location.href = "/login";
-};
-</script>
 
 <style scoped>
 /* Stile base per tutti i link */

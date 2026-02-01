@@ -1,5 +1,27 @@
-<script setup lang="ts">
-// Logica per recupero password
+<script lang="ts">
+import axios from "axios";
+import { defineComponent } from "vue";
+import { mostraNotifica } from "../notification";
+import { auth } from "../stores/auth"; 
+
+export default defineComponent({
+
+    async mounted() {
+        // Controllo veloce dello stato locale
+        if (auth.isLoggedIn) {
+            location.href = "/";
+            return;
+        }
+
+        // Controllo sicuro lato server (utile se l'utente ha refreshato la pagina)
+        const isLogged = await auth.checkAuth();
+        if (isLogged) {
+            location.href = "/";
+        }
+    },
+
+
+});
 </script>
 
 <template>
