@@ -1,9 +1,12 @@
 <script setup lang="ts">
-/*import { ref } from 'vue'
+import { onMounted } from "vue";
+import { auth } from "../stores/auth";
 
-defineProps<{ msg: string }>()
+onMounted(async () => {
+    await auth.checkAuth();
+});
 
-const count = ref(0)*/
+
 </script>
 
 <template>
@@ -30,7 +33,7 @@ const count = ref(0)*/
       <div class="row justify-content-center align-items-center text-center mb-5">
         <div class="col-3"></div>
         <router-link to="/studente" class="col-6">
-          <button class="w-100 btn btn-danger btn-lg shadow-lg p-4 mb-5 btn-action">
+          <button v-if="!auth.isLoggedIn" class="w-100 btn btn-danger btn-lg shadow-lg p-4 mb-5 btn-action">
             Entra<br>come guest
           </button>
         </router-link>
@@ -51,7 +54,7 @@ const count = ref(0)*/
         </button>
       </router-link>
       <router-link to="/studente">
-        <button class="col-3 btn btn-danger btn-lg shadow-lg p-5 mb-5 ms-5 btn-action">
+        <button v-if="!auth.isLoggedIn" class="col-3 btn btn-danger btn-lg shadow-lg p-5 mb-5 ms-5 btn-action">
           Entra<br>come guest
         </button>
       </router-link>

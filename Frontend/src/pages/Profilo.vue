@@ -3,9 +3,16 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { Prenotazione } from "../types";
 import { auth } from "../stores/auth";
+import { mostraNotifica } from "../notification";
 
+// Lista delle prenotazioni dell'utente
 const prenotazioni = ref<Prenotazione[]>([]);
+
+// ID dell'utente corrente
 const currentUserId = ref<number | null>(null);
+
+// ID della prenotazione selezionata da cancellare
+const selectedPrenotazioneId = ref<number | null>(null);
 
 // Funzione per formattare la data
 const formattaData = (dataString: string) => {
@@ -22,6 +29,31 @@ const formattaOra = (oraString: string) => {
     if (!oraString) return "";
     // Prende solo i primi 5 caratteri (es. "16:30")
     return oraString.slice(0, 5);
+};
+
+const disdiciPrenotazione = async () => {
+    if (!selectedPrenotazioneId.value) {
+        mostraNotifica("Seleziona una prenotazione.", "error");
+        return;
+    }
+
+    try {
+        await axios.delete(`/api/prenotazioni/${selectedPrenotazioneId.value}`);
+        
+        mostraNotifica("Prenotazione disdetta correttamente", "success");
+
+        // Rimuoviamo la riga dalla tabella visiva
+        prenotazioni.value = prenotazioni.value.filter(p => p.Id !== selectedPrenotazioneId.value);
+        selectedPrenotazioneId.value = null; // Reset selezione
+
+    } catch (error: any) {
+        console.error("Errore:", error);
+        const messaggio = error.response?.data?.message || "Errore durante la cancellazione";
+        mostraNotifica(messaggio, "error");
+        
+        // Se c'è un errore, ricarichiamo i dati veri dal server per sicurezza
+        if (currentUserId.value) await getPrenotazioni(currentUserId.value);
+    }
 };
 
 const getUtenteAndPrenotazioni = async () => {
@@ -210,12 +242,7 @@ onMounted(() => {
                         <table class="table-unibo">
                             <thead>
                                 <tr>
-                                    <th scope="col">
-                                        <input
-                                            type="checkbox"
-                                            class="custom-check"
-                                        />
-                                    </th>
+                                    <th scope="col">Scelta</th>
                                     <th scope="col">Data</th>
                                     <th scope="col">Ora</th>
                                     <th scope="col">Località</th>
@@ -229,11 +256,15 @@ onMounted(() => {
                                     v-for="prenotazione in prenotazioni"
                                     :key="prenotazione.Id"
                                 >
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            class="custom-check"
-                                        />
+                                    <td class="text-center">
+                                       <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            name="prenotazioneCheck"
+                                            :value="prenotazione.Id" 
+                                            v-model="selectedPrenotazioneId"
+                                            style="cursor: pointer;"
+                                        >
                                     </td>
                                     <td>
                                         {{ formattaData(prenotazione.Data) }}
@@ -244,9 +275,19 @@ onMounted(() => {
 
                                     <td>{{ prenotazione.materia_nome }}</td>
 
-                                    <td>
-                                        {{ prenotazione.nome_studente }}
-                                        {{ prenotazione.cognome_studente }}
+                                   <td v-if="prenotazione.id_tutor == currentUserId">
+                                        {{
+                                            prenotazione.nome_studente
+                                        }}
+                                        {{
+                                            prenotazione.cognome_studente
+                                        }}
+                                    </td>
+                                    <td v-else>
+                                        {{ prenotazione.nome_tutor }}
+                                        {{
+                                            prenotazione.cognome_tutor
+                                        }}
                                     </td>
                                     <td>
                                         <span
@@ -256,10 +297,10 @@ onMounted(() => {
                                             "
                                             class="badge bg-warning text-dark"
                                         >
-                                            Sei il Tutor
+                                            Tutor
                                         </span>
                                         <span v-else class="badge bg-danger">
-                                            Sei lo Studente
+                                            Studente
                                         </span>
                                     </td>
                                 </tr>
@@ -274,14 +315,12 @@ onMounted(() => {
                     </div>
 
                     <div class="row justify-content-center mt-3 gap-4">
-                        <button
-                            class="col-4 btn btn-blue shadow fw-bold py-2"
-                            @click="updatePrenotazione"
+                        <button @click="disdiciPrenotazione"
+                                :disabled="!selectedPrenotazioneId"
+                                class="btn btn-red shadow fw-bold py-2 px-4 rounded-pill"
+                                :class="{ 'opacity-50 text-white': !selectedPrenotazioneId }"
                         >
-                            Modifica
-                        </button>
-                        <button class="col-4 btn btn-red shadow fw-bold py-2">
-                            Elimina
+                            Disdici Prenotazione
                         </button>
                     </div>
                 </div>
@@ -436,7 +475,7 @@ onMounted(() => {
                                 <table class="table-unibo">
                                     <thead>
                                         <tr>
-                                            <th scope="col"></th>
+                                            <th scope="col">Scelta</th>
                                             <th scope="col">Data</th>
                                             <th scope="col">Ora</th>
                                             <th scope="col">Località</th>
@@ -451,10 +490,14 @@ onMounted(() => {
                                             :key="prenotazione.Id"
                                         >
                                             <td>
-                                                <input
-                                                    type="checkbox"
-                                                    class="custom-check"
-                                                />
+                                            <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            name="prenotazioneCheck"
+                                            :value="prenotazione.Id" 
+                                            v-model="selectedPrenotazioneId"
+                                            style="cursor: pointer;"
+                                            >
                                             </td>
                                             <td>
                                                 {{
@@ -477,10 +520,18 @@ onMounted(() => {
                                                 {{ prenotazione.materia_nome }}
                                             </td>
 
-                                            <td>
-                                                {{ prenotazione.nome_studente }}
+                                            <td v-if="prenotazione.id_tutor == currentUserId">
+                                                {{
+                                                    prenotazione.nome_studente
+                                                }}
                                                 {{
                                                     prenotazione.cognome_studente
+                                                }}
+                                            </td>
+                                            <td v-else>
+                                                {{ prenotazione.nome_tutor }}
+                                                {{
+                                                    prenotazione.cognome_tutor
                                                 }}
                                             </td>
                                             <td>
@@ -491,13 +542,13 @@ onMounted(() => {
                                                     "
                                                     class="badge bg-warning text-dark"
                                                 >
-                                                    Sei il Tutor
+                                                    Tutor
                                                 </span>
                                                 <span
                                                     v-else
                                                     class="badge bg-danger"
                                                 >
-                                                    Sei lo Studente
+                                                    Studente
                                                 </span>
                                             </td>
                                         </tr>
@@ -513,6 +564,15 @@ onMounted(() => {
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="justify-content-center mt-3 gap-4">
+                            <button @click="disdiciPrenotazione"
+                                :disabled="!selectedPrenotazioneId"
+                                class="btn btn-red shadow fw-bold py-2 px-4 rounded-pill"
+                                :class="{ 'opacity-50 text-white': !selectedPrenotazioneId }"
+                            >
+                                Disdici Prenotazione
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -520,3 +580,10 @@ onMounted(() => {
         </div>
     </main>
 </template>
+
+<style scoped>
+.btn-red:hover {
+    background-color: #ce1126;
+    color: white;
+}
+</style>

@@ -6,23 +6,27 @@ import { GetUtente } from '../utils/auth';
 async function allPrenotazioni(req: Request, res: Response) {
     const userId = req.params.id;
 
-    // Aggiungiamo la JOIN con la tabella 'materie'
+    // Usiamo LEFT JOIN per lo studente perché potrebbe non esserci ancora (id_studente NULL)
     const sql = `
         SELECT 
             p.*, 
-            u.nome AS nome_studente, 
-            u.cognome AS cognome_studente,
-            m.nome AS materia_nome
+            m.Nome AS materia_nome,
+            s.Nome AS nome_studente, 
+            s.Cognome AS cognome_studente,
+            t.Nome AS nome_tutor,
+            t.Cognome AS cognome_tutor
         FROM prenotazioni p
-        JOIN utenti u ON p.id_studente = u.id
-        JOIN materie m ON p.id_materia = m.id
+        JOIN materie m ON p.id_materia = m.Id
+        JOIN utenti t ON p.id_tutor = t.Id       -- Join per i dati del Tutor
+        LEFT JOIN utenti s ON p.id_studente = s.Id -- Left Join per i dati dello Studente
         WHERE p.id_studente = ? OR p.id_tutor = ?
+        ORDER BY p.Data DESC, p.Ora DESC
     `;
 
     connection.query(
         sql,
-        [userId, userId], 
-        function (error: QueryError | null, results: RowDataPacket[], fields: any) {
+        [userId, userId], // Passiamo l'ID due volte (per il WHERE OR)
+        function (error: QueryError | null, results: RowDataPacket[]) {
             if (error) {
                 console.error("Errore DB:", error);
                 res.status(500).send('Errore del server');
@@ -71,25 +75,30 @@ async function addPrenotazione(req: Request, res: Response) {
 }
 
 async function deletePrenotazione(req: Request, res: Response) {
-    const userId = req.params.id;
+    const utenteLoggato = GetUtente(req, res);
+    const id_prenotazione = req.params.id;
 
-    const sql = `
-        DELETE FROM prenotazioni
-        WHERE id_studente = ?
-    `;
+    if (!utenteLoggato) {
+        res.status(401).json({ message: "Non autorizzato" });
+        return;
+    }
 
-    connection.query(
-        sql,
-        [userId],
-        function (error: QueryError | null, results: RowDataPacket[], fields: any) {
-            if (error) {
-                console.error("Errore DB:", error);
-                res.status(500).send('Errore del server');
-            } else {
-                res.json({ message: "Prenotazione eliminata con successo" });
-            }
+    let sql = "";
+    
+    console.log(`Tutor ${utenteLoggato.Id} elimina disponibilità ${id_prenotazione}`);
+    sql = "DELETE FROM prenotazioni WHERE Id = ?";
+
+    connection.query(sql, [id_prenotazione], (err: QueryError | null, results: any) => {
+        if (err) {
+            console.error("Errore disdetta:", err);
+            res.status(500).json({ message: "Errore nel database" });
+        } else if (results.affectedRows === 0) {
+            // Questo è il controllo che mancava!
+            res.status(404).json({ message: "Prenotazione non trovata o già cancellata" });
+        } else {
+            res.json({ message: "Disdetta effettuata con successo" });
         }
-    );
+    });
 }
 
 async function cercaDisponibilita(req: Request, res: Response) {
@@ -99,9 +108,11 @@ async function cercaDisponibilita(req: Request, res: Response) {
     const utenteLoggato = GetUtente(req, res);
     
     // Query: Seleziona tutto da prenotazioni dove NON c'è ancora uno studente
+    // IMPORTANTE: Aggiunti p.id_materia e p.id_tutor per il matching lato client
     let sql = `
         SELECT 
-            p.Id, p.Data, p.Ora, p.Localita, p.id_tutor,
+            p.Id, p.Data, p.Ora, p.Localita,
+            p.id_materia, p.id_tutor,
             m.Nome as materia_nome,
             u.Nome as tutor_nome, u.Cognome as tutor_cognome
         FROM prenotazioni p
@@ -118,7 +129,7 @@ async function cercaDisponibilita(req: Request, res: Response) {
         params.push(utenteLoggato.Id);
     }
 
-    // Filtri opzionali
+    // Filtri opzionali (mantenuti per compatibilità ma non usati per il matching)
     if (data) { 
         sql += ` AND p.Data = ?`; 
         params.push(data); 
@@ -131,10 +142,9 @@ async function cercaDisponibilita(req: Request, res: Response) {
         sql += ` AND p.id_tutor = ?`; 
         params.push(id_tutor); 
     }
-    // AGGIUNTO FILTRO LOCALITÀ
     if (localita) { 
         sql += ` AND p.Localita LIKE ?`; 
-        params.push(`%${localita}%`); // Usa LIKE per ricerca parziale
+        params.push(`%${localita}%`);
     }
 
     // Ordina per data e ora più vicine
