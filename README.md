@@ -9,3 +9,7 @@ usa il comando
 per installare le dipendenze
 esegui il file build_backend.bat
 poi esegui i 2 file .bat per startare il frontend e il backend.
+
+
+
+Non scaricatelo e soprattutto se siete del mio stesso corso non prendete spunto da questo progetto, è pieno di codice scritto da AI illegibile o cose strane tipo il modo in cui utilizzo il cookie 
