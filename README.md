@@ -1,5 +1,5 @@
-# Ingegneria-dei-Sistemi-Web
-Progetto per l'esame di Ingegneria dei Sistemi Web del corso LP tecnologie dei sistemi informatici svolto da Andrea Tonini e Lisandro Antonioli nell'anno accademico 2025-2026.
+# Laboratorio di Sicurezza dei Sistemi e Privacy
+Progetto di Secure coding per l'esame di Laboratorio di Sicurezza dei Sistemi e Privacy del corso LP tecnologie dei sistemi informatici svolto da Andrea Tonini nell'anno accademico 2025-2026 sulla base del progetto di ingegneria dei sistemi web svolto da Andrea Tonini e Lisandro Antonioli.
 
 Istruzioni per installazione
 
@@ -9,7 +9,3 @@ usa il comando
 per installare le dipendenze
 esegui il file build_backend.bat
 poi esegui i 2 file .bat per startare il frontend e il backend.
-
-
-
-Non scaricatelo e soprattutto se siete del mio stesso corso non prendete spunto da questo progetto, è pieno di codice scritto da AI illegibile o cose strane tipo il modo in cui utilizzo il cookie 
