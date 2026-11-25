@@ -1,3 +1,0 @@
-echo Ciao! Stiamo avviando il frontend...
-cd Frontend
-npm run dev
