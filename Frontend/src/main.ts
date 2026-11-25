@@ -15,6 +15,7 @@ import PassDimenticata from './pages/PassDimenticata.vue';
 import Registrazione from './pages/Registrazione.vue';
 import Studente from './pages/Studente.vue';
 import Tutor from './pages/Tutor.vue';
+import Admin from './pages/Admin.vue';
 import NotFound from './pages/NotFound.vue';
 
 
@@ -27,6 +28,7 @@ const router: Router = createRouter({
     { path: '/profilo', component: Profilo },
     { path: '/studente', component: Studente },
     { path: '/tutor', component: Tutor },
+    { path: '/admin', component: Admin },
     { path: '/pass_dimenticata', component: PassDimenticata },
     { path: "/:pathMatch(.*)*", component: NotFound } 
   ]

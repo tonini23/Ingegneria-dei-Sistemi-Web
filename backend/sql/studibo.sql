@@ -109,21 +109,22 @@ CREATE TABLE `utenti` (
   `Cognome` varchar(64) NOT NULL,
   `Matricola` bigint(20) NOT NULL,
   `Email` varchar(64) NOT NULL,
-  `Password` varchar(128) NOT NULL
+  `Password` varchar(128) NOT NULL,
+  `Ruolo` varchar(32) NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `utenti`
 --
 
-INSERT INTO `utenti` (`Id`, `Nome`, `Cognome`, `Matricola`, `Email`, `Password`) VALUES
-(1, 'andrea', 'tonini', 1146765, 'andrea.tonini4@studio.unibo.it', '$2b$10$ZWscbAUaMkLfLKh61PjgAu/OTAEm4UQqNs0sP0Tv8mHlPHrmBfgbG'),
-(14, 'Prova', 'Tonini', 1231232132, 'aaaaa@aaaa.com', '$2b$10$dH/Mdt4CEwJr.SlgT2hBAOHdgP9DA4LqPa.NJOPz27jM3KqcQ7Xbe'),
-(16, 'Prova', 'Prova', 123123123, 'a@a', '$2b$10$bHGaVXRUu9jgoJnI6WMiI.T7loY0fqQrAAQjqgtWeqVnPuX8Flaj6'),
-(17, 'Lu', 'Zhang', 8888888, 'lu@zhang', '$2b$10$x8VaCh8rZg8KfcFgZsRqu.vHgFQYIvAv9XpHMhBnrPyFn3IHDM42C'),
-(18, 'Lisandro', 'Antonioli', 1231231, 'lisandroantonioli@studio.unibo.it', '$2b$10$ntdS0/Frqpepf8IefqM/OeQi4Dc2jC8t/uJ4E5DyzWmt583dv2ErK'),
-(19, 'Patrik', 'Kossi', 19191919, 'swanton@viper.it', '$2b$10$g8ncH5Nv1VcWdxjQ0OxbHOOFRNIzc8fGUFZtUpQYhH2zvt9jHyweO'),
-(20, 'Alessandro', 'Bruno', 11111111, 'alessandro@gmail.com', '$2b$10$lUzGBDQdgu3NNMfh7TxyZeFqmpDJCgaUfn4M5I4BKLkHjwR3IDAP6');
+INSERT INTO `utenti` (`Id`, `Nome`, `Cognome`, `Matricola`, `Email`, `Password`, `Ruolo`) VALUES
+(1, 'andrea', 'tonini', 1146765, 'andrea.tonini4@studio.unibo.it', '$2b$10$ZWscbAUaMkLfLKh61PjgAu/OTAEm4UQqNs0sP0Tv8mHlPHrmBfgbG', 'admin'),
+(14, 'Prova', 'Tonini', 1231232132, 'aaaaa@aaaa.com', '$2b$10$dH/Mdt4CEwJr.SlgT2hBAOHdgP9DA4LqPa.NJOPz27jM3KqcQ7Xbe', 'user'),
+(16, 'Prova', 'Prova', 123123123, 'a@a', '$2b$10$bHGaVXRUu9jgoJnI6WMiI.T7loY0fqQrAAQjqgtWeqVnPuX8Flaj6', 'user'),
+(17, 'Lu', 'Zhang', 8888888, 'lu@zhang', '$2b$10$x8VaCh8rZg8KfcFgZsRqu.vHgFQYIvAv9XpHMhBnrPyFn3IHDM42C', 'user'),
+(18, 'Lisandro', 'Antonioli', 1231231, 'lisandroantonioli@studio.unibo.it', '$2b$10$ntdS0/Frqpepf8IefqM/OeQi4Dc2jC8t/uJ4E5DyzWmt583dv2ErK', 'user'),
+(19, 'Patrik', 'Kossi', 19191919, 'swanton@viper.it', '$2b$10$g8ncH5Nv1VcWdxjQ0OxbHOOFRNIzc8fGUFZtUpQYhH2zvt9jHyweO', 'user'),
+(20, 'Alessandro', 'Bruno', 11111111, 'alessandro@gmail.com', '$2b$10$lUzGBDQdgu3NNMfh7TxyZeFqmpDJCgaUfn4M5I4BKLkHjwR3IDAP6', 'user');
 
 --
 -- Indici per le tabelle scaricate

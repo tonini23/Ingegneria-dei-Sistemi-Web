@@ -8,6 +8,7 @@ export interface Utente {
     Matricola: number; 
     Email: string;
     Password: string;
+    Ruolo: string;
 }
 
 const JWT_SECRET = 'il_mio_segreto_jwt_studibo';

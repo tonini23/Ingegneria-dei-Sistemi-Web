@@ -5,6 +5,7 @@ export interface Utente {
     Matricola: number; 
     Email: string;
     Password: string;
+    Ruolo?: string;
 }
 
 

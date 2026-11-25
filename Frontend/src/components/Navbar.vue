@@ -66,6 +66,13 @@ onMounted(async () => {
                                 >Tutor</router-link
                             >
                         </li>
+                        <li class="nav-item" v-if="auth.user?.Ruolo === 'admin'">
+                            <router-link
+                                to="/admin"
+                                class="nav-link text-white ps-0"
+                                >Admin</router-link
+                            >
+                        </li>
                         <li class="nav-item" v-if="!auth.isLoggedIn">
                             <router-link
                                 to="/login"
