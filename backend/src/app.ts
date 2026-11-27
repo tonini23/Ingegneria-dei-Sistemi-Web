@@ -5,6 +5,7 @@ import { prenotazioniRouter } from './routes/prenotazioniRouter';
 import { authRouter } from './routes/authRouter';
 import { materieRouter } from './routes/materieRouter';
 import { utentiRouter } from './routes/utentiRouter';
+import { serviziRouter } from './routes/serviziRouter';
 // ---------------------------------------------
 
 // Creazione variabili
@@ -27,6 +28,7 @@ app.use('/', prenotazioniRouter);
 app.use('/', authRouter);
 app.use('/', materieRouter);
 app.use('/', utentiRouter);
+app.use('/', serviziRouter);
 
 // Gestione rotte non esistenti
 app.use((req: Request, res: Response, next: NextFunction) => {

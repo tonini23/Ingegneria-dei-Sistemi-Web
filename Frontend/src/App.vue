@@ -48,7 +48,7 @@ export default defineComponent({
   <footer class="text-white footer fixed-bottom">
     <p> Progetto svolto da: </p>
     <p class="text-center">
-      Andrea Tonini e Lisandro Antonioli - A.A. 2025-2026
+      Andrea Tonini - A.A. 2026-2027
     </p>
   </footer>
    

@@ -60,7 +60,7 @@ onMounted(caricaUtenti);
                     <td>{{ u.Ruolo || 'user' }}</td>
                     <td>
                         <button
-                            class="btn btn-sm btn-warning me-2"
+                            class="btn btn-sm btn-warning text-white me-2"
                             @click="cambiaRuolo(u.Id, u.Ruolo === 'admin' ? 'user' : 'admin')"
                         >
                             Rendi {{ u.Ruolo === 'admin' ? 'user' : 'admin' }}
